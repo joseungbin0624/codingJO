@@ -1,0 +1,37 @@
+// 변수 정의
+$navbar-height: 60px;
+$navbar-background-color: #3498db;
+$navbar-color: white;
+$navbar-padding: 0 15px;
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: $navbar-height;
+  background-color: $navbar-background-color;
+  color: $navbar-color;
+  padding: $navbar-padding;
+
+  .navbar-brand {
+    font-size: 1.5em;
+  }
+
+  .navbar-menu {
+    display: flex;
+
+    .navbar-item {
+      margin-right: 15px;
+
+      a {
+        color: $navbar-color;
+        text-decoration: none;
+        transition: text-decoration 0.2s ease-in-out; // hover 효과를 부드럽게 만듭니다.
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

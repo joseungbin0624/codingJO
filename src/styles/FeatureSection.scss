@@ -1,0 +1,29 @@
+.feature-section {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 20px;
+
+  .feature {
+    flex: 1 1 200px;
+    margin: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+
+    .feature-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .feature-title {
+      margin: 20px 0;
+      font-size: 1.5em;
+    }
+
+    .feature-description {
+      color: #666;
+    }
+  }
+}
