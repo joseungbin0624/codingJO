@@ -1,15 +1,1 @@
-// 전역 스타일 변수
-$font-stack:    Helvetica, sans-serif;
-$primary-color: #333;
-
-// 전역 스타일 정의
-body {
-  font: 100% $font-stack;
-  color: $primary-color;
-}
-
-// 다른 스타일 시트 임포트
-@import './navbar.scss';
-@import './footer.scss';
-@import './card.scss';
-@import './App.scss';
+ 

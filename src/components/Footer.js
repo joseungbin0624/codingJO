@@ -1,12 +1,19 @@
 import React from 'react';
-import '../styles/footer.scss'; // 가정된 Sass 스타일 파일
+import './Footer.scss';
+import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 
 const Footer = () => {
   return (
     <footer className="footer">
-      <p>© 2024 codingJO. All rights reserved.</p>
+      <div className="social-links">
+        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"><FaFacebook /></a>
+        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><FaTwitter /></a>
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><FaInstagram /></a>
+      </div>
+      <p>© 2023 Project CodingJO. All rights reserved.</p>
     </footer>
   );
 };
 
 export default Footer;
+ 

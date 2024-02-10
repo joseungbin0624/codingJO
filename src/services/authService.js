@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/users/';
+const API_URL = 'http://localhost:5000/api/auth/';
 
 const register = async (userData) => {
   const response = await axios.post(API_URL + 'register', userData);
@@ -15,10 +15,15 @@ const login = async (userData) => {
   return response.data;
 };
 
+const logout = () => {
+  localStorage.removeItem('user');
+};
+
 const authService = {
   register,
   login,
-  // 다른 인증 관련 메서드 추가 가능
+  logout,
 };
 
 export default authService;
+

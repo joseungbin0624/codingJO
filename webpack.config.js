@@ -44,10 +44,11 @@ module.exports = {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: 'asset/resource',
       },
+      // SASS 파일 처리
       {
         test: /\.scss$/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
-    },
+      },
     ],
   },
 

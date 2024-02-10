@@ -1,20 +1,21 @@
 import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import ReactModal from 'react-modal';
+import './Modal.scss';
 
-const CustomModal = ({ isOpen, onClose, children }) => {
+const Modal = ({ isOpen, onRequestClose, children }) => {
+  ReactModal.setAppElement('#root'); // 접근성을 위해 설정
+
   return (
-    <Modal show={isOpen} onHide={onClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>Modal title</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>{children}</Modal.Body>
-      <Modal.Footer>
-        <Button variant="secondary" onClick={onClose}>
-          Close
-        </Button>
-      </Modal.Footer>
-    </Modal>
+    <ReactModal 
+      isOpen={isOpen}
+      onRequestClose={onRequestClose}
+      className="Modal"
+      overlayClassName="Overlay"
+    >
+      {children}
+    </ReactModal>
   );
 };
 
-export default CustomModal;
+export default Modal;
+

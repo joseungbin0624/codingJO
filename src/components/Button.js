@@ -1,12 +1,14 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
+import './Button.scss'; // 버튼 스타일
+import { fadeIn } from './animations';
 
-const CustomButton = ({ text, onClick, className, variant = "primary" }) => {
+const Button = ({ children, onClick }) => {
   return (
-    <Button className={className} onClick={onClick} variant={variant}>
-      {text}
-    </Button>
+    <button className="btn" onClick={onClick} style={{ animation: fadeIn }}>
+      {children}
+    </button>
   );
 };
 
-export default CustomButton;
+export default Button;
+

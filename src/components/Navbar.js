@@ -1,40 +1,17 @@
 import React from 'react';
-import { Navbar, Nav, Container } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
+import { Link } from 'react-router-dom';
+import './Navbar.scss';
 
-const CustomNavbar = () => {
+const Navbar = () => {
   return (
-    <Navbar bg="light" expand="lg">
-      <Container>
-        <LinkContainer to="/">
-          <Navbar.Brand>codingJO</Navbar.Brand>
-        </LinkContainer>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <LinkContainer to="/">
-              <Nav.Link>Home</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/courses">
-              <Nav.Link>Courses</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/forum">
-              <Nav.Link>Forum</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/login">
-              <Nav.Link>Login</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/about">
-              <Nav.Link>About</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/contact">
-              <Nav.Link>Contact</Nav.Link>
-            </LinkContainer>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+    <nav className="navbar">
+      <Link to="/">Home</Link>
+      <Link to="/courses">Courses</Link>
+      <Link to="/about">About</Link>
+      {/* 추가 링크 */}
+    </nav>
   );
 };
 
-export default CustomNavbar;
+export default Navbar;
+ 

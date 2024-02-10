@@ -1,18 +1,18 @@
 import React from 'react';
-import { Card } from 'react-bootstrap';
+import moment from 'moment';
+import './Post.scss';
 
 const Post = ({ post }) => {
   return (
-    <Card>
-      <Card.Body>
-        <Card.Title>{post.title}</Card.Title>
-        <Card.Text>{post.content}</Card.Text>
-        <footer className="blockquote-footer">
-          Posted by {post.author}
-        </footer>
-      </Card.Body>
-    </Card>
+    <div className="post">
+      <h3>{post.title}</h3>
+      <p>{post.content}</p>
+      <div className="post-footer">
+        <span>Posted {moment(post.date).fromNow()}</span>
+      </div>
+    </div>
   );
 };
 
 export default Post;
+

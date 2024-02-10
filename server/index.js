@@ -1,16 +1,18 @@
-require('dotenv').config(); 
-
-
-console.log('Database URL:', process.env.DB_URL);
+// E:\project\codingJO\server\index.js
+require('dotenv').config();
 const app = require('./app');
-const connectDatabase = require('./config/database');
+const mongoose = require('mongoose');
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
+const MONGODB_URI = process.env.MONGODB_URI;
 
-// 데이터베이스 연결
-connectDatabase();
-
-// 서버 시작
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+mongoose.connect(MONGODB_URI)
+  .then(() => {
+    console.log('Connected to the database');
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error('Database connection failed:', error);
+  });
