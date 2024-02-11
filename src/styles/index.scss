@@ -1,1 +1,20 @@
- 
+@import 'variables';
+@import 'mixins';
+@import 'button';
+@import 'card';
+@import 'Carousel';
+@import 'CategoryItem';
+@import 'ChatBot';
+@import 'CollaborationForm';
+// Import the rest of your styles here.
+
+body {
+  font-family: $primary-font;
+  background-color: $background-color;
+  color: $text-color;
+  margin: 0;
+  padding: 0;
+  @include flex-center;
+  flex-direction: column;
+}
+

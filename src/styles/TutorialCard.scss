@@ -1,1 +1,48 @@
- 
+@import 'variables';
+@import 'mixins';
+
+.tutorial-card {
+  background-color: $background-color;
+  border-radius: $border-radius;
+  overflow: hidden;
+  @include box-shadow($soft-shadow);
+  transition: transform $transition-fast;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-5px);
+    @include box-shadow($deep-shadow);
+  }
+
+  .tutorial-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .tutorial-info {
+    padding: 20px;
+
+    .tutorial-title {
+      font-size: 1.5rem;
+      color: $primary-color;
+      margin-bottom: 10px;
+    }
+
+    .tutorial-description {
+      font-size: 1rem;
+      color: $text-color;
+      opacity: 0.8;
+    }
+  }
+
+  .tutorial-footer {
+    padding: 15px;
+    background-color: $secondary-color;
+    color: $light-text-color;
+    text-align: center;
+    font-size: 1rem;
+    @include gradient-text($background-gradient);
+  }
+}
+

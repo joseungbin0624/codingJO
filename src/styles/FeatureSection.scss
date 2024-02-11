@@ -1,1 +1,43 @@
- 
+@import 'variables';
+@import 'mixins';
+
+.feature-section {
+  padding: 50px 0;
+  @include flex-center;
+  flex-wrap: wrap;
+  gap: 30px;
+
+  .feature-item {
+    width: 30%;
+    @include box-shadow($soft-shadow);
+    border-radius: $border-radius;
+    overflow: hidden;
+    transition: all $transition-normal;
+
+    &:hover {
+      transform: translateY(-10px);
+      @include box-shadow($deep-shadow);
+    }
+
+    .feature-icon {
+      font-size: 4rem;
+      color: $primary-color;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .feature-title {
+      text-align: center;
+      font-size: 1.5rem;
+      color: $text-color;
+    }
+
+    .feature-description {
+      padding: 0 20px 20px 20px;
+      text-align: center;
+      color: $text-color;
+      font-size: 1rem;
+    }
+  }
+}
+

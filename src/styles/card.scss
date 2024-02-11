@@ -1,1 +1,41 @@
- 
+@import 'variables';
+@import 'mixins';
+
+.card {
+  @include box-shadow;
+  background-color: $background-color;
+  border-radius: $border-radius;
+  overflow: hidden;
+  transition: all $transition-normal;
+
+  &:hover {
+    transform: translateY(-5px);
+    @include box-shadow($deep-shadow);
+  }
+
+  .card-header {
+    @include gradient-bg($primary-color, $secondary-color);
+    color: $light-text-color;
+    padding: 15px;
+    font-size: 1.5rem;
+  }
+
+  .card-body {
+    padding: 20px;
+    color: $text-color;
+
+    p {
+      @include glow-text($neon-green);
+    }
+  }
+
+  .card-footer {
+    padding: 10px;
+    background-color: $secondary-color;
+    color: $light-text-color;
+    text-align: center;
+
+    @include gradient-text($background-gradient);
+  }
+}
+

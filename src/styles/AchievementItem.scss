@@ -1,1 +1,35 @@
- 
+@import 'variables';
+@import 'mixins';
+
+.achievement-item {
+  @include flex-center(column);
+  @include glow-text($electric-blue);
+  padding: 20px;
+  margin: 10px;
+  background-color: $dark-background-color;
+  border-radius: $border-radius;
+  transition: transform $transition-fast;
+
+  &:hover {
+    transform: scale(1.05);
+    @include glow-text($hot-pink);
+  }
+
+  .achievement-icon {
+    font-size: 3rem;
+    margin-bottom: 10px;
+  }
+
+  .achievement-title {
+    font-size: 1.5rem;
+    color: $light-text-color;
+    @include gradient-text;
+  }
+
+  .achievement-description {
+    font-size: 1rem;
+    color: $text-color;
+    opacity: 0.8;
+  }
+}
+

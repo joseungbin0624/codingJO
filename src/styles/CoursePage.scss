@@ -1,1 +1,27 @@
- 
+@import 'variables';
+@import 'mixins';
+
+.course-page {
+  .course-header {
+    @include gradient-bg($primary-color, $secondary-color);
+    padding: 30px;
+    color: $light-text-color;
+    @include glow-text($neon-green);
+  }
+
+  .course-content {
+    padding: 20px;
+    @include flex-center;
+
+    .course-description {
+      @include glow-text($electric-blue);
+    }
+  }
+
+  .enroll-button {
+    @include glowing-button($accent-color, $hot-pink);
+    font-size: 1.2rem;
+    margin-top: 20px;
+  }
+}
+

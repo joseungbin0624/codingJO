@@ -2,16 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.scss';
 
-const Navbar = () => {
-  return (
-    <nav className="navbar">
-      <Link to="/">Home</Link>
+const Navbar = () => (
+  <nav className="navbar">
+    <Link to="/" className="logo">CodingJO</Link>
+    <div className="nav-links">
       <Link to="/courses">Courses</Link>
       <Link to="/about">About</Link>
-      {/* 추가 링크 */}
-    </nav>
-  );
-};
+      <Link to="/contact">Contact</Link>
+    </div>
+  </nav>
+);
 
 export default Navbar;
- 

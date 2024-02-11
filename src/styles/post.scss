@@ -1,1 +1,41 @@
- 
+@import 'variables';
+@import 'mixins';
+
+.post {
+  background-color: $background-color;
+  border-radius: $border-radius;
+  @include box-shadow;
+  margin-bottom: 20px;
+  overflow: hidden;
+
+  .post-header {
+    @include gradient-bg($primary-color, $secondary-color);
+    color: $light-text-color;
+    padding: 15px;
+    font-size: 1.5rem;
+  }
+
+  .post-body {
+    padding: 20px;
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    p {
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
+  }
+
+  .post-footer {
+    padding: 10px 20px;
+    background-color: $secondary-color;
+    color: $light-text-color;
+    @include flex-center(space-between);
+  }
+}
+

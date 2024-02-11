@@ -1,1 +1,23 @@
- 
+@import 'variables';
+@import 'mixins';
+
+.interactive-graph {
+  padding: 20px;
+  @include box-shadow($soft-shadow);
+  background-color: $background-color;
+  border-radius: $border-radius;
+  margin: 20px 0;
+
+  .graph-header {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: $primary-color;
+    @include glow-text($primary-color);
+  }
+
+  // Assuming you're using a library, add specific styles for the graph container here
+  .graph-container {
+    height: 400px;
+  }
+}
+

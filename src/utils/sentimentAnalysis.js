@@ -1,14 +1,16 @@
- // 간단한 예시로, 실제 감정 분석은 더 복잡한 알고리즘을 필요로 할 수 있습니다.
+// 감정 분석 유틸리티
+// 간단한 예시로, 텍스트 내용을 기반으로 긍정적인지 부정적인지 판단
+
 export const analyzeSentiment = (text) => {
-    // 긍정적인 단어와 부정적인 단어의 간단한 리스트
-    const positiveWords = ['happy', 'joy', 'great'];
-    const negativeWords = ['sad', 'bad', 'terrible'];
-  
-    // 텍스트에서 긍정적 및 부정적 단어의 수를 계산
-    const positiveCount = positiveWords.filter(word => text.includes(word)).length;
-    const negativeCount = negativeWords.filter(word => text.includes(word)).length;
-  
-    // 긍정적 단어가 더 많으면 'Positive', 그렇지 않으면 'Negative' 반환
-    return positiveCount > negativeCount ? 'Positive' : 'Negative';
-  };
-  
+  // 여기서는 단순한 예시로, 특정 키워드를 포함하는지 여부로 감정을 분석합니다.
+  const positiveWords = ['happy', 'joy', 'love'];
+  const negativeWords = ['sad', 'hate', 'pain'];
+
+  const textWords = text.toLowerCase().split(' ');
+  const positiveScore = textWords.filter(word => positiveWords.includes(word)).length;
+  const negativeScore = textWords.filter(word => negativeWords.includes(word)).length;
+
+  if (positiveScore > negativeScore) return 'Positive';
+  if (negativeScore > positiveScore) return 'Negative';
+  return 'Neutral';
+};

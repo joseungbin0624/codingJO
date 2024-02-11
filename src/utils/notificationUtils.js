@@ -1,21 +1,12 @@
-import api from './api';
+// 알림 관련 유틸리티
+import { getUserNotifications, markNotificationAsRead } from '../../server/api/v1/services/notificationService';
 
-export const fetchNotifications = async (userId) => {
-  try {
-    const response = await api.get(`/notifications/user/${userId}`);
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching notifications:', error);
-    throw error;
-  }
+// 사용자 알림 조회 함수
+export const fetchUserNotifications = async (userId) => {
+  return await getUserNotifications(userId);
 };
 
-export const markNotificationAsRead = async (notificationId) => {
-  try {
-    await api.put(`/notifications/${notificationId}/read`);
-  } catch (error) {
-    console.error('Error marking notification as read:', error);
-    throw error;
-  }
+// 알림 읽음 처리 함수
+export const readNotification = async (notificationId) => {
+  return await markNotificationAsRead(notificationId);
 };
-

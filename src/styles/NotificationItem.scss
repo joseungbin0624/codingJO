@@ -1,1 +1,35 @@
- 
+@import 'variables';
+@import 'mixins';
+
+.notification-item {
+  @include flex-center(space-between);
+  background-color: $background-color;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: $border-radius;
+  @include box-shadow($soft-shadow);
+  transition: background-color $transition-fast;
+
+  &:hover {
+    background-color: lighten($background-color, 5%);
+  }
+
+  .notification-content {
+    @include flex-center;
+
+    .icon {
+      margin-right: 10px;
+      color: $primary-color;
+    }
+
+    .text {
+      color: $text-color;
+    }
+  }
+
+  .notification-time {
+    font-size: 0.8rem;
+    color: darken($text-color, 20%);
+  }
+}
+

@@ -1,14 +1,19 @@
 import React from 'react';
-import './Button.scss'; // 버튼 스타일
-import { fadeIn } from './animations';
+import { useSpring, animated } from 'react-spring';
+import './Button.scss';
 
-const Button = ({ children, onClick }) => {
+const Button = ({ text, onClick }) => {
+  const animationProps = useSpring({
+    to: { opacity: 1, transform: 'translateY(0)' },
+    from: { opacity: 0, transform: 'translateY(-20px)' },
+    reset: true,
+  });
+
   return (
-    <button className="btn" onClick={onClick} style={{ animation: fadeIn }}>
-      {children}
-    </button>
+    <animated.button style={animationProps} className="button" onClick={onClick}>
+      {text}
+    </animated.button>
   );
 };
 
 export default Button;
-

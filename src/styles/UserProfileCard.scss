@@ -1,1 +1,49 @@
- 
+@import 'variables';
+@import 'mixins';
+
+.user-profile-card {
+  background-color: $background-color;
+  border-radius: $border-radius;
+  @include box-shadow;
+  overflow: hidden;
+  transition: all $transition-normal;
+
+  &:hover {
+    transform: scale(1.05);
+    @include box-shadow($deep-shadow);
+  }
+
+  .profile-card-header {
+    background-color: $primary-color;
+    color: $light-text-color;
+    padding: 20px;
+    text-align: center;
+
+    .avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin: auto;
+      overflow: hidden;
+      border: 4px solid $light-text-color;
+    }
+
+    .name {
+      font-size: 1.5rem;
+      margin-top: 10px;
+      @include glow-text($accent-color);
+    }
+  }
+
+  .profile-card-body {
+    padding: 20px;
+    text-align: center;
+
+    .bio {
+      font-size: 1rem;
+      color: $text-color;
+      opacity: 0.8;
+    }
+  }
+}
+

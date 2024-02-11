@@ -1,1 +1,23 @@
- 
+@import 'variables';
+@import 'mixins';
+
+.favorite-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+
+  .icon {
+    color: $text-color;
+    transition: color $transition-fast;
+
+    &:hover {
+      color: $accent-color;
+    }
+  }
+
+  &.active .icon {
+    @include glow-text($hot-pink);
+  }
+}
+

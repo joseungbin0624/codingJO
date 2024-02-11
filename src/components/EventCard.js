@@ -1,19 +1,17 @@
 import React from 'react';
-import moment from 'moment';
+import { useSpring, animated } from 'react-spring';
 import './EventCard.scss';
 
 const EventCard = ({ event }) => {
+  const fade = useSpring({ from: { opacity: 0 }, opacity: 1 });
+
   return (
-    <div className="event-card">
-      <img src={event.image} alt={event.title} />
-      <div className="event-info">
-        <h4>{event.title}</h4>
-        <p>{moment(event.date).format('MMMM Do YYYY, h:mm a')}</p>
-        <p>{event.location}</p>
-      </div>
-    </div>
+    <animated.div style={fade} className="event-card">
+      <h3>{event.title}</h3>
+      <p>{event.date}</p>
+      <p>{event.location}</p>
+    </animated.div>
   );
 };
 
 export default EventCard;
-

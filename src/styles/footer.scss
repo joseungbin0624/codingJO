@@ -1,1 +1,41 @@
- 
+@import 'variables';
+@import 'mixins';
+
+.footer {
+  background-color: $dark-background-color;
+  color: $light-text-color;
+  padding: 20px 0;
+  @include flex-center(space-between);
+  flex-wrap: wrap;
+  gap: 20px;
+
+  .footer-logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: $light-text-color;
+    @include glow-text($accent-color);
+  }
+
+  .footer-links {
+    @include flex-center;
+
+    a {
+      color: $light-text-color;
+      margin: 0 10px;
+      transition: color $transition-fast;
+
+      &:hover {
+        color: $primary-color;
+      }
+    }
+  }
+
+  .footer-copy {
+    text-align: center;
+    width: 100%;
+    margin-top: 20px;
+    font-size: 0.8rem;
+    opacity: 0.8;
+  }
+}
+

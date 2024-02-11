@@ -1,30 +1,20 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/users/';
+const API_URL = '/api/v1/users';
 
-// 사용자 정보 가져오기
-const getUserById = async (userId) => {
-  const response = await axios.get(API_URL + `${userId}`);
+const createUser = async (userData) => {
+  const response = await axios.post(`${API_URL}/register`, userData);
   return response.data;
 };
 
-// 사용자 정보 업데이트
-const updateUser = async (userId, userData) => {
-  const response = await axios.put(API_URL + `${userId}`, userData);
+const updateUser = async (userId, updateData) => {
+  const response = await axios.put(`${API_URL}/${userId}`, updateData);
   return response.data;
 };
 
-// 사용자 삭제
 const deleteUser = async (userId) => {
-  const response = await axios.delete(API_URL + `${userId}`);
+  const response = await axios.delete(`${API_URL}/${userId}`);
   return response.data;
 };
 
-const userService = {
-  getUserById,
-  updateUser,
-  deleteUser,
-};
-
-export default userService;
-
+export default { createUser, updateUser, deleteUser };

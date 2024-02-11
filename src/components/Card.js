@@ -1,20 +1,19 @@
 import React from 'react';
-import './Card.scss'; // 스타일 임포트
-import { useSpring, animated } from 'react-spring'; // 애니메이션 라이브러리
+import { useSpring, animated } from 'react-spring';
+import './Card.scss';
 
-const Card = ({ title, content, imageUrl }) => {
-  const animProps = useSpring({ opacity: 1, from: { opacity: 0 } });
+const Card = ({ title, description, imageUrl }) => {
+  const animationProps = useSpring({ to: { opacity: 1 }, from: { opacity: 0 } });
 
   return (
-    <animated.div className="card" style={animProps}>
-      <div className="card-image" style={{ backgroundImage: `url(${imageUrl})` }}></div>
-      <div className="card-content">
+    <animated.div style={animationProps} className="card">
+      <img src={imageUrl} alt="" className="card-image" />
+      <div className="card-body">
         <h3>{title}</h3>
-        <p>{content}</p>
+        <p>{description}</p>
       </div>
     </animated.div>
   );
 };
 
 export default Card;
-

@@ -1,1 +1,46 @@
- 
+@import 'variables';
+@import 'mixins';
+
+.login-page {
+  .login-container {
+    @include box-shadow($deep-shadow);
+    border-radius: $border-radius;
+    padding: 40px;
+    width: 300px;
+    background-color: $background-color;
+    @include flex-center(column);
+
+    .login-title {
+      margin-bottom: 20px;
+      font-size: 2rem;
+      color: $text-color;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      border-radius: $border-radius;
+      border: 1px solid $secondary-color;
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+        @include glow-text($primary-color);
+      }
+    }
+
+    .login-button {
+      @include glowing-button($primary-color, $neon-green);
+      width: 100%;
+    }
+
+    .forgot-password {
+      margin-top: 20px;
+      color: $secondary-color;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+  }
+}
+

@@ -1,1 +1,36 @@
- 
+@import 'variables';
+@import 'mixins';
+
+.carousel {
+  @include flex-center;
+  overflow: hidden;
+  position: relative;
+
+  .carousel-slide {
+    display: flex;
+    transition: transform $transition-normal ease-in-out;
+
+    .carousel-item {
+      min-width: 100%;
+      transition: transform $transition-fast ease-in-out;
+      @include animated-background;
+    }
+  }
+
+  .carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 2;
+
+    &.left {
+      left: 10px;
+    }
+
+    &.right {
+      right: 10px;
+    }
+  }
+}
+
