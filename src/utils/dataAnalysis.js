@@ -1,16 +1,7 @@
-// 데이터 분석 유틸리티
-const { getAllFeedbacks } = require('../../server/api/v1/services/feedbackService');
+// dataAnalysis.js는 데이터 시각화 또는 분석을 위한 유틸리티 함수를 제공합니다.
+// 예를 들어, 서버로부터 받은 데이터를 처리하여 차트 또는 그래프에 적합한 형태로 변환합니다.
 
-// 특정 코스에 대한 피드백을 분석하는 함수
-async function analyzeCourseFeedback(courseId) {
-  const feedbacks = await getAllFeedbacks();
-  const courseFeedbacks = feedbacks.filter(feedback => feedback.courseId === courseId);
-  // 피드백 평균 점수 계산
-  const averageRating = courseFeedbacks.reduce((acc, curr) => acc + curr.rating, 0) / courseFeedbacks.length;
-  return {
-    averageRating,
-    feedbacksCount: courseFeedbacks.length
-  };
-}
-
-module.exports = { analyzeCourseFeedback };
+export const transformDataForVisualization = (rawData) => {
+  // 원시 데이터를 분석 또는 시각화에 적합한 형태로 변환
+  return "변환된 데이터";
+};

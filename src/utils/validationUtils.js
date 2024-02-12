@@ -1,18 +1,18 @@
-// 입력 데이터 유효성 검사 유틸리티
+// validationUtils.js
 
-// 문자열 길이 검사
-export const isStringLengthValid = (string, min, max) => {
-  return string.length >= min && string.length <= max;
+// 입력 데이터 검증에 사용될 유틸리티 함수들을 포함합니다.
+
+export const isValidEmail = (email) => {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
 };
 
-// 숫자 범위 검사
-export const isNumberInRange = (number, min, max) => {
-  return number >= min && number <= max;
+export const isValidPassword = (password) => {
+  // 최소 8자, 하나 이상의 문자 및 하나의 숫자 포함
+  const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  return regex.test(password);
 };
 
-// 비밀번호 복잡성 검사
-export const isPasswordComplex = (password) => {
-  // 최소 8자, 최소 하나의 문자 및 하나의 숫자 포함
-  const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-  return re.test(password);
+export const isMatchingPasswords = (password, confirmPassword) => {
+  return password === confirmPassword;
 };

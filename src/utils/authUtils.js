@@ -1,18 +1,22 @@
-import api from './api';
-import { setAuthToken } from './apiUtils';
+// authUtils.js
 
-export const login = async (email, password) => {
-  const response = await api.post('/auth/login', { email, password });
-  const { token } = response.data;
-  setAuthToken(token);
-  return response.data;
+export const setAuthToken = (token) => {
+  if (token) {
+    localStorage.setItem('authToken', token);
+    // Axios 기본 헤더 설정
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  } else {
+    localStorage.removeItem('authToken');
+    // Axios 기본 헤더 제거
+    delete api.defaults.headers.common['Authorization'];
+  }
 };
 
-export const logout = () => {
-  setAuthToken(null);
+export const getAuthToken = () => {
+  return localStorage.getItem('authToken');
 };
 
-export const register = async userData => {
-  const response = await api.post('/auth/register', userData);
-  return response.data;
+export const isAuthenticated = () => {
+  const token = getAuthToken();
+  return !!token;
 };

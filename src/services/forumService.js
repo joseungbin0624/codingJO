@@ -1,25 +1,22 @@
-import axios from 'axios';
-
-const API_URL = '/api/v1/forums';
+import api from '../utils/api';
 
 const createForum = async (forumData) => {
-  const response = await axios.post(API_URL, forumData);
+  const response = await api.post(`/forums`, forumData);
   return response.data;
 };
 
 const getAllForums = async () => {
-  const response = await axios.get(API_URL);
+  const response = await api.get(`/forums`);
   return response.data;
 };
 
 const getForumById = async (forumId) => {
-  const response = await axios.get(`${API_URL}/${forumId}`);
+  const response = await api.get(`/forums/${forumId}`);
   return response.data;
 };
 
-const addPostToForum = async (forumId, postData) => {
-  const response = await axios.post(`${API_URL}/${forumId}/posts`, postData);
-  return response.data;
+export const forumService = {
+  createForum,
+  getAllForums,
+  getForumById
 };
-
-export default { createForum, getAllForums, getForumById, addPostToForum };

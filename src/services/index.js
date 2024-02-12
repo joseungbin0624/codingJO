@@ -1,25 +1,11 @@
-// E:\project\codingJO\src\services\services.js
-
-import * as authService from './authService';
-import * as courseService from './courseService';
-import * as eventService from './eventService';
-import * as favoritesService from './favoritesService';
-import * as feedbackService from './feedbackService';
-import * as forumService from './forumService';
-import * as notificationService from './notificationService';
-import * as reviewService from './reviewService';
-import * as userService from './userService';
-import * as visualizationService from './visualizationService';
-
-export {
-  authService,
-  courseService,
-  eventService,
-  favoritesService,
-  feedbackService,
-  forumService,
-  notificationService,
-  reviewService,
-  userService,
-  visualizationService,
-};
+export { authService } from './authService';
+export { chatService } from './chatService';
+export { courseService } from './courseService';
+export { eventService } from './eventService';
+export { favoritesService } from './favoritesService';
+export { feedbackService } from './feedbackService';
+export { forumService } from './forumService';
+export { notificationService } from './notificationService';
+export { reviewService } from './reviewService';
+export { userService } from './userService';
+export { visualizationService } from './visualizationService';

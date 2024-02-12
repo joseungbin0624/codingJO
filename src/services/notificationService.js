@@ -1,15 +1,10 @@
-import axios from 'axios';
-
-const API_URL = '/api/v1/notifications';
+import api from '../utils/api';
 
 const getUserNotifications = async (userId) => {
-  const response = await axios.get(`${API_URL}/user/${userId}`);
+  const response = await api.get(`/notifications/user/${userId}`);
   return response.data;
 };
 
-const markNotificationAsRead = async (notificationId) => {
-  const response = await axios.patch(`${API_URL}/${notificationId}/read`);
-  return response.data;
+export const notificationService = {
+  getUserNotifications,
 };
-
-export default { getUserNotifications, markNotificationAsRead };

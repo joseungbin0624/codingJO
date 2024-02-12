@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+// 수정된 환경 변수 이름을 사용
+const API_URL = process.env.REACT_APP_API_URL;
 
 const api = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: API_URL, // 수정된 변수 이름을 참조
   headers: {
     'Content-Type': 'application/json',
   },

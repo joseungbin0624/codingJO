@@ -1,11 +1,14 @@
+// apiUtils.js
+
 import api from './api';
 
-export const setAuthToken = token => {
-  if (token) {
-    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    localStorage.setItem('token', token);
-  } else {
-    delete api.defaults.headers.common['Authorization'];
-    localStorage.removeItem('token');
+export const fetchData = async (endpoint, options = {}) => {
+  try {
+    const response = await api(endpoint, options);
+    return response.data;
+  } catch (error) {
+    // API 호출 실패 시 처리
+    console.error('Fetching data failed:', error);
+    throw error;
   }
 };

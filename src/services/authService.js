@@ -1,18 +1,13 @@
-import axios from 'axios';
+import api from '../utils/api';
 
-const API_URL = '/api/v1';
-
-const registerUser = async (userData) => {
-  const response = await axios.post(`${API_URL}/register`, userData);
+const register = async (userData) => {
+  const response = await api.post('/auth/register', userData);
   return response.data;
 };
 
-const loginUser = async (credentials) => {
-  const response = await axios.post(`${API_URL}/login`, credentials);
+const login = async (userData) => {
+  const response = await api.post('/auth/login', userData);
   return response.data;
 };
 
-export default {
-  registerUser,
-  loginUser,
-};
+export const authService = { register, login };

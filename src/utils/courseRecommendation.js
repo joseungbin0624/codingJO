@@ -1,12 +1,8 @@
-// 코스 추천 로직
-const { getAllCourses } = require('../../server/api/v1/services/courseService');
+// courseRecommendation.js는 사용자의 활동 및 선호도를 분석하여 코스 추천을 제공합니다.
+// 이는 복잡한 알고리즘 또는 단순한 규칙 기반 로직을 포함할 수 있습니다.
 
-// 사용자의 선호도나 이력을 기반으로 코스를 추천하는 함수
-async function recommendCourses(userPreferences) {
-  const courses = await getAllCourses();
-  // 여기서는 단순화를 위해 모든 코스를 반환하지만,
-  // 실제로는 userPreferences를 분석하여 맞춤 코스를 추천해야 합니다.
-  return courses.filter(course => course.level === userPreferences.level);
-}
-
-module.exports = { recommendCourses };
+export const getRecommendedCourses = (userPreferences) => {
+  // 사용자 선호도 및 활동 기반 코스 추천 로직
+  // 예: userPreferences에 따라 추천 코스 목록을 필터링 및 정렬
+  return "추천 코스 목록";
+};

@@ -1,30 +1,22 @@
-import axios from 'axios';
+import api from '../utils/api';
 
-const API_URL = 'http://localhost:5000/api/favorites/';
-
-// 사용자의 즐겨찾기 목록 가져오기
-const getFavorites = async (userId) => {
-  const response = await axios.get(API_URL + `user/${userId}`);
-  return response.data;
-};
-
-// 즐겨찾기에 코스 추가
 const addFavorite = async (userId, courseId) => {
-  const response = await axios.post(API_URL, { userId, courseId });
+  const response = await api.post(`/favorites`, { userId, courseId });
   return response.data;
 };
 
-// 즐겨찾기에서 코스 제거
+const getUserFavorites = async (userId) => {
+  const response = await api.get(`/favorites/${userId}`);
+  return response.data;
+};
+
 const removeFavorite = async (userId, courseId) => {
-  const response = await axios.delete(API_URL + `user/${userId}/course/${courseId}`);
+  const response = await api.delete(`/favorites/${userId}/${courseId}`);
   return response.data;
 };
 
-const favoritesService = {
-  getFavorites,
+export const favoritesService = {
   addFavorite,
-  removeFavorite,
+  getUserFavorites,
+  removeFavorite
 };
-
-export default favoritesService;
-

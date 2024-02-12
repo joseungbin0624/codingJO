@@ -1,14 +1,19 @@
-// 데이터 포매팅 유틸리티
-const moment = require('moment');
+// formattingUtils.js
 
-// 날짜를 "YYYY-MM-DD" 형식으로 포매팅하는 함수
-function formatDate(date) {
-  return moment(date).format('YYYY-MM-DD');
-}
+// 숫자, 날짜 등을 포매팅하는 함수들을 포함합니다.
 
-// 숫자를 통화 형식("1,000")으로 포매팅하는 함수
-function formatNumber(number) {
-  return number.toLocaleString();
-}
+export const formatNumber = (number) => {
+  // 숫자를 포매팅하여 반환합니다. 예: 콤마 추가
+  return Intl.NumberFormat().format(number);
+};
 
-module.exports = { formatDate, formatNumber };
+export const formatDate = (date) => {
+  // 날짜를 포매팅하여 반환합니다. 예: YYYY-MM-DD 형식
+  const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+  return new Date(date).toLocaleDateString('ko-KR', options);
+};
+
+export const capitalizeFirstLetter = (string) => {
+  // 문자열의 첫 글자를 대문자로 변환합니다.
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};

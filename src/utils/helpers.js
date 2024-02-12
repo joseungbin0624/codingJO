@@ -1,22 +1,28 @@
-// 다양한 보조 기능을 제공하는 유틸리티 함수 모음
+// helpers.js
 
-// 이메일 유효성 검사 함수
-export const validateEmail = (email) => {
-  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
+// 여러 곳에서 사용될 수 있는 일반적인 도우미 함수들을 포함합니다.
+
+export const isEmptyObject = (obj) => {
+  return Object.keys(obj).length === 0 && obj.constructor === Object;
 };
 
-// 객체의 모든 필드가 비어있지 않은지 확인하는 함수
-export const validateFieldsNotEmpty = (obj) => {
-  return Object.values(obj).every(x => x !== null && x !== '');
+export const debounce = (func, wait) => {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
 };
 
-// URL 유효성 검사 함수
-export const isValidUrl = (string) => {
+export const safelyParseJSON = (json) => {
   try {
-    new URL(string);
-    return true;
-  } catch (_) {
-    return false;  
+    return JSON.parse(json);
+  } catch (e) {
+    console.error("Error parsing JSON string:", e);
+    return null;
   }
 };

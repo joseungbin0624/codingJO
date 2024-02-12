@@ -1,24 +1,22 @@
-import axios from 'axios';
+import api from '../utils/api';
 
-const API_URL = 'http://localhost:5000/api/visualizations/';
-
-// 데이터 시각화 정보 가져오기
-const getVisualizationData = async () => {
-  const response = await axios.get(API_URL);
+const createVisualization = async (visualizationData) => {
+  const response = await api.post('/visualizations', visualizationData);
   return response.data;
 };
 
-// 특정 시각화 정보 가져오기
-const getVisualizationById = async (visualizationId) => {
-  const response = await axios.get(API_URL + `${visualizationId}`);
+const getAllVisualizations = async () => {
+  const response = await api.get('/visualizations');
   return response.data;
 };
 
-const visualizationService = {
-  getVisualizationData,
+const getVisualizationById = async (id) => {
+  const response = await api.get(`/visualizations/${id}`);
+  return response.data;
+};
+
+export const visualizationService = {
+  createVisualization,
+  getAllVisualizations,
   getVisualizationById,
-  // 필요한 경우 추가 함수 구현
 };
-
-export default visualizationService;
-

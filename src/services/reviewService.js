@@ -1,15 +1,16 @@
-import axios from 'axios';
-
-const API_URL = '/api/v1/reviews';
+import api from '../utils/api';
 
 const createReview = async (reviewData) => {
-  const response = await axios.post(API_URL, reviewData);
+  const response = await api.post('/reviews', reviewData);
   return response.data;
 };
 
 const getCourseReviews = async (courseId) => {
-  const response = await axios.get(`${API_URL}/course/${courseId}`);
+  const response = await api.get(`/reviews/${courseId}`);
   return response.data;
 };
 
-export default { createReview, getCourseReviews };
+export const reviewService = {
+  createReview,
+  getCourseReviews,
+};

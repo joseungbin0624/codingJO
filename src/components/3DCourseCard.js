@@ -1,34 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { Canvas } from '@react-three/fiber';
-import CourseModel from './CourseModel'; // 3D 모델 컴포넌트
-import { courseService } from '../services/courseService';
-import './3DCourseCard.scss'; // 3D 코스 카드 스타일
-import { fadeIn } from './animations'; // 애니메이션 유틸
-import { truncateString } from '../utils/helpers'; // 헬퍼 함수
+import React, { useState } from 'react';
+import { Canvas } from 'react-three-fiber';
+import { useSpring, a } from 'react-spring/three';
+import './3DCourseCard.scss';
+import Button from './Button'; // Assuming Button.js is in the same directory
 
-const 3DCourseCard = ({ courseId }) => {
-  const [course, setCourse] = useState(null);
+const CourseCard3D = ({ course }) => {
+  const [isHovered, setHovered] = useState(false);
 
-  useEffect(() => {
-    courseService.getCourseById(courseId)
-      .then(setCourse);
-  }, [courseId]);
+  // Animation for the card
+  const cardAnimation = useSpring({
+    scale: isHovered ? [1.1, 1.1, 1.1] : [1, 1, 1],
+    config: { mass: 5, tension: 350, friction: 40 }
+  });
 
   return (
-    <div className="3d-course-card" style={{ animation: fadeIn }}>
+    <div className="course-card-3d-container" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
       <Canvas>
-        <ambientLight intensity={0.5} />
-        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-        <pointLight position={[-10, -10, -10]} />
-        {course && <CourseModel course={course} />}
+        <a.mesh scale={cardAnimation.scale} castShadow>
+          {/* Add 3D object/model here. For simplicity, using a simple box. */}
+          <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
+          <meshStandardMaterial attach="material" color={isHovered ? 'hotpink' : 'orange'} />
+        </a.mesh>
       </Canvas>
-      <div className="course-info">
-        <h3>{course ? truncateString(course.title, 20) : 'Loading...'}</h3>
-        <p>{course && truncateString(course.description, 100)}</p>
+      <div className="course-card-info">
+        <h3>{course.title}</h3>
+        <p>{course.description}</p>
+        <Button text="Learn More" onClick={() => console.log('Course Selected:', course.id)} />
       </div>
     </div>
   );
 };
 
-export default 3DCourseCard;
-
+export default CourseCard3D;
