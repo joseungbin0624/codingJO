@@ -1,9 +1,7 @@
 import axios from 'axios';
 
-// API 기본 URL 설정
-const API_BASE_URL = 'http://localhost:3000/api/v1';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-// axios 인스턴스 생성
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
@@ -11,13 +9,14 @@ const api = axios.create({
   },
 });
 
-// 토큰을 설정하는 함수
-export const setAuthToken = (token) => {
-  if (token) {
-    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  } else {
-    delete api.defaults.headers.common['Authorization'];
+// 전역 에러 핸들링
+api.interceptors.response.use(
+  response => response,
+  error => {
+    // 공통 에러 처리 로직
+    console.error('API Error:', error.response);
+    return Promise.reject(error);
   }
-};
+);
 
 export default api;
