@@ -1,23 +1,35 @@
-// E:\project\codingJO\server\migrations\20240212051757-create_review.js
-
 module.exports = {
   async up(db, client) {
-    // 리뷰 초기 데이터 삽입
-    await db.collection('reviews').insertMany([
-      {
-        userId: new ObjectId(),
-        targetId: new ObjectId(),
-        content: "정말 유익한 코스였습니다.",
-        rating: 5,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      // 나머지 4개 데이터 추가...
-    ]);
-  }
-  ,
-
+    await db.createCollection('reviews', {
+      validator: {
+        $jsonSchema: {
+          bsonType: "object",
+          required: ["userId", "targetId", "content", "rating"],
+          properties: {
+            userId: {
+              bsonType: "objectId",
+              description: "must be an objectId and is required"
+            },
+            targetId: {
+              bsonType: "objectId",
+              description: "must be an objectId and is required"
+            },
+            content: {
+              bsonType: "string",
+              description: "must be a string and is required"
+            },
+            rating: {
+              bsonType: "int",
+              minimum: 1,
+              maximum: 5,
+              description: "must be an integer in [1, 5] and is required"
+            }
+          }
+        }
+      }
+    });
+  },
   async down(db, client) {
-    await db.collection('reviews').deleteMany({});
+    await db.collection('reviews').drop();
   }
 };

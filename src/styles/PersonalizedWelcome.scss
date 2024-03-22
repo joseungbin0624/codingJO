@@ -1,0 +1,14 @@
+@import 'variables';
+.personalized-welcome {
+  text-align: center;
+  margin: $spacing-large 0;
+  padding: $spacing-large;
+  background-color: $background-color;
+  border-radius: $border-radius-large;
+  box-shadow: $box-shadow;
+
+  h1 {
+    color: $primary-color;
+    margin: 0;
+  }
+}

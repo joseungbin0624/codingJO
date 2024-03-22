@@ -1,14 +1,11 @@
 @import 'variables';
-@import 'mixins';
-@import 'index';
+@import 'reset'; // Reset styles are assumed to be imported before main styles
+@import 'variables'; // Define and import your variables like colors, fonts, etc.
 
-// 여기에는 프로젝트의 글로벌 스타일을 설정합니다.
-body, html {
-  margin: 0;
-  padding: 0;
-  background-color: $background-color;
+body {
+  font-family: 'Open Sans', sans-serif;
+  background-color: $body-bg-color;
   color: $text-color;
-  font-family: $primary-font;
 }
 
 a {
@@ -16,13 +13,24 @@ a {
   text-decoration: none;
 
   &:hover {
-    color: $accent-color;
+    text-decoration: underline;
   }
 }
 
+// Global classes for common use
 .container {
   max-width: 1200px;
-  margin: auto;
-  padding: 20px;
+  margin: 0 auto;
+  padding: 0 15px;
 }
 
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+// Additional global styles...

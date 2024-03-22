@@ -1,0 +1,42 @@
+@import 'variables';
+.realtime-discussion {
+  @include box-shadow-default;
+  background-color: $light-color;
+  border-radius: $border-radius-large;
+  padding: $spacing-large;
+  margin-bottom: $spacing-large;
+
+  .messages {
+    max-height: $interactive-graph-height;
+    overflow-y: auto;
+    margin-bottom: $spacing-large;
+
+    p {
+      background-color: $background-hover-color;
+      padding: $spacing-unit;
+      border-radius: $border-radius;
+      margin: 5px 0;
+    }
+  }
+
+  input[type="text"] {
+    width: calc(100% - 100px);
+    padding: $spacing-unit;
+    margin-right: $spacing-unit;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+  }
+
+  button {
+    width: 90px;
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: $border-radius;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $button-hover-bg-color;
+    }
+  }
+}

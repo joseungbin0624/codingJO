@@ -1,7 +1,3 @@
-// notificationUtils.js
-
-// 알림 관련 유틸리티 함수들을 포함합니다.
-
 export const formatNotificationMessage = (notification) => {
   // 알림 타입에 따라 적절한 메시지 포맷을 반환합니다.
   switch (notification.type) {

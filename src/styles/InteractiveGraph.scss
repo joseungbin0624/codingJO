@@ -1,23 +1,22 @@
 @import 'variables';
-@import 'mixins';
-
 .interactive-graph {
-  padding: 20px;
-  @include box-shadow($soft-shadow);
-  background-color: $background-color;
-  border-radius: $border-radius;
-  margin: 20px 0;
+  width: 100%;
+  height: $interactive-graph-height;
+  position: relative;
 
-  .graph-header {
-    font-size: 1.5rem;
-    margin-bottom: 20px;
-    color: $primary-color;
-    @include glow-text($primary-color);
+  svg {
+    width: 100%;
+    height: 100%;
   }
 
-  // Assuming you're using a library, add specific styles for the graph container here
-  .graph-container {
-    height: 400px;
+  .tooltip {
+    @include box-shadow-default;
+    position: absolute;
+    background-color: $tooltip-bg-color;
+    border: 1px solid $tooltip-border-color;
+    border-radius: $border-radius;
+    padding: 5px 10px;
+    font-size: $font-size-small;
+    display: none;
   }
 }
-

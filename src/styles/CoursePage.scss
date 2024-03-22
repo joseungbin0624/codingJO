@@ -1,27 +1,18 @@
 @import 'variables';
-@import 'mixins';
-
 .course-page {
-  .course-header {
-    @include gradient-bg($primary-color, $secondary-color);
-    padding: 30px;
-    color: $light-text-color;
-    @include glow-text($neon-green);
+  padding: $spacing-large;
+  
+  h1 {
+    text-align: center;
+    margin-bottom: $spacing-large;
   }
-
-  .course-content {
-    padding: 20px;
-    @include flex-center;
-
-    .course-description {
-      @include glow-text($electric-blue);
-    }
+  
+  .course-info {
+    max-width: 800px;
+    margin: 0 auto;
   }
-
-  .enroll-button {
-    @include glowing-button($accent-color, $hot-pink);
-    font-size: 1.2rem;
-    margin-top: 20px;
+  
+  .course-review {
+    margin-top: $spacing-large;
   }
 }
-

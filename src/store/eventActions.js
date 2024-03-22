@@ -1,32 +1,15 @@
-import { CREATE_EVENT_SUCCESS, FETCH_EVENTS_SUCCESS } from './actionTypes';
-import axios from 'axios';
+import * as actionTypes from './actionTypes';
+import { getEvents as getEventsService } from '../services/eventService';
 
-const API_URL = '/api/events';
-
-export const createEventSuccess = (event) => ({
-  type: CREATE_EVENT_SUCCESS,
-  payload: event,
-});
-
-export const fetchEventsSuccess = (events) => ({
-  type: FETCH_EVENTS_SUCCESS,
-  payload: events,
-});
-
-export const fetchEvents = () => async (dispatch) => {
+export const getEvents = () => async dispatch => {
   try {
-    const response = await axios.get(API_URL);
-    dispatch(fetchEventsSuccess(response.data));
+    const events = await getEventsService();
+    dispatch({
+      type: actionTypes.GET_EVENTS,
+      payload: events
+    });
   } catch (error) {
-    // 에러 처리
-  }
-};
-
-export const createEvent = (eventData) => async (dispatch) => {
-  try {
-    const response = await axios.post(API_URL, eventData);
-    dispatch(createEventSuccess(response.data));
-  } catch (error) {
-    // 에러 처리
+    console.error('Error fetching events:', error);
+    // Handle error
   }
 };

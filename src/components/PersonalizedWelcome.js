@@ -1,20 +1,29 @@
-import React from 'react';
-import { userService } from '../services/userService';
-import './PersonalizedWelcome.scss';
+import React, { useEffect, useState } from 'react';
+import { fetchCurrentUser } from '../services/userService';
+import '../styles/PersonalizedWelcome.scss';
 
-const PersonalizedWelcome = ({ userId }) => {
-  const [userName, setUserName] = React.useState('');
+function PersonalizedWelcome() {
+  const [user, setUser] = useState(null);
 
-  React.useEffect(() => {
-    userService.getUserName(userId).then(setUserName);
-  }, [userId]);
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const userData = await fetchCurrentUser();
+        setUser(userData);
+      } catch (error) {
+        console.error('Failed to fetch user data', error);
+      }
+    };
 
+    getUserData();
+  }, []);
+
+  // 사용자 이름이 없는 경우의 처리 추가
   return (
     <div className="personalized-welcome">
-      <h1>Welcome back, {userName}!</h1>
+      {user ? <h1>Welcome back, {user.name}!</h1> : <h1>Welcome to CodingJO!</h1>}
     </div>
   );
-};
+}
 
 export default PersonalizedWelcome;
-

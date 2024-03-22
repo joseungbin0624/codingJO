@@ -1,0 +1,16 @@
+@import 'variables';
+.category-page {
+  padding: $spacing-large;
+  
+  h1 {
+    text-align: center;
+    margin-bottom: $spacing-large;
+  }
+  
+  .category-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: $spacing-large;
+  }
+}

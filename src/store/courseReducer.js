@@ -1,25 +1,22 @@
-import { CREATE_COURSE_SUCCESS, FETCH_COURSES_SUCCESS } from './actionTypes';
+import * as actionTypes from './actionTypes';
 
 const initialState = {
   courses: [],
+  loading: false,
+  error: null
 };
 
-const courseReducer = (state = initialState, action) => {
+export default function courseReducer(state = initialState, action) {
   switch (action.type) {
-    case FETCH_COURSES_SUCCESS:
+    case actionTypes.GET_COURSES:
       return {
         ...state,
         courses: action.payload,
+        loading: false,
+        error: null
       };
-    case CREATE_COURSE_SUCCESS:
-      return {
-        ...state,
-        courses: [...state.courses, action.payload],
-      };
+    // Add more cases as needed
     default:
       return state;
   }
-};
-
-export default courseReducer;
-
+}

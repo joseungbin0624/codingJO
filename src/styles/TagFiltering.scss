@@ -1,0 +1,21 @@
+@import 'variables';
+.tag-filtering {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-unit;
+  margin-bottom: $spacing-large;
+
+  button {
+    padding: 5px 10px;
+    background-color: $background-color;
+    color: $text-color;
+    border: none;
+    border-radius: $border-radius;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: $background-hover-color;
+    }
+  }
+}

@@ -1,29 +1,32 @@
-import React from 'react';
-import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
-import './CollaborationForm.scss';
+import React, { useState } from 'react';
+import { isValidEmail } from '../utils/validationUtils';
+import '../styles/CollaborationForm.scss'; // SCSS 스타일 파일
 
-const CollaborationSchema = Yup.object().shape({
-  email: Yup.string().email('Invalid email').required('Required'),
-  message: Yup.string().required('Required'),
-});
+function CollaborationForm() {
+  const [email, setEmail] = useState('');
 
-const CollaborationForm = ({ onSubmit }) => (
-  <Formik
-    initialValues={{ email: '', message: '' }}
-    validationSchema={CollaborationSchema}
-    onSubmit={onSubmit}
-  >
-    {({ errors, touched }) => (
-      <Form className="collaboration-form">
-        <Field name="email" type="email" />
-        {errors.email && touched.email ? <div>{errors.email}</div> : null}
-        <Field name="message" as="textarea" />
-        {errors.message && touched.message ? <div>{errors.message}</div> : null}
-        <button type="submit">Submit</button>
-      </Form>
-    )}
-  </Formik>
-);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (!isValidEmail(email)) {
+      alert("Please enter a valid email.");
+      return;
+    }
+    // 폼 제출 로직
+    setEmail(''); // 이메일 초기화
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="collaboration-form">
+      <input
+        type="email"
+        name="email"
+        placeholder="Your email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
 
 export default CollaborationForm;

@@ -1,34 +1,30 @@
 import api from '../utils/api';
+import { formatEventDate, calculateEventStatus } from '../utils/eventUtils';
 
-const createEvent = async (eventData) => {
-  const response = await api.post('/events', eventData);
-  return response.data;
+export const getAllEvents = async () => {
+  try {
+    const response = await api.get('/events');
+    const events = response.data.map(event => ({
+      ...event,
+      formattedDate: formatEventDate(new Date(event.date)),
+      status: calculateEventStatus(new Date(event.startDate), new Date(event.endDate))
+    }));
+    return events;
+  } catch (error) {
+    throw new Error(`Failed to fetch events: ${error.response?.data?.message || error.message}`);
+  }
 };
 
-const getAllEvents = async () => {
-  const response = await api.get('/events');
-  return response.data;
-};
-
-const getEventById = async (id) => {
-  const response = await api.get(`/events/${id}`);
-  return response.data;
-};
-
-const updateEvent = async (id, updateData) => {
-  const response = await api.put(`/events/${id}`, updateData);
-  return response.data;
-};
-
-const deleteEvent = async (id) => {
-  const response = await api.delete(`/events/${id}`);
-  return response.data;
-};
-
-export const eventService = {
-  createEvent,
-  getAllEvents,
-  getEventById,
-  updateEvent,
-  deleteEvent
+export const getEventById = async (eventId) => {
+  try {
+    const response = await api.get(`/events/${eventId}`);
+    const event = {
+      ...response.data,
+      formattedDate: formatEventDate(new Date(response.data.date)),
+      status: calculateEventStatus(new Date(response.data.startDate), new Date(response.data.endDate))
+    };
+    return event;
+  } catch (error) {
+    throw new Error(`Failed to fetch event details: ${error.response?.data?.message || error.message}`);
+  }
 };

@@ -1,35 +1,20 @@
 @import 'variables';
-@import 'mixins';
-
 .notification-item {
-  @include flex-center(space-between);
   background-color: $background-color;
-  padding: 10px;
-  margin-bottom: 10px;
+  border-left: 4px solid $notification-border-color;
+  margin: $spacing-unit 0;
+  padding: $spacing-unit;
   border-radius: $border-radius;
-  @include box-shadow($soft-shadow);
-  transition: background-color $transition-fast;
 
-  &:hover {
-    background-color: lighten($background-color, 5%);
+  p {
+    margin: 0;
+    color: $text-color;
   }
 
-  .notification-content {
-    @include flex-center;
-
-    .icon {
-      margin-right: 10px;
-      color: $primary-color;
-    }
-
-    .text {
-      color: $text-color;
-    }
-  }
-
-  .notification-time {
-    font-size: 0.8rem;
-    color: darken($text-color, 20%);
+  span {
+    display: block;
+    margin-top: $spacing-unit;
+    font-size: $font-size-small;
+    color: $subtitle-color;
   }
 }
-

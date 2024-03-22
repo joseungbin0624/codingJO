@@ -1,0 +1,15 @@
+@import 'variables';
+
+.analytics-page {
+  padding: $spacing-large;
+  
+  h1 {
+    text-align: center;
+    margin-bottom: $spacing-large;
+  }
+  
+  .interactive-graph {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}

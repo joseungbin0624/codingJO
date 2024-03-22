@@ -1,0 +1,32 @@
+@import 'variables';
+.course-review {
+  @include box-shadow-default;
+  background-color: $light-color;
+  padding: $spacing-unit;
+  border-radius: $border-radius-large;
+  margin-bottom: $spacing-unit;
+
+  textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    margin-bottom: 10px;
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: $border-radius;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $button-hover-bg-color;
+    }
+  }
+}

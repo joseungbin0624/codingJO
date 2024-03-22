@@ -1,7 +1,3 @@
-// formattingUtils.js
-
-// 숫자, 날짜 등을 포매팅하는 함수들을 포함합니다.
-
 export const formatNumber = (number) => {
   // 숫자를 포매팅하여 반환합니다. 예: 콤마 추가
   return Intl.NumberFormat().format(number);

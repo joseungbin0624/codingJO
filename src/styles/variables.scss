@@ -1,48 +1,65 @@
- // 확장된 색상 팔레트
-$primary-color: #6200EE;
-$secondary-color: #03DAC6;
-$accent-color: #E91E63;
-$background-color: #F5F5F5;
-$text-color: #212121;
-$light-text-color: #FFFFFF;
-$dark-background-color: #333333; // 새로 추가된 변수
-$hover-color: #FFC107; // 새로 추가된 변수
 
-// 폰트
-$primary-font: 'Roboto', sans-serif;
-$secondary-font: 'Montserrat', sans-serif;
+// Colors
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$success-color: #28a745;
+$info-color: #17a2b8;
+$warning-color: #ffc107;
+$danger-color: #dc3545;
+$light-color: #f8f9fa;
+$dark-color: #343a40;
+$achieved-bg-color: #d4edda; // Achievement Background Color
+$button-hover-bg-color: #0056b3; // Button Hover Background Color
+$button-active-bg-color: #00408b; // Button Active Background Color
+$button-disabled-bg-color: #ccc; // Button Disabled Background Color
+$button-focus-shadow-color: rgba(0,123,255,.5); // Button Focus Shadow Color
+$text-color: #333; // Main Text Color
+$description-text-color: #666; // Description Text Color
+$subtitle-color: #999; // Subtitle Text Color
+$notification-border-color: #007bff; // Notification Item Border Color
+$favorite-active-bg-color: #24a19c; // Favorite Active Background Color
+$background-hover-color: #e8e8e8; // Background Hover Color
+$background-color: #f0f0f0; // Default Background Color
 
-// 그림자 & 테두리
-$box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-$border-radius: 8px;
-$soft-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // 새로 추가된 변수
-$deep-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); // 새로 추가된 변수
+// Typography
+$font-stack: 'Open Sans', sans-serif; // Main Font Stack
+$font-size-large: 1.5rem; // Large Font Size
+$font-size-medium: 1.2rem; // Medium Font Size
+$font-size-small: 0.9rem; // Small Font Size
+$font-size-tiny: 0.8rem; // Tiny Font Size
 
-// 반응형 디자인 브레이크포인트
-$breakpoint-sm: 576px;
-$breakpoint-md: 768px;
-$breakpoint-lg: 992px;
-$breakpoint-xl: 1200px;
+// Borders
+$border-radius: 4px; // Default Border Radius
+$border-radius-large: 8px; // Large Border Radius
+$border-radius-circle: 50%; // Circle Border Radius
+$border-color: #ccc; // Default Border Color
+$border-color-hover: #ddd; // Border Color on Hover
 
-// 애니메이션 지속 시간
-$fast-animation: 0.3s;
-$normal-animation: 0.5s;
-$slow-animation: 1s;
+// Shadows
+$box-shadow: 0 2px 4px rgba(0,0,0,0.1); // Default Box Shadow
+$box-shadow-hover: 0 8px 12px rgba(0,0,0,0.2); // Box Shadow on Hover
 
-// 새로운 색상 추가
-$neon-green: #39FF14;
-$electric-blue: #7DF9FF;
-$hot-pink: #FF69B4;
+// Spacing
+$spacing-unit: 10px; // Basic Spacing Unit
+$spacing-large: 20px; // Large Spacing Unit
 
-// 빛나는 효과를 위한 변수
-$glow-effect: 0 0 8px;
+// Background
+$background-feature: url('/path/to/feature-background.jpg'); // Feature Section Background Image
+$modal-overlay-color: rgba(0,0,0,0.5); // Modal Overlay Color
 
-// 배경 및 텍스트 그라디언트
-$background-gradient: linear-gradient(45deg, $electric-blue, $hot-pink);
-$text-gradient: linear-gradient(45deg, $neon-green, $electric-blue);
+// Interactive Elements
+$tooltip-bg-color: #fff; // Tooltip Background Color
+$tooltip-border-color: #ccc; // Tooltip Border Color
+$interactive-graph-height: 400px; // Interactive Graph Height
 
-// 전환 효과
-$transition-fast: 0.2s ease-in-out;
-$transition-normal: 0.5s ease-in-out;
-$transition-slow: 1s ease-in-out;
+// Sizes
+$avatar-size: 80px; // Avatar Size
 
+// Miscellaneous
+$body-bg-color: #f8f9fa; // Body Background Color
+$modal-max-width: 500px; // Modal Maximum Width
+
+// Mixins
+@mixin box-shadow-default {
+  box-shadow: $box-shadow;
+}

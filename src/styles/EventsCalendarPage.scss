@@ -1,0 +1,9 @@
+@import 'variables';
+.events-calendar-page {
+  padding: $spacing-large;
+
+  .rbc-calendar {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+}

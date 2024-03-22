@@ -1,24 +1,16 @@
-import { SET_USER, LOGOUT } from './actions';
+import { combineReducers } from 'redux';
+import courseReducer from './courseReducer';
+import eventReducer from './eventReducer';
+import feedbackReducer from './feedbackReducer';
+import forumReducer from './forumReducer';
+import userReducer from './userReducer';
 
-const initialState = {
-  user: null
-};
-
-const rootReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case SET_USER:
-      return {
-        ...state,
-        user: action.payload
-      };
-    case LOGOUT:
-      return {
-        ...state,
-        user: null
-      };
-    default:
-      return state;
-  }
-};
+const rootReducer = combineReducers({
+  course: courseReducer,
+  event: eventReducer,
+  feedback: feedbackReducer,
+  forum: forumReducer,
+  user: userReducer,
+});
 
 export default rootReducer;

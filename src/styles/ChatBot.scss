@@ -1,54 +1,29 @@
 @import 'variables';
-@import 'mixins';
-
 .chat-bot {
   position: fixed;
-  right: 20px;
   bottom: 20px;
-  @include box-shadow;
-  border-radius: $border-radius;
-  overflow: hidden;
-  z-index: 1000;
+  right: 20px;
+  width: 300px;
+  background-color: $light-color;
+  border: 1px solid $border-color;
+  border-radius: $border-radius-large;
+  padding: 1rem;
+  box-shadow: $box-shadow;
 
-  .chat-header {
-    @include flex-center(space-between);
+  input[type="text"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 1rem;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+  }
+
+  button {
+    @include button-style;
     background-color: $primary-color;
-    color: $light-text-color;
-    padding: 10px;
 
-    .title {
-      @include glow-text($hot-pink);
-    }
-
-    .close {
-      cursor: pointer;
-      @include glow-text($accent-color);
-    }
-  }
-
-  .chat-messages {
-    height: 300px;
-    overflow-y: auto;
-    background-color: $dark-background-color;
-    padding: 10px;
-  }
-
-  .chat-input {
-    display: flex;
-    padding: 10px;
-    background-color: $secondary-color;
-
-    input {
-      flex-grow: 1;
-      border-radius: $border-radius;
-      padding: 5px 10px;
-      border: none;
-    }
-
-    button {
-      @include glowing-button($accent-color, $neon-green);
-      margin-left: 10px;
+    &:hover {
+      background-color: $button-hover-bg-color;
     }
   }
 }
-

@@ -1,41 +1,26 @@
 @import 'variables';
-@import 'mixins';
-
 .footer {
-  background-color: $dark-background-color;
-  color: $light-text-color;
-  padding: 20px 0;
-  @include flex-center(space-between);
-  flex-wrap: wrap;
-  gap: 20px;
+  background-color: $dark-color;
+  color: $light-color;
+  text-align: center;
+  padding: $spacing-unit;
 
-  .footer-logo {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: $light-text-color;
-    @include glow-text($accent-color);
-  }
-
-  .footer-links {
-    @include flex-center;
+  .social-links {
+    margin: $spacing-unit 0;
 
     a {
-      color: $light-text-color;
-      margin: 0 10px;
-      transition: color $transition-fast;
+      margin: 0 $spacing-unit;
+      color: $light-color;
+      transition: color 0.3s ease;
 
       &:hover {
-        color: $primary-color;
+        color: $warning-color;
       }
     }
   }
 
-  .footer-copy {
-    text-align: center;
-    width: 100%;
-    margin-top: 20px;
-    font-size: 0.8rem;
-    opacity: 0.8;
+  p {
+    margin: $spacing-unit 0;
+    font-size: $font-size-small;
   }
 }
-

@@ -1,31 +1,26 @@
 import React, { useState } from 'react';
-import { debounce } from 'lodash';
-import './SearchBar.scss';
+import '../styles/SearchBar.scss';
 
-const SearchBar = ({ onSearch }) => {
-  const [input, setInput] = useState('');
+function SearchBar({ onSearch }) {
+  const [query, setQuery] = useState('');
 
-  const handleSearch = debounce((query) => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     onSearch(query);
-  }, 300);
-
-  const handleChange = (e) => {
-    const { value } = e.target;
-    setInput(value);
-    handleSearch(value);
   };
 
   return (
-    <div className="search-bar">
+    <form className="search-bar" onSubmit={handleSubmit}>
       <input
         type="text"
-        value={input}
-        onChange={handleChange}
+        className="search-input"
         placeholder="Search..."
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
       />
-    </div>
+      <button type="submit" className="search-button">Search</button>
+    </form>
   );
-};
+}
 
 export default SearchBar;
-

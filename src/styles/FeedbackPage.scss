@@ -1,0 +1,35 @@
+@import 'variables';
+.feedback-form {
+    @include box-shadow-default;
+    background-color: $light-color;
+    padding: $spacing-large;
+    border-radius: $border-radius-large;
+    max-width: $modal-max-width;
+    margin: $spacing-large auto;
+  
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid $border-color;
+      border-radius: $border-radius;
+      resize: none;
+      height: 150px;
+      margin-bottom: 10px;
+    }
+  
+    button[type="submit"] {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: $success-color;
+      color: white;
+      border: none;
+      border-radius: $border-radius;
+      cursor: pointer;
+  
+      &:hover {
+        background-color: darken($success-color, 10%);
+      }
+    }
+  }
+  

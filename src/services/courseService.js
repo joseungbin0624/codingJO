@@ -1,35 +1,28 @@
 import api from '../utils/api';
 
-const createCourse = async (courseData) => {
-  const response = await api.post('/courses', courseData);
-  return response.data;
+export const getAllCourses = async () => {
+  try {
+    const response = await api.get('/courses');
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to fetch courses: ${error.response?.data?.message || error.message}`);
+  }
 };
 
-const getAllCourses = async () => {
-  const response = await api.get('/courses');
-  return response.data;
+export const getCourseById = async (courseId) => {
+  try {
+    const response = await api.get(`/courses/${courseId}`);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to fetch course details: ${error.response?.data?.message || error.message}`);
+  }
 };
 
-const getCourseById = async (id) => {
-  const response = await api.get(`/courses/${id}`);
-  return response.data;
+export const createCourse = async (courseData) => {
+  try {
+    const response = await api.post('/courses', courseData);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Failed to create course: ${error.response?.data?.message || error.message}`);
+  }
 };
-
-const updateCourse = async (id, updateData) => {
-  const response = await api.put(`/courses/${id}`, updateData);
-  return response.data;
-};
-
-const deleteCourse = async (id) => {
-  const response = await api.delete(`/courses/${id}`);
-  return response.data;
-};
-
-export const courseService = {
-  createCourse,
-  getAllCourses,
-  getCourseById,
-  updateCourse,
-  deleteCourse
-};
-

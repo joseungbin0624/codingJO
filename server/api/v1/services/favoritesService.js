@@ -6,7 +6,9 @@ async function addFavorite(userId, courseId) {
     if (!favorite) {
         favorite = new Favorite({ user: userId, courses: [courseId] });
     } else {
-        favorite.courses.push(courseId);
+        if (!favorite.courses.includes(courseId)) {
+            favorite.courses.push(courseId);
+        }
     }
     await favorite.save();
     return favorite;
@@ -18,7 +20,7 @@ async function removeFavorite(userId, courseId) {
     if (!favorite) {
         throw new Error('Favorites not found');
     }
-    favorite.courses = favorite.courses.filter(course => course.toString() !== courseId);
+    favorite.courses = favorite.courses.filter(course => !course.equals(courseId));
     await favorite.save();
     return favorite;
 }
@@ -34,4 +36,3 @@ module.exports = {
     removeFavorite,
     getUserFavorites,
 };
-

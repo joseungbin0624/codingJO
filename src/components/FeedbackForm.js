@@ -1,32 +1,37 @@
-import React from 'react';
-import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
-import './FeedbackForm.scss';
+import React, { useState } from 'react';
+import { submitFeedback } from '../services/feedbackService';
+import '../styles/FeedbackForm.scss';
 
-const FeedbackSchema = Yup.object().shape({
-  feedback: Yup.string().required('Feedback is required'),
-});
+function FeedbackForm() {
+  const [feedback, setFeedback] = useState('');
+  const [submitStatus, setSubmitStatus] = useState('');
 
-const FeedbackForm = ({ onSubmit }) => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      await submitFeedback({ text: feedback });
+      setFeedback('');
+      setSubmitStatus('Feedback submitted successfully!');
+    } catch (error) {
+      console.error('Failed to submit feedback:', error);
+      setSubmitStatus('Failed to submit feedback.');
+    }
+  };
+
   return (
-    <Formik
-      initialValues={{ feedback: '' }}
-      validationSchema={FeedbackSchema}
-      onSubmit={(values, actions) => {
-        onSubmit(values.feedback);
-        actions.resetForm();
-      }}
-    >
-      {({ errors, touched }) => (
-        <Form className="feedback-form">
-          <Field as="textarea" name="feedback" placeholder="Enter your feedback"/>
-          {errors.feedback && touched.feedback ? <div className="error">{errors.feedback}</div> : null}
-          <button type="submit">Submit</button>
-        </Form>
-      )}
-    </Formik>
+    <div className="feedback-form">
+      <form onSubmit={handleSubmit}>
+        <textarea
+          name="feedback"
+          placeholder="Your feedback..."
+          value={feedback}
+          onChange={(e) => setFeedback(e.target.value)}
+        ></textarea>
+        <button type="submit">Submit Feedback</button>
+      </form>
+      {submitStatus && <p>{submitStatus}</p>}
+    </div>
   );
-};
+}
 
 export default FeedbackForm;
-

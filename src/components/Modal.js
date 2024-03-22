@@ -1,21 +1,18 @@
+// src/components/Modal.js
 import React from 'react';
-import ReactModal from 'react-modal';
-import './Modal.scss';
+import '../styles/Modal.scss';
 
-const Modal = ({ isOpen, onRequestClose, children }) => {
-  ReactModal.setAppElement('#root'); // 접근성을 위해 설정
+function Modal({ isOpen, onClose, children }) {
+  if (!isOpen) return null;
 
   return (
-    <ReactModal 
-      isOpen={isOpen}
-      onRequestClose={onRequestClose}
-      className="Modal"
-      overlayClassName="Overlay"
-    >
-      {children}
-    </ReactModal>
+    <div className="modal-overlay" onClick={onClose} data-testid="modal-overlay"> {/* 수정: data-testid 추가 */}
+      <div className="modal-content" onClick={e => e.stopPropagation()}>
+        <button className="close-button" onClick={onClose}>✕</button>
+        {children}
+      </div>
+    </div>
   );
-};
+}
 
 export default Modal;
-

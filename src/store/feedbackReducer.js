@@ -1,24 +1,21 @@
-import { SUBMIT_FEEDBACK_SUCCESS, FETCH_FEEDBACKS_SUCCESS } from './actionTypes';
+import * as actionTypes from './actionTypes';
 
 const initialState = {
   feedbacks: [],
+  loading: false,
+  error: null,
 };
 
-const feedbackReducer = (state = initialState, action) => {
+export default function feedbackReducer(state = initialState, action) {
   switch (action.type) {
-    case FETCH_FEEDBACKS_SUCCESS:
-      return {
-        ...state,
-        feedbacks: action.payload,
-      };
-    case SUBMIT_FEEDBACK_SUCCESS:
+    case actionTypes.SUBMIT_FEEDBACK:
       return {
         ...state,
         feedbacks: [...state.feedbacks, action.payload],
+        loading: false,
+        error: null
       };
     default:
       return state;
   }
-};
-
-export default feedbackReducer;
+}

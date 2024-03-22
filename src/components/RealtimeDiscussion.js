@@ -1,48 +1,51 @@
-import React, { useEffect, useState } from 'react';
-import io from 'socket.io-client';
-import './RealtimeDiscussion.scss';
+import React, { useState, useEffect } from 'react';
+import { getChatById, sendMessage } from '../services/chatService';
+import '../styles/RealtimeDiscussion.scss';
 
-const socket = io('http://localhost:5000'); // 서버 주소
-
-const RealtimeDiscussion = () => {
+function RealtimeDiscussion({ chatId }) {
+  const [chat, setChat] = useState(null);
   const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    socket.on('newMessage', (newMessage) => {
-      setMessages([...messages, newMessage]);
-    });
+    const fetchChat = async () => {
+      try {
+        const chatData = await getChatById(chatId);
+        setChat(chatData);
+      } catch (error) {
+        console.error('Failed to fetch chat', error);
+      }
+    };
+    fetchChat();
+  }, [chatId]);
 
-    return () => socket.off('newMessage');
-  }, [messages]);
-
-  const sendMessage = (e) => {
-    e.preventDefault();
-    if (message) {
-      socket.emit('sendMessage', message);
+  const handleSendMessage = async () => {
+    if (!message.trim()) return; // 빈 메시지 전송 방지
+    try {
+      await sendMessage(chatId, { message });
       setMessage('');
+      // 새 메시지를 추가한 채팅 데이터를 다시 가져옵니다.
+      fetchChat();
+    } catch (error) {
+      console.error('Failed to send message', error);
     }
   };
 
   return (
     <div className="realtime-discussion">
-      <ul>
-        {messages.map((msg, index) => (
-          <li key={index}>{msg}</li>
+      <div className="messages">
+        {chat && chat.messages.map((msg, index) => (
+          <p key={index}>{msg}</p>
         ))}
-      </ul>
-      <form onSubmit={sendMessage}>
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Type a message..."
-        />
-        <button type="submit">Send</button>
-      </form>
+      </div>
+      <input
+        type="text"
+        value={message}
+        onChange={e => setMessage(e.target.value)}
+        placeholder="Type a message..."
+      />
+      <button onClick={handleSendMessage}>Send</button>
     </div>
   );
-};
+}
 
 export default RealtimeDiscussion;
-

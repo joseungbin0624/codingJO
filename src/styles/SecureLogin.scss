@@ -1,0 +1,31 @@
+@import 'variables';
+.secure-login {
+  display: flex;
+  flex-direction: column;
+  max-width: $modal-max-width;
+  margin: auto;
+  padding: $spacing-large;
+  background-color: $light-color;
+  border-radius: $border-radius-large;
+  box-shadow: $box-shadow;
+
+  input {
+    padding: $spacing-unit;
+    margin-bottom: $spacing-unit;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+  }
+
+  button {
+    padding: $spacing-unit 0;
+    background-color: $success-color;
+    color: $light-color;
+    border: none;
+    border-radius: $border-radius;
+    cursor: pointer;
+
+    &:hover {
+      background-color: darken($success-color, 10%);
+    }
+  }
+}

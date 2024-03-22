@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSpring, animated } from 'react-spring';
-import './Card.scss';
+import '../styles/Card.scss';
 
 const Card = ({ title, description, imageUrl }) => {
   const animationProps = useSpring({ to: { opacity: 1 }, from: { opacity: 0 } });

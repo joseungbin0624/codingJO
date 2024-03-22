@@ -1,0 +1,18 @@
+@import 'variables';
+.review-page {
+  padding: $spacing-large;
+  h1 {
+    text-align: center;
+    margin-bottom: $spacing-large;
+  }
+  .review-list {
+    list-style: none;
+    padding: 0;
+    .review-item {
+      margin-bottom: $spacing-unit;
+      padding: $spacing-unit;
+      border: 1px solid $border-color;
+      border-radius: $border-radius;
+    }
+  }
+}

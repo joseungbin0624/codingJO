@@ -1,24 +1,13 @@
-import { USER_LOGIN_SUCCESS, USER_LOGOUT } from './actionTypes';
-import axios from 'axios';
+import * as actionTypes from './actionTypes';
+import { userService } from '../services/userService';
 
-const API_URL = '/api/users';
-
-export const loginSuccess = (userInfo) => ({
-  type: USER_LOGIN_SUCCESS,
-  payload: userInfo,
-});
-
-export const logout = () => ({
-  type: USER_LOGOUT,
-});
-
-export const loginUser = (credentials) => async (dispatch) => {
+export const fetchCurrentUser = () => async (dispatch) => {
   try {
-    const response = await axios.post(`${API_URL}/login`, credentials);
-    dispatch(loginSuccess(response.data));
-    // 추가적으로 로그인 성공 후 필요한 작업 수행
+    const userInfo = await userService.fetchCurrentUser();
+    dispatch({ type: actionTypes.FETCH_USER_SUCCESS, payload: userInfo });
   } catch (error) {
-    // 에러 처리
-    console.error(error);
+    dispatch({ type: actionTypes.FETCH_USER_FAILURE, payload: error });
   }
 };
+
+// 사용자 액션 생성 함수를 필요에 따라 더 추가할 수 있습니다.

@@ -1,0 +1,53 @@
+@import 'variables';
+.site-header {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+
+  .header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
+  }
+
+  .navigation {
+    .nav-links {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      margin: 0;
+
+      li {
+        margin-left: 20px;
+
+        a {
+          color: #fff;
+          text-decoration: none;
+          transition: color 0.3s ease;
+
+          &:hover {
+            color: #ffc107;
+          }
+        }
+      }
+    }
+  }
+
+  .auth-links {
+    a {
+      margin-left: 20px;
+      color: #fff;
+      text-decoration: none;
+
+      &:hover {
+        color: #ffc107;
+      }
+    }
+  }
+}

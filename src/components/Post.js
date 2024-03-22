@@ -1,18 +1,25 @@
 import React from 'react';
-import moment from 'moment';
-import './Post.scss';
+import '../styles/Post.scss';
 
-const Post = ({ post }) => {
+function Post({ post }) {
+  // 포스트 날짜 형식을 보다 친숙한 형태로 변환
+  const formattedDate = new Date(post.date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
   return (
-    <div className="post">
-      <h3>{post.title}</h3>
+    <article className="post">
+      <h2>{post.title}</h2>
       <p>{post.content}</p>
       <div className="post-footer">
-        <span>Posted {moment(post.date).fromNow()}</span>
+        <span>Posted by {post.author}</span>
+        {/* 날짜 형식 변경 반영 */}
+        <span>{formattedDate}</span>
       </div>
-    </div>
+    </article>
   );
-};
+}
 
 export default Post;
-

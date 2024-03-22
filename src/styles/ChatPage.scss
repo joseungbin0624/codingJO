@@ -1,0 +1,27 @@
+@import 'variables';
+.chat-page {
+  padding: $spacing-large;
+  
+  h1 {
+    text-align: center;
+    margin-bottom: $spacing-large;
+  }
+  
+  .chat-list {
+    border: 1px solid $border-color;
+    padding: $spacing-unit;
+
+    .chat-summary {
+      padding: $spacing-unit;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $background-hover-color;
+      }
+    }
+  }
+
+  .realtime-discussion {
+    margin-top: $spacing-large;
+  }
+}

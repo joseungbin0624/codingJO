@@ -1,7 +1,3 @@
-// validationUtils.js
-
-// 입력 데이터 검증에 사용될 유틸리티 함수들을 포함합니다.
-
 export const isValidEmail = (email) => {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return regex.test(email);

@@ -1,8 +1,8 @@
-// chatBotLogic.js는 챗봇과의 상호작용을 위한 로직을 처리합니다.
-// 예를 들어, 사용자의 메시지를 분석하고 적절한 응답을 생성하는 기능을 포함할 수 있습니다.
-
-export const analyzeMessage = (message) => {
-  // 메시지 분석 로직 (키워드 분석, 인텐트 파악 등)
-  // 이는 실제 백엔드 API 호출과는 독립적인 클라이언트 사이드 로직입니다.
-  return "분석된 응답 또는 동작";
+export const chatBotLogic = (input) => {
+  if (input.toLowerCase().includes("hello")) {
+      return "Hi there! How can I help you today?";
+  } else if (input.toLowerCase().includes("help")) {
+      return "Sure, what do you need help with?";
+  }
+  return "Sorry, I didn't understand that. Can you try asking in a different way?";
 };

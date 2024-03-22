@@ -1,14 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './styles/index.scss';  // 상대 경로 수정
+import { createRoot } from 'react-dom/client';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import './index.scss';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
-
-reportWebVitals();
+const container = document.getElementById('root');
+const root = createRoot(container); // createRoot로 컨테이너 루트 생성
+root.render(<App />); // root.render로 앱 렌더링

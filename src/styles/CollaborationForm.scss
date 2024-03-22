@@ -1,40 +1,28 @@
 @import 'variables';
-@import 'mixins';
-
 .collaboration-form {
-  @include box-shadow;
-  background-color: $background-color;
-  padding: 20px;
-  border-radius: $border-radius;
-  transition: all $transition-fast;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-unit;
+  max-width: 500px;
+  margin: auto;
 
-  &:hover {
-    transform: translateY(-5px);
-    @include box-shadow($soft-shadow);
-  }
-
-  label {
-    display: block;
-    margin-bottom: 5px;
-    color: $text-color;
-  }
-
-  input[type="text"],
-  textarea {
-    width: 100%;
+  input[type="email"], button {
     padding: 10px;
-    margin-bottom: 15px;
     border-radius: $border-radius;
-    border: 1px solid darken($background-color, 10%);
-    &:focus {
-      outline: none;
-      border-color: $primary-color;
-      @include glow-text($primary-color);
+  }
+
+  input[type="email"] {
+    border: 1px solid $border-color;
+  }
+
+  button {
+    background-color: $success-color;
+    color: white;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: darken($success-color, 10%);
     }
   }
-
-  button[type="submit"] {
-    @include glowing-button($hot-pink, $electric-blue);
-  }
 }
-

@@ -1,5 +1,3 @@
-// src/store/index.js
-
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers'; // 모든 리듀서를 결합한 rootReducer 파일 경로를 적절히 지정하세요.

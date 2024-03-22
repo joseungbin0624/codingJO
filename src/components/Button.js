@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSpring, animated } from 'react-spring';
-import './Button.scss';
+import '../styles/Button.scss'; // Ensure styles align with the guide
 
 const Button = ({ text, onClick }) => {
   const animationProps = useSpring({

@@ -1,0 +1,15 @@
+@import 'variables';
+.profile-page {
+  padding: $spacing-large;
+  h1 {
+    text-align: center;
+    margin-bottom: $spacing-large;
+  }
+  .profile-info {
+    max-width: $modal-max-width;
+    margin: 0 auto;
+    p {
+      margin-bottom: $spacing-unit;
+    }
+  }
+}

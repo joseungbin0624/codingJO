@@ -1,32 +1,27 @@
 @import 'variables';
-@import 'mixins';
-
 .search-bar {
-  @include flex-center;
-  position: relative;
-  margin-bottom: 20px;
+  display: flex;
+  margin-bottom: $spacing-large;
 
-  input[type="text"] {
-    width: 100%;
-    padding: 10px 40px 10px 20px;
-    border: 1px solid $secondary-color;
-    border-radius: $border-radius;
-    transition: border-color $transition-fast;
+  .search-input {
+    flex: 1;
+    padding: $spacing-unit;
+    border: 1px solid $border-color;
+    border-top-left-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
+  }
 
-    &:focus {
-      outline: none;
-      border-color: $primary-color;
-      @include glow-text($primary-color);
+  .search-button {
+    padding: $spacing-unit $spacing-large;
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-top-right-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $button-hover-bg-color;
     }
   }
-
-  .search-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: $secondary-color;
-    cursor: pointer;
-  }
 }
-

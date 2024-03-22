@@ -1,20 +1,38 @@
 @import 'variables';
-@import 'mixins';
-@import 'button';
-@import 'card';
-@import 'Carousel';
-@import 'CategoryItem';
-@import 'ChatBot';
-@import 'CollaborationForm';
-// Import the rest of your styles here.
-
-body {
-  font-family: $primary-font;
-  background-color: $background-color;
-  color: $text-color;
-  margin: 0;
-  padding: 0;
-  @include flex-center;
-  flex-direction: column;
-}
-
+// index.scss
+@import "variables";
+@import "ThreeDCourseCard";
+@import "AchievementItem";
+@import "button";
+@import "card";
+@import "Carousel";
+@import "CategoryItem";
+@import "ChatBot";
+@import "CollaborationForm";
+@import "CoursePage";
+@import "CourseReview";
+@import "EventCard";
+@import "FavoriteButton";
+@import "FeatureSection";
+@import "FeedbackForm";
+@import "Footer";
+@import "ForumPage";
+@import "Header";
+@import "HomePage";
+@import "InteractiveGraph";
+@import "LoginPage";
+@import "main";
+@import "modal";
+@import "navbar";
+@import "NotificationItem";
+@import "PersonalizedWelcome";
+@import "post";
+@import "RealtimeDiscussion";
+@import "RegisterPage";
+@import "SearchBar";
+@import "SecureLogin";
+@import "SettingsForm";
+@import "TagFiltering";
+@import "TutorialCard";
+@import "UserProfile";
+@import "UserProfileCard";

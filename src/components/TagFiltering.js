@@ -1,15 +1,16 @@
 import React from 'react';
-import './TagFiltering.scss';
+import '../styles/TagFiltering.scss';
 
-const TagFiltering = ({ tags, onTagSelect }) => (
-  <div className="tag-filtering">
-    {tags.map((tag, index) => (
-      <button key={index} onClick={() => onTagSelect(tag)} className="tag">
-        {tag}
-      </button>
-    ))}
-  </div>
-);
+const TagFiltering = ({ tags, onSelectTag }) => {
+  return (
+    <div className="tag-filtering">
+      {tags.map(tag => (
+        <button key={tag} onClick={() => onSelectTag(tag)}>
+          {tag}
+        </button>
+      ))}
+    </div>
+  );
+};
 
 export default TagFiltering;
-

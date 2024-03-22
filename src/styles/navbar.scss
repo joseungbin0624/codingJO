@@ -1,31 +1,34 @@
 @import 'variables';
-@import 'mixins';
-
 .navbar {
   background-color: $primary-color;
-  @include flex-center(space-between);
-  padding: 0 20px;
-  color: $light-text-color;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  padding: $spacing-unit;
+  color: white;
 
   .navbar-brand {
-    font-size: 1.8rem;
-    @include glow-text($accent-color);
+    color: white;
+    font-size: $font-size-large;
+    font-weight: bold;
+
+    &:hover {
+      color: $light-color;
+    }
   }
 
   .navbar-links {
-    @include flex-center;
+    display: flex;
+    list-style-type: none;
+    margin-left: auto;
 
-    a {
-      margin-left: 20px;
-      transition: color $transition-fast;
+    li {
+      padding: 0 $spacing-unit;
 
-      &:hover {
-        color: $accent-color;
+      a {
+        color: white;
+
+        &:hover {
+          color: $light-color;
+        }
       }
     }
   }
 }
-

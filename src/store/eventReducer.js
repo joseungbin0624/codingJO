@@ -1,24 +1,21 @@
-import { CREATE_EVENT_SUCCESS, FETCH_EVENTS_SUCCESS } from './actionTypes';
+import * as actionTypes from './actionTypes';
 
 const initialState = {
   events: [],
+  loading: false,
+  error: null,
 };
 
-const eventReducer = (state = initialState, action) => {
+export default function eventReducer(state = initialState, action) {
   switch (action.type) {
-    case FETCH_EVENTS_SUCCESS:
+    case actionTypes.GET_EVENTS:
       return {
         ...state,
         events: action.payload,
-      };
-    case CREATE_EVENT_SUCCESS:
-      return {
-        ...state,
-        events: [...state.events, action.payload],
+        loading: false,
+        error: null
       };
     default:
       return state;
   }
-};
-
-export default eventReducer;
+}

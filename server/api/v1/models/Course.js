@@ -53,13 +53,6 @@ const courseSchema = new mongoose.Schema({
   },
 }, { timestamps: true });
 
-courseSchema.virtual('reviewsCount', {
-  ref: 'Review',
-  localField: '_id',
-  foreignField: 'course',
-  count: true
-});
-
 courseSchema.index({ title: 'text', tags: 'text' });
 
 module.exports = mongoose.model('Course', courseSchema);

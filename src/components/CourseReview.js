@@ -1,28 +1,38 @@
- 
-import React from 'react';
-import Rating from 'react-rating-stars-component';
-import { reviewService } from '../services/reviewService';
-import './CourseReview.scss';
+import React, { useState } from 'react';
+import { createReview } from '../services/reviewService';
+import '../styles/CourseReview.scss';
 
-const CourseReview = ({ courseId }) => {
-  const [reviews, setReviews] = React.useState([]);
+function CourseReview({ courseId }) {
+  const [review, setReview] = useState('');
+  const [submitStatus, setSubmitStatus] = useState('');
 
-  React.useEffect(() => {
-    reviewService.getReviewsByCourseId(courseId).then(setReviews);
-  }, [courseId]);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!review.trim()) return;
+    try {
+      await createReview(courseId, { text: review });
+      setReview('');
+      setSubmitStatus('Review submitted successfully!');
+    } catch (error) {
+      console.error('Failed to submit review:', error);
+      setSubmitStatus('Failed to submit review.');
+    }
+  };
 
   return (
     <div className="course-review">
-      <h3>Course Reviews</h3>
-      {reviews.map((review) => (
-        <div key={review.id} className="review">
-          <Rating value={review.rating} edit={false} size={20} />
-          <p>{review.text}</p>
-          <span>— {review.user}</span>
-        </div>
-      ))}
+      <form onSubmit={handleSubmit}>
+        <textarea
+          name="review"
+          placeholder="Write a review..."
+          value={review}
+          onChange={(e) => setReview(e.target.value)}
+        ></textarea>
+        <button type="submit">Submit Review</button>
+      </form>
+      {submitStatus && <p>{submitStatus}</p>} {/* 제출 상태 메시지 추가 */}
     </div>
   );
-};
+}
 
 export default CourseReview;

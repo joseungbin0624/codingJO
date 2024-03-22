@@ -1,22 +1,35 @@
-// E:\project\codingJO\server\migrations\20240212051800-create_course.js
-
 module.exports = {
   async up(db, client) {
-    await db.collection('feedbacks').insertMany([
-      {
-        userId: new ObjectId("507f1f77bcf86cd799439017"),
-        courseId: new ObjectId("507f1f77bcf86cd799439018"),
-        content: "코스 내용이 알차고 유익했습니다.",
-        rating: 5,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      // 4개 더 추가...
-    ]);
-  }
-  ,
-
+    await db.createCollection('feedbacks', {
+      validator: {
+        $jsonSchema: {
+          bsonType: "object",
+          required: ["userId", "courseId", "content", "rating"],
+          properties: {
+            userId: {
+              bsonType: "objectId",
+              description: "must be an objectId and is required"
+            },
+            courseId: {
+              bsonType: "objectId",
+              description: "must be an objectId and is required"
+            },
+            content: {
+              bsonType: "string",
+              description: "must be a string and is required"
+            },
+            rating: {
+              bsonType: "int",
+              minimum: 1,
+              maximum: 5,
+              description: "must be an integer in [1, 5] and is required"
+            }
+          }
+        }
+      }
+    });
+  },
   async down(db, client) {
-    await db.collection('feedback').deleteMany({});
+    await db.collection('feedbacks').drop();
   }
 };

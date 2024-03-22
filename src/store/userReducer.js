@@ -1,25 +1,28 @@
-import { USER_LOGIN_SUCCESS, USER_LOGOUT } from './actionTypes';
+import * as actionTypes from './actionTypes';
 
 const initialState = {
-  user: null,
+  userInfo: null,
+  loading: false,
+  error: null,
 };
 
-const userReducer = (state = initialState, action) => {
+export default function userReducer(state = initialState, action) {
   switch (action.type) {
-    case USER_LOGIN_SUCCESS:
+    case actionTypes.FETCH_USER_SUCCESS:
       return {
         ...state,
-        user: action.payload,
+        userInfo: action.payload,
+        loading: false,
+        error: null,
       };
-    case USER_LOGOUT:
+    case actionTypes.FETCH_USER_FAILURE:
       return {
         ...state,
-        user: null,
+        loading: false,
+        error: action.payload,
       };
+    // 사용자 관련 액션을 더 처리할 수 있습니다.
     default:
       return state;
   }
-};
-
-export default userReducer;
-
+}

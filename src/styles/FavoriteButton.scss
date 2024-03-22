@@ -1,23 +1,18 @@
 @import 'variables';
-@import 'mixins';
-
 .favorite-button {
-  background: none;
+  padding: 5px 10px;
+  background-color: $danger-color;
+  color: white;
   border: none;
+  border-radius: $border-radius;
   cursor: pointer;
-  position: relative;
+  transition: background-color 0.3s ease;
 
-  .icon {
-    color: $text-color;
-    transition: color $transition-fast;
-
-    &:hover {
-      color: $accent-color;
-    }
+  &.is-favorite {
+    background-color: $favorite-active-bg-color;
   }
 
-  &.active .icon {
-    @include glow-text($hot-pink);
+  &:hover {
+    opacity: 0.8;
   }
 }
-

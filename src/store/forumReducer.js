@@ -1,24 +1,27 @@
-import { CREATE_FORUM_SUCCESS, FETCH_FORUMS_SUCCESS } from './actionTypes';
+import * as actionTypes from './actionTypes';
 
 const initialState = {
   forums: [],
+  selectedForum: null,
+  loading: false,
+  error: null,
 };
 
-const forumReducer = (state = initialState, action) => {
+export default function forumReducer(state = initialState, action) {
   switch (action.type) {
-    case FETCH_FORUMS_SUCCESS:
+    case actionTypes.GET_FORUMS:
       return {
         ...state,
         forums: action.payload,
+        loading: false,
+        error: null
       };
-    case CREATE_FORUM_SUCCESS:
+    case actionTypes.SELECT_FORUM:
       return {
         ...state,
-        forums: [...state.forums, action.payload],
+        selectedForum: action.payload,
       };
     default:
       return state;
   }
-};
-
-export default forumReducer;
+}

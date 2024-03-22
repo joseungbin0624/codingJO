@@ -1,40 +1,31 @@
 @import 'variables';
-@import 'mixins';
-
 .settings-form {
-  background-color: $background-color;
-  @include box-shadow($soft-shadow);
-  padding: 20px;
-  border-radius: $border-radius;
-  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  max-width: $modal-max-width;
   margin: auto;
+  padding: $spacing-large;
+  background-color: $light-color;
+  border-radius: $border-radius-large;
+  box-shadow: $box-shadow;
 
-  .form-section {
-    margin-bottom: 30px;
+  input {
+    padding: $spacing-unit;
+    margin-bottom: $spacing-unit;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+  }
 
-    .section-title {
-      font-size: 1.5rem;
-      color: $primary-color;
-      margin-bottom: 15px;
-    }
+  button {
+    padding: $spacing-unit 0;
+    background-color: $primary-color;
+    color: $light-color;
+    border: none;
+    border-radius: $border-radius;
+    cursor: pointer;
 
-    input[type="text"],
-    input[type="email"],
-    select {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0 20px 0;
-      border-radius: $border-radius;
-      border: 1px solid $secondary-color;
-      &:focus {
-        outline: none;
-        border-color: $accent-color;
-        @include glow-text($accent-color);
-      }
-    }
-
-    .update-button {
-      @include glowing-button($electric-blue, $neon-green);
+    &:hover {
+      background-color: $button-hover-bg-color;
     }
   }
 }

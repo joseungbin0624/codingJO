@@ -1,5 +1,3 @@
-// 이 파일에서 migrate-mongo를 구성할 수 있습니다.
-
 const config = {
   mongodb: {
     // MongoDB URL을 여러분의 MongoDB URL로 변경(또는 검토)하세요:
@@ -9,10 +7,7 @@ const config = {
     databaseName: "codingjo",
 
     options: {
-      useNewUrlParser: true, // 연결 시 경고 제거
-      useUnifiedTopology: true, // 연결 시 경고 제거
-      //   connectTimeoutMS: 3600000, // 연결 시간 초과를 1시간으로 증가
-      //   socketTimeoutMS: 3600000, // 소켓 시간 초과를 1시간으로 증가
+      
     }
   },
 

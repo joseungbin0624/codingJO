@@ -1,7 +1,3 @@
-// sentimentAnalysis.js
-
-// 간단한 감정 분석 유틸리티. 실제 사용 시에는 외부 감정 분석 라이브러리나 API를 사용하는 것이 좋습니다.
-
 export const analyzeSentiment = (text) => {
   // 임시 로직: 텍스트에 특정 키워드가 포함되어 있는지 기반으로 긍정/부정을 판단합니다.
   const positiveKeywords = ['행복', '좋음', '멋짐'];

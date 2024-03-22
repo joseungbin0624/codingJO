@@ -1,39 +1,34 @@
 @import 'variables';
-@import 'mixins';
-
 .feedback-form {
-  @include box-shadow;
-  background-color: $background-color;
-  padding: 20px;
-  border-radius: $border-radius;
-  width: 50%;
-  margin: auto;
+  @include box-shadow-default;
+  background-color: $light-color;
+  padding: $spacing-large;
+  border-radius: $border-radius-large;
+  max-width: $modal-max-width;
+  margin: $spacing-large auto;
 
-  label {
-    display: block;
-    margin-bottom: 5px;
-    color: $text-color;
-  }
-
-  input[type="text"],
   textarea {
     width: 100%;
     padding: 10px;
-    margin-bottom: 15px;
+    border: 1px solid $border-color;
     border-radius: $border-radius;
-    border: 1px solid darken($background-color, 10%);
-    &:focus {
-      outline: none;
-      border-color: $accent-color;
-      @include glow-text($accent-color);
-    }
+    resize: none;
+    height: 150px;
+    margin-bottom: 10px;
   }
 
   button[type="submit"] {
-    @include glowing-button($primary-color, $neon-green);
+    display: block;
     width: 100%;
-    padding: 10px 0;
-    font-size: 1.2rem;
+    padding: 10px;
+    background-color: $success-color;
+    color: white;
+    border: none;
+    border-radius: $border-radius;
+    cursor: pointer;
+
+    &:hover {
+      background-color: darken($success-color, 10%);
+    }
   }
 }
-

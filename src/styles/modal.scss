@@ -1,40 +1,30 @@
 @import 'variables';
-@import 'mixins';
-
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  @include flex-center;
-  z-index: 100;
+  width: 100%;
+  height: 100%;
+  background-color: $modal-overlay-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
 }
 
 .modal-content {
-  background-color: $background-color;
-  padding: 20px;
-  border-radius: $border-radius;
-  @include box-shadow($deep-shadow);
-  position: relative;
-  
-  .modal-header, .modal-footer {
-    @include flex-center(space-between);
-    padding: 10px 0;
-  }
-
-  .modal-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    font-size: 1.5rem;
-    color: $text-color;
-  }
-
-  .modal-body {
-    padding: 20px 0;
-  }
+  @include box-shadow-default;
+  background-color: $light-color;
+  padding: $spacing-large;
+  border-radius: $border-radius-large;
+  width: 100%;
+  max-width: $modal-max-width;
 }
 
+.close-button {
+  float: right;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
