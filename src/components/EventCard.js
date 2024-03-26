@@ -1,8 +1,8 @@
+// EventCard.js
 import React from 'react';
-import '../styles/EventCard.scss';
+import '../styles/EventCard.scss'; // 경로 확인: '../styles/EventCard.scss'가 존재해야 함
 
 function EventCard({ event }) {
-  // 이벤트 날짜 형식을 보다 친숙한 형태로 변환
   const formattedDate = new Date(event.date).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
@@ -14,7 +14,6 @@ function EventCard({ event }) {
     <div className="event-card">
       <h3>{event.title}</h3>
       <p>{event.description}</p>
-      {/* 날짜 형식 변경 반영 */}
       <span>{formattedDate}</span>
     </div>
   );

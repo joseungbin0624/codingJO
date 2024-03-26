@@ -1,16 +1,18 @@
 @import 'variables';
 
 .achievements-page {
-  padding: $spacing-large;
+  padding: 2rem; // 넓은 패딩으로 더 여유 있는 레이아웃
   
   h1 {
     text-align: center;
-    margin-bottom: $spacing-large;
+    margin-bottom: 2rem; // 제목 아래의 여유 공간 증가
+    color: $primary-color; // 제목 색상 변경
+    font-size: $font-size-large; // 제목 크기 강조
   }
   
   .achievements-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: $spacing-large;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); // 넓은 카드
+    gap: 2rem; // 넓은 간격
   }
 }

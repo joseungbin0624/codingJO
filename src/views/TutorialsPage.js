@@ -1,34 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import TutorialCard from '../components/TutorialCard';
-import { getAllTutorials } from '../services/tutorialService'; // 수정: 함수 사용 변경
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllTutorials } from '../store/tutorialSlice';
+import TutorialCard from '../components/TutorialCard'; // 가정: 각 튜토리얼을 표시하는 컴포넌트
 import '../styles/TutorialsPage.scss';
 
-function TutorialsPage() {
-  const [tutorials, setTutorials] = useState([]);
+const TutorialsPage = () => {
+    const dispatch = useDispatch();
+    const tutorials = useSelector(state => state.tutorial.tutorials);
 
-  useEffect(() => {
-    async function fetchTutorials() {
-      try {
-        const data = await getAllTutorials(); // 수정: 함수 사용 변경
-        setTutorials(data);
-      } catch (error) {
-        console.error('Error fetching tutorials:', error);
-      }
-    }
+    useEffect(() => {
+        dispatch(fetchAllTutorials());
+    }, [dispatch]);
 
-    fetchTutorials();
-  }, []);
-
-  return (
-    <div className="tutorials-page">
-      <h1>Explore Tutorials</h1>
-      <div className="tutorials-list">
-        {tutorials.map(tutorial => (
-          <TutorialCard key={tutorial.id} tutorial={tutorial} />
-        ))}
-      </div>
-    </div>
-  );
-}
+    return (
+        <div className="tutorials-page">
+            <h1>Tutorials</h1>
+            <div className="tutorials-list">
+                {tutorials.map(tutorial => (
+                    <TutorialCard key={tutorial.id} tutorial={tutorial} />
+                ))}
+            </div>
+        </div>
+    );
+};
 
 export default TutorialsPage;

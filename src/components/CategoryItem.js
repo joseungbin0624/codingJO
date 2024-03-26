@@ -1,12 +1,13 @@
+// CategoryItem.js
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // 페이지 이동을 위해 필요
-import '../styles/CategoryItem.scss';
+import { useNavigate } from 'react-router-dom'; // 경로 변경 확인 필요 없음
+import '../styles/CategoryItem.scss'; // 경로 확인: '../styles/CategoryItem.scss'가 존재해야 함
 
 const CategoryItem = ({ category }) => {
-  let navigate = useNavigate(); // 페이지 이동을 위한 훅
+  let navigate = useNavigate(); // 함수 이름 및 사용법 변경 없음
 
   const handleClick = () => {
-    navigate(`/categories/${category.id}`); // 해당 카테고리 페이지로 이동
+    navigate(`/categories/${category.id}`); // 함수 사용법 변경 없음
   };
 
   return (

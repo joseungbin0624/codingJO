@@ -1,13 +1,15 @@
+// AchievementItem.scss
 @import 'variables';
 
 .achievement-item {
   display: flex;
   align-items: center;
-  padding: 1rem;
+  padding: 1.5rem;
   background-color: $background-color;
   border-radius: $border-radius-large;
-  margin-bottom: $spacing-unit;
-  transition: background-color 0.3s ease;
+  margin-bottom: 1.5rem;
+  transition: background-color 0.3s ease, transform 0.2s ease-out;
+  box-shadow: $box-shadow;
 
   &.achieved {
     background-color: $achieved-bg-color;
@@ -15,21 +17,23 @@
 
   &:hover {
     background-color: $background-hover-color;
+    transform: translateY(-2px);
   }
 
   .achievement-icon {
-    width: 50px;
-    height: 50px;
-    margin-right: 1rem;
+    width: 60px;
+    height: 60px;
+    margin-right: 1.5rem;
   }
 
   .achievement-info {
     flex: 1;
 
     .achievement-title {
-      font-size: $font-size-medium;
+      font-size: $font-size-large;
       font-weight: bold;
       color: $text-color;
+      margin-bottom: 0.5rem;
     }
 
     .achievement-description {
@@ -41,8 +45,8 @@
   .achievement-badge {
     background-color: $success-color;
     color: white;
-    padding: 0.2rem 0.6rem;
+    padding: 0.3rem 0.8rem;
     border-radius: $border-radius;
-    font-size: $font-size-tiny;
+    font-size: $font-size-small;
   }
 }

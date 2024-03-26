@@ -1,24 +1,19 @@
 // Carousel.js
 import React, { useState, useEffect } from 'react';
-import { courseService } from '../services/courseService';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllCourses } from '../store/courseSlice';
 import '../styles/Carousel.scss';
 
 const Carousel = () => {
+  const dispatch = useDispatch();
+  // 코스 목록을 가져오기 위해 Redux 스토어의 상태 선택
+  const courses = useSelector((state) => state.course.courses);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const data = await courseService.getAllCourses();
-        setCourses(data);
-      } catch (error) {
-        console.error('Error fetching courses:', error);
-      }
-    };
-
-    fetchCourses();
-  }, []);
+    // 컴포넌트 마운트 시 코스 목록을 가져오기 위한 액션 디스패치
+    dispatch(fetchAllCourses());
+  }, [dispatch]);
 
   const goToPrevious = () => {
     const isFirstItem = currentIndex === 0;
@@ -35,15 +30,15 @@ const Carousel = () => {
   return (
     <div className="carousel-container">
       <div className="carousel-controls">
-        <button onClick={goToPrevious}>&lt;</button>
-        <button onClick={goToNext}>&gt;</button>
+        <button onClick={goToPrevious} aria-label="Previous Slide">&lt;</button>
+        <button onClick={goToNext} aria-label="Next Slide">&gt;</button>
       </div>
       {courses.length > 0 ? (
         <div className="carousel-item">
-          <img src={courses[currentIndex].image} alt={courses[currentIndex].title} />
+          <img src={courses[currentIndex]?.image} alt={courses[currentIndex]?.title || 'Course image'} />
           <div>
-            <h3>{courses[currentIndex].title}</h3>
-            <p>{courses[currentIndex].description}</p>
+            <h3>{courses[currentIndex]?.title}</h3>
+            <p>{courses[currentIndex]?.description}</p>
           </div>
         </div>
       ) : (

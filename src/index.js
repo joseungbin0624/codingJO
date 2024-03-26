@@ -1,8 +1,15 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { Provider } from 'react-redux'; // react-redux에서 Provider 컴포넌트를 임포트합니다.
+import { store } from './store/store'; // 수정된 store 경로를 임포트합니다.
 import App from './App';
 import './index.scss';
 
 const container = document.getElementById('root');
-const root = createRoot(container); // createRoot로 컨테이너 루트 생성
-root.render(<App />); // root.render로 앱 렌더링
+const root = createRoot(container);
+
+root.render(
+  <Provider store={store}> // Provider로 App을 감싸 store를 전달합니다.
+    <App />
+  </Provider>
+);

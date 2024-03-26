@@ -1,44 +1,44 @@
 @import 'variables';
+
 .login-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  
-    .login-form {
-      @include box-shadow-default;
-      padding: $spacing-large;
-      border-radius: $border-radius-large;
-      background-color: $light-color;
-      max-width: $modal-max-width;
-  
-      input {
-        width: 100%;
-        margin-bottom: $spacing-unit;
-        padding: 10px;
-        border: 1px solid $border-color;
-        border-radius: $border-radius;
-  
-        &:focus {
-          border-color: $primary-color;
-          outline: none;
-        }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+
+  .login-form {
+    @include box-shadow-default;
+    padding: $spacing-large;
+    border-radius: $border-radius-large;
+    background-color: $light-color;
+    max-width: $modal-max-width;
+
+    input {
+      width: 100%;
+      margin-bottom: $spacing-unit;
+      padding: 10px;
+      border: 1px solid $border-color;
+      border-radius: $border-radius;
+
+      &:focus {
+        border-color: $primary-color;
+        outline: none;
       }
-  
-      button {
-        width: 100%;
-        padding: 10px;
-        background-color: $primary-color;
-        color: white;
-        border: none;
-        border-radius: $border-radius;
-        cursor: pointer;
-  
-        &:hover {
-          background-color: $button-hover-bg-color;
-        }
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: $primary-color;
+      color: white;
+      border: none;
+      border-radius: $border-radius;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $button-hover-bg-color;
       }
     }
   }
-  
+}

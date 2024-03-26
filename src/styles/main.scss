@@ -1,9 +1,8 @@
 @import 'variables';
-@import 'reset'; // Reset styles are assumed to be imported before main styles
-@import 'variables'; // Define and import your variables like colors, fonts, etc.
+@import 'reset';
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: $font-stack;
   background-color: $body-bg-color;
   color: $text-color;
 }
@@ -17,7 +16,6 @@ a {
   }
 }
 
-// Global classes for common use
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -32,5 +30,3 @@ a {
 .justify-between {
   justify-content: space-between;
 }
-
-// Additional global styles...

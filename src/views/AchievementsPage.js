@@ -1,35 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAchievements } from '../store/achievementsSlice';
 import AchievementItem from '../components/AchievementItem';
-import { getAchievements } from '../services/achievementsService';
 import '../styles/AchievementsPage.scss';
-import { Link } from 'react-router-dom';
 
-function AchievementsPage() {
-  const [achievements, setAchievements] = useState([]);
+const AchievementsPage = () => {
+    const dispatch = useDispatch();
+    const achievements = useSelector(state => state.achievements.data);
 
-  useEffect(() => {
-    async function fetchAchievements() {
-      try {
-        const data = await getAchievements();
-        setAchievements(data);
-      } catch (error) {
-        console.error('Error fetching achievements:', error);
-      }
-    }
-    fetchAchievements();
-  }, []);
+    useEffect(() => {
+        dispatch(fetchAchievements());
+    }, [dispatch]);
 
-  return (
-    <div className="achievements-page">
-      <h1>Your Achievements</h1>
-      <div className="achievements-list">
-        {achievements.length > 0 ? achievements.map(achievement => (
-          <AchievementItem key={achievement.id} achievement={achievement} />
-        )) : <p>No achievements to display.</p>}
-      </div>
-      <Link to="/">Go Back to Home</Link>
-    </div>
-  );
-}
+    return (
+        <div className="achievements-page">
+            <h1>Achievements</h1>
+            {achievements.map((achievement, index) => (
+                <AchievementItem key={index} achievement={achievement} />
+            ))}
+        </div>
+    );
+};
 
 export default AchievementsPage;

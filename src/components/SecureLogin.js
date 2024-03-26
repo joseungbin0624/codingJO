@@ -30,6 +30,7 @@ function SecureLogin() {
         placeholder="Email"
         value={credentials.email}
         onChange={handleChange}
+        aria-label="Email"
       />
       <input
         type="password"
@@ -37,6 +38,7 @@ function SecureLogin() {
         placeholder="Password"
         value={credentials.password}
         onChange={handleChange}
+        aria-label="Password"
       />
       <button type="submit">Login</button>
     </form>

@@ -1,5 +1,4 @@
-
-// Colors
+// 색상
 $primary-color: #007bff;
 $secondary-color: #6c757d;
 $success-color: #28a745;
@@ -8,58 +7,77 @@ $warning-color: #ffc107;
 $danger-color: #dc3545;
 $light-color: #f8f9fa;
 $dark-color: #343a40;
-$achieved-bg-color: #d4edda; // Achievement Background Color
-$button-hover-bg-color: #0056b3; // Button Hover Background Color
-$button-active-bg-color: #00408b; // Button Active Background Color
-$button-disabled-bg-color: #ccc; // Button Disabled Background Color
-$button-focus-shadow-color: rgba(0,123,255,.5); // Button Focus Shadow Color
-$text-color: #333; // Main Text Color
-$description-text-color: #666; // Description Text Color
-$subtitle-color: #999; // Subtitle Text Color
-$notification-border-color: #007bff; // Notification Item Border Color
-$favorite-active-bg-color: #24a19c; // Favorite Active Background Color
-$background-hover-color: #e8e8e8; // Background Hover Color
-$background-color: #f0f0f0; // Default Background Color
+$achieved-bg-color: #d4edda; // 성취 배경 색상
+$button-hover-bg-color: #0056b3; // 버튼 호버 배경 색상
+$button-active-bg-color: #00408b; // 버튼 활성 배경 색상
+$button-disabled-bg-color: #ccc; // 버튼 비활성 배경 색상
+$button-focus-shadow-color: rgba(0,123,255,.5); // 버튼 포커스 쉐도우 색상
+$text-color: #333; // 메인 텍스트 색상
+$description-text-color: #666; // 설명 텍스트 색상
+$subtitle-color: #999; // 서브타이틀 색상
+$notification-border-color: #007bff; // 알림 항목 테두리 색상
+$favorite-active-bg-color: #24a19c; // 즐겨찾기 활성 배경 색상
+$background-hover-color: #e8e8e8; // 배경 호버 색상
+$background-color: #f0f0f0; // 기본 배경 색상
 
-// Typography
-$font-stack: 'Open Sans', sans-serif; // Main Font Stack
-$font-size-large: 1.5rem; // Large Font Size
-$font-size-medium: 1.2rem; // Medium Font Size
-$font-size-small: 0.9rem; // Small Font Size
-$font-size-tiny: 0.8rem; // Tiny Font Size
+// 타이포그래피
+$font-stack: 'Open Sans', sans-serif; // 메인 폰트 스택
+$font-size-large: 1.5rem; // 큰 폰트 크기
+$font-size-medium: 1.2rem; // 중간 폰트 크기
+$font-size-small: 0.9rem; // 작은 폰트 크기
+$font-size-tiny: 0.8rem; // 매우 작은 폰트 크기
 
-// Borders
-$border-radius: 4px; // Default Border Radius
-$border-radius-large: 8px; // Large Border Radius
-$border-radius-circle: 50%; // Circle Border Radius
-$border-color: #ccc; // Default Border Color
-$border-color-hover: #ddd; // Border Color on Hover
+// 테두리
+$border-radius: 4px; // 기본 테두리 반경
+$border-radius-large: 8px; // 큰 테두리 반경
+$border-radius-circle: 50%; // 원형 테두리 반경
+$border-color: #ccc; // 기본 테두리 색상
+$border-color-hover: #ddd; // 테두리 호버 색상
 
-// Shadows
-$box-shadow: 0 2px 4px rgba(0,0,0,0.1); // Default Box Shadow
-$box-shadow-hover: 0 8px 12px rgba(0,0,0,0.2); // Box Shadow on Hover
+// 그림자
+$box-shadow: 0 2px 4px rgba(0,0,0,0.1); // 기본 박스 그림자
+$box-shadow-hover: 0 8px 12px rgba(0,0,0,0.2); // 박스 그림자 호버
 
-// Spacing
-$spacing-unit: 10px; // Basic Spacing Unit
-$spacing-large: 20px; // Large Spacing Unit
+// 간격
+$spacing-unit: 10px; // 기본 간격 단위
+$spacing-large: 20px; // 큰 간격 단위
 
-// Background
-$background-feature: url('/path/to/feature-background.jpg'); // Feature Section Background Image
-$modal-overlay-color: rgba(0,0,0,0.5); // Modal Overlay Color
+// 배경
+$background-feature: url('/path/to/feature-background.jpg'); // 특징 섹션 배경 이미지
+$modal-overlay-color: rgba(0,0,0,0.5); // 모달 오버레이 색상
 
-// Interactive Elements
-$tooltip-bg-color: #fff; // Tooltip Background Color
-$tooltip-border-color: #ccc; // Tooltip Border Color
-$interactive-graph-height: 400px; // Interactive Graph Height
+// 인터랙티브 요소
+$tooltip-bg-color: #fff; // 툴팁 배경 색상
+$tooltip-border-color: #ccc; // 툴팁 테두리 색상
+$interactive-graph-height: 400px; // 인터랙티브 그래프 높이
 
-// Sizes
-$avatar-size: 80px; // Avatar Size
+// 크기
+$avatar-size: 80px; // 아바타 크기
 
-// Miscellaneous
-$body-bg-color: #f8f9fa; // Body Background Color
-$modal-max-width: 500px; // Modal Maximum Width
+// 기타
+$body-bg-color: #f8f9fa; // 바디 배경 색상
+$modal-max-width: 500px; // 모달 최대 너비
 
-// Mixins
+// 믹스인
 @mixin box-shadow-default {
   box-shadow: $box-shadow;
+}
+
+@mixin button-style {
+  background-color: $primary-color;
+  color: white;
+  padding: 0.375rem 0.75rem;
+  border-radius: $border-radius;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px $button-focus-shadow-color;
+  }
 }

@@ -1,3 +1,4 @@
+// ChatBot.js
 import React, { useState } from 'react';
 import { sendMessage } from '../services/chatService';
 import '../styles/ChatBot.scss';
@@ -8,13 +9,19 @@ function ChatBot() {
 
   const handleSendMessage = async () => {
     try {
-      const response = await sendMessage('chatId', { message }); // chatId 필요, 예시로 'chatId' 사용
-      setResponse(response.message); // 가정: sendMessage가 메시지 응답을 반환한다고 가정
+      const response = await sendMessage('chatId', { message }); // Assume 'chatId' is needed, using 'chatId' as an example
+      setResponse(response.message); // Assuming sendMessage returns a message response
     } catch (error) {
       console.error('Error sending message:', error);
       setResponse('Failed to send message.');
     }
-    setMessage(''); // 메시지 초기화
+    setMessage(''); // Clear the message
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSendMessage();
+    }
   };
 
   return (
@@ -24,9 +31,10 @@ function ChatBot() {
         placeholder="Say something..."
         value={message}
         onChange={(e) => setMessage(e.target.value)}
+        onKeyPress={handleKeyPress}
       />
       <button onClick={handleSendMessage}>Send</button>
-      {response && <p>{response}</p>} {/* 서버 응답 출력 추가 */}
+      {response && <p>{response}</p>}
     </div>
   );
 }

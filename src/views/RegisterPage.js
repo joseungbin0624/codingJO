@@ -1,43 +1,19 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { registerUser } from '../utils/apiUtils'; // 수정된 부분
-import '../styles/RegisterPage.scss';
+import { useDispatch } from 'react-redux';
+import { loginUser, logoutUser } from '../store/authSlice';
+import '../styles/RegisterPage.scss'; // 정확한 경로 확인 필요
 
-function RegisterPage() {
-  const [userInfo, setUserInfo] = useState({
-    name: '',
-    email: '',
-    password: '',
-  });
-  const navigate = useNavigate();
+const RegisterPage = () => {
+    const dispatch = useDispatch();
+    const [userInfo, setUserInfo] = useState({ username: '', email: '', password: '' });
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setUserInfo({ ...userInfo, [name]: value });
-  };
+    // 기타 함수 구현
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      await registerUser(userInfo); // 수정된 부분
-      navigate('/login');
-    } catch (error) {
-      console.error('Registration failed:', error);
-      alert('Registration failed. Please try again.');
-    }
-  };
-
-  return (
-    <div className="register-page">
-      <h1>Create Your Account</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Full Name" value={userInfo.name} onChange={handleChange} required />
-        <input type="email" name="email" placeholder="Email Address" value={userInfo.email} onChange={handleChange} required />
-        <input type="password" name="password" placeholder="Password" value={userInfo.password} onChange={handleChange} required />
-        <button type="submit">Sign Up</button>
-      </form>
-    </div>
-  );
-}
+    return (
+        <div className="register-page">
+            {/* 폼 구현 */}
+        </div>
+    );
+};
 
 export default RegisterPage;

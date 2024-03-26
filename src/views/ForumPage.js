@@ -1,36 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { getAllForums } from '../services/forumService';
-import '../styles/ForumPage.scss';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllForums } from '../store/forumSlice';
+import ForumPost from '../components/ForumPost';
+import '../styles/ForumPage.scss'; // 정확한 경로 확인
 
-function ForumPage() {
-  const [forums, setForums] = useState([]);
+const ForumPage = () => {
+    const dispatch = useDispatch();
+    const forums = useSelector(state => state.forum.forums);
 
-  useEffect(() => {
-    async function fetchForums() {
-      try {
-        const data = await getAllForums();
-        setForums(data);
-      } catch (error) {
-        console.error('Error fetching forums:', error);
-      }
-    }
-    fetchForums();
-  }, []);
+    useEffect(() => {
+        dispatch(fetchAllForums()); // 수정됨
+    }, [dispatch]);
 
-  return (
-    <div className="forum-page">
-      <h1>Community Forums</h1>
-      <div>
-        {forums.length > 0 ? forums.map(forum => (
-          <div key={forum.id}>
-            {forum.title}
-          </div>
-        )) : <p>No forums found.</p>}
-      </div>
-      <Link to="/">Back to Home</Link>
-    </div>
-  );
-}
+    return (
+        <div className="forum-page">
+            <h1>Forums</h1>
+            <div className="forum-list">
+                {forums.map(forum => (
+                    <ForumPost key={forum.id} forum={forum} />
+                ))}
+            </div>
+        </div>
+    );
+};
 
 export default ForumPage;

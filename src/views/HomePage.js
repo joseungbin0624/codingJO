@@ -1,38 +1,54 @@
-import React, { useEffect, useState } from 'react';
+// HomePage.js
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllCourses } from '../store/courseSlice'; // 수정됨: 임포트된 함수 이름 변경
+import { fetchAllEvents } from '../store/eventSlice'; // 수정됨: 임포트된 함수 이름 변경
+import CourseCard from '../components/CourseCard.js';
+import EventCard from '../components/EventCard';
+import Carousel from '../components/Carousel';
 import '../styles/HomePage.scss';
-// 실제 존재하는 컴포넌트를 임포트합니다.
-import Navbar from '../components/Navbar';
-import { getAllCourses } from '../services/courseService';
-import { getAllTutorials } from '../services/tutorialService';
-import { getAllForums } from '../services/forumService';
+import { useNavigate } from 'react-router-dom';
 
-function HomePage() {
-  const [courses, setCourses] = useState([]);
-  const [tutorials, setTutorials] = useState([]);
-  const [forums, setForums] = useState([]);
+const HomePage = () => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate(); // 변경: 변수명 history에서 navigate로 변경
+    const { courses } = useSelector((state) => state.course);
+    const { events } = useSelector((state) => state.event);
 
-  useEffect(() => {
-    async function fetchData() {
-      // 실제 프로젝트에 존재하는 함수를 사용합니다.
-      const fetchedCourses = await getAllCourses();
-      const fetchedTutorials = await getAllTutorials();
-      const fetchedForums = await getAllForums();
-      // 각 섹션별로 데이터를 설정합니다.
-      setCourses(fetchedCourses.slice(0, 4)); // 예시로 첫 4개만 사용
-      setTutorials(fetchedTutorials.slice(0, 4)); // 예시로 첫 4개만 사용
-      setForums(fetchedForums.slice(0, 3)); // 예시로 첫 3개만 사용
-    }
-    fetchData();
-  }, []);
+    useEffect(() => {
+        dispatch(fetchAllCourses()); // 수정됨: 함수 이름 변경
+        dispatch(fetchAllEvents()); // 수정됨: 함수 이름 변경
+    }, [dispatch]);
 
-  return (
-    <div className="home-page">
-      <Navbar />
-      {/* 홈페이지 내용을 실제 프로젝트에 맞게 조정합니다. */}
-      {/* 예시: 코스, 튜토리얼, 포럼 게시글 목록 등을 표시합니다. */}
-      {/* 해당 컴포넌트들이 실제 존재하는지 확인하고, 필요에 따라 생성하거나 수정합니다. */}
-    </div>
-  );
-}
+    const handleCourseClick = (courseId) => {
+        navigate(`/course/${courseId}`);
+    };
+
+    const handleEventClick = (eventId) => {
+        navigate(`/event/${eventId}`);
+    };
+
+    return (
+        <div className="home-page">
+            <Carousel />
+            <div className="featured-courses">
+                <h2>Featured Courses</h2>
+                <div className="courses-list">
+                    {courses.map((course) => (
+                        <CourseCard key={course.id} course={course} onClick={() => handleCourseClick(course.id)} />
+                    ))}
+                </div>
+            </div>
+            <div className="upcoming-events">
+                <h2>Upcoming Events</h2>
+                <div className="events-list">
+                    {events.map((event) => (
+                        <EventCard key={event.id} event={event} onClick={() => handleEventClick(event.id)} />
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
 
 export default HomePage;

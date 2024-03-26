@@ -1,40 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getCourseById } from '../services/courseService';
-import CourseReview from '../components/CourseReview';
-import FavoriteButton from '../components/FavoriteButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllCourses, fetchCourseDetails } from '../store/courseSlice';
 import '../styles/CoursePage.scss';
-import { Link } from 'react-router-dom';
 
 const CoursePage = () => {
-  const { courseId } = useParams();
-  const [course, setCourse] = useState(null);
+    const { courseId } = useParams();
+    const dispatch = useDispatch();
+    const courseDetails = useSelector(state => state.course.details);
 
-  useEffect(() => {
-    async function fetchCourse() {
-      try {
-        const fetchedCourse = await getCourseById(courseId);
-        setCourse(fetchedCourse);
-      } catch (error) {
-        console.error('Error fetching course:', error);
-      }
+    useEffect(() => {
+        dispatch(fetchCourseDetails(courseId));
+    }, [dispatch, courseId]);
+
+    if (!courseDetails) {
+        return <div>Loading...</div>;
     }
-    fetchCourse();
-  }, [courseId]);
 
-  if (!course) {
-    return <div>Loading...</div>;
-  }
-
-  return (
-    <div className="course-page">
-      <h2>{course.title}</h2>
-      <p>{course.description}</p>
-      <FavoriteButton courseId={courseId} />
-      <CourseReview courseId={courseId} />
-      <Link to="/dashboard">Back to Dashboard</Link>
-    </div>
-  );
+    return (
+        <div className="course-page">
+            <h1>{courseDetails.title}</h1>
+            <div className="course-info">
+                <p>{courseDetails.description}</p>
+                {/* Additional course information and components */}
+            </div>
+        </div>
+    );
 };
 
 export default CoursePage;

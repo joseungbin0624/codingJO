@@ -1,13 +1,17 @@
 @import 'variables';
+
 .search-results-page {
   padding: $spacing-large;
+  
   h1 {
     text-align: center;
     margin-bottom: $spacing-large;
   }
+  
   .results-list {
     list-style: none;
     padding: 0;
+    
     .result-item {
       margin-bottom: $spacing-unit;
       padding: $spacing-unit;

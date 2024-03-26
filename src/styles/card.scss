@@ -1,14 +1,17 @@
 @import 'variables';
+
 .card {
   display: block;
   background-color: white;
   border-radius: $border-radius-large;
-  @include box-shadow-default;
-  transition: box-shadow 0.3s ease;
+  box-shadow: $box-shadow;
+  transition: box-shadow 0.3s, transform 0.2s; // 추가된 변환 효과
   overflow: hidden;
+  margin-bottom: 1rem; // 마진 조정
 
   &:hover {
     box-shadow: $box-shadow-hover;
+    transform: scale(1.02); // 호버 시 카드 확대
   }
 
   .card-image {
@@ -18,7 +21,7 @@
   }
 
   .card-body {
-    padding: 1rem;
+    padding: $spacing-unit;
 
     h3 {
       margin-top: 0;

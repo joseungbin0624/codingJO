@@ -1,39 +1,28 @@
-import React, { useState, useEffect } from 'react';
-import RealtimeDiscussion from '../components/RealtimeDiscussion';
-import { getUserChats } from '../services/chatService';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserChats } from '../store/chatSlice';
+import ChatList from '../components/ChatList';
+// ChatPage.js 올바른 스타일 시트 경로
 import '../styles/ChatPage.scss';
-import { Link } from 'react-router-dom';
 
-function ChatPage() {
-  const [chats, setChats] = useState([]);
-  const [selectedChatId, setSelectedChatId] = useState(null);
 
-  useEffect(() => {
-    async function fetchChats() {
-      try {
-        const data = await getUserChats();
-        setChats(data);
-      } catch (error) {
-        console.error('Error fetching chats:', error);
-      }
-    }
-    fetchChats();
-  }, []);
+const ChatPage = () => {
+    const dispatch = useDispatch();
+    const { chats } = useSelector(state => state.chat);
+    const [currentUserId, setCurrentUserId] = useState(null); // 가정: 현재 사용자 ID를 상태로 관리
 
-  return (
-    <div className="chat-page">
-      <h1>Your Chats</h1>
-      <div className="chat-list">
-        {chats.length > 0 ? chats.map(chat => (
-          <div key={chat.id} className="chat-summary" onClick={() => setSelectedChatId(chat.id)}>
-            {chat.title}
-          </div>
-        )) : <p>No chats available.</p>}
-      </div>
-      {selectedChatId && <RealtimeDiscussion chatId={selectedChatId} />}
-      <Link to="/">Go Back to Home</Link>
-    </div>
-  );
-}
+    useEffect(() => {
+        if (currentUserId) {
+            dispatch(fetchUserChats(currentUserId));
+        }
+    }, [currentUserId, dispatch]);
+
+    return (
+        <div className="chat-page">
+            <h1>Chats</h1>
+            <ChatList chats={chats} />
+        </div>
+    );
+};
 
 export default ChatPage;

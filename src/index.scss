@@ -1,0 +1,55 @@
+// index.scss
+@import 'styles/variables';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: $font-stack;
+  background-color: $body-bg-color;
+  color: $text-color;
+}
+
+a {
+  color: $primary-color;
+  text-decoration: none;
+
+  &:hover {
+    color: darken($primary-color, 10%);
+  }
+}
+
+button {
+  @include button-style;
+
+  &:disabled {
+    background-color: $button-disabled-bg-color;
+    cursor: not-allowed;
+  }
+}
+
+// Utility classes for margin and padding
+.m-0 { margin: 0 !important; }
+.p-0 { padding: 0 !important; }
+
+// Responsive grid system, flex utilities, and other layout helpers
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 $spacing-unit;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.col {
+  flex: 1;
+}
+
+// Additional global styles...

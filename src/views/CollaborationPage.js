@@ -1,32 +1,37 @@
 import React, { useState } from 'react';
-import CollaborationForm from '../components/CollaborationForm';
-import { sendCollaborationRequest } from '../services/collaborationService';
+import { useDispatch } from 'react-redux';
+import { sendCollaboration } from '../store/collaborationSlice';
 import '../styles/CollaborationPage.scss';
-import { Link } from 'react-router-dom';
 
-function CollaborationPage() {
-  const [requestSent, setRequestSent] = useState(false);
+const CollaborationPage = () => {
+    const dispatch = useDispatch();
+    const [collabDetails, setCollabDetails] = useState({
+        title: '',
+        description: '',
+        contactEmail: ''
+    });
 
-  const handleCollaborationSubmit = async (collaborationDetails) => {
-    try {
-      await sendCollaborationRequest(collaborationDetails);
-      setRequestSent(true);
-    } catch (error) {
-      console.error('Failed to send collaboration request:', error);
-    }
-  };
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setCollabDetails({ ...collabDetails, [name]: value });
+    };
 
-  return (
-    <div className="collaboration-page">
-      <h1>Collaborate with Us</h1>
-      {!requestSent ? (
-        <CollaborationForm onSubmit={handleCollaborationSubmit} />
-      ) : (
-        <p>Thank you for your interest! We will get back to you soon.</p>
-      )}
-      <Link to="/">Go Back to Home</Link>
-    </div>
-  );
-}
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(sendCollaboration(collabDetails));
+    };
+
+    return (
+        <div className="collaboration-page">
+            <h1>Propose a Collaboration</h1>
+            <form onSubmit={handleSubmit}>
+                <input type="text" name="title" placeholder="Title" value={collabDetails.title} onChange={handleChange} />
+                <textarea name="description" placeholder="Description" value={collabDetails.description} onChange={handleChange}></textarea>
+                <input type="email" name="contactEmail" placeholder="Contact Email" value={collabDetails.contactEmail} onChange={handleChange} />
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    );
+};
 
 export default CollaborationPage;

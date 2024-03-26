@@ -1,35 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserActivities } from '../store/dashboardSlice';
 import ActivityItem from '../components/ActivityItem';
-import { getUserActivities } from '../services/dashboardService';
 import '../styles/DashboardPage.scss';
-import { Link } from 'react-router-dom';
 
-function DashboardPage() {
-  const [activities, setActivities] = useState([]);
+const DashboardPage = () => {
+    const dispatch = useDispatch();
+    const activities = useSelector(state => state.dashboard.activities);
 
-  useEffect(() => {
-    async function fetchActivities() {
-      try {
-        const data = await getUserActivities();
-        setActivities(data);
-      } catch (error) {
-        console.error('Error fetching activities:', error);
-      }
-    };
-    fetchActivities();
-  }, []);
+    useEffect(() => {
+        dispatch(fetchUserActivities());
+    }, [dispatch]);
 
-  return (
-    <div className="dashboard-page">
-      <h1>Your Dashboard</h1>
-      <div className="activities-list">
-        {activities.length > 0 ? activities.map(activity => (
-          <ActivityItem key={activity.id} activity={activity} />
-        )) : <p>No recent activities.</p>}
-      </div>
-      <Link to="/">Go Back to Home</Link>
-    </div>
-  );
-}
+    return (
+        <div className="dashboard-page">
+            <h1>Dashboard</h1>
+            {activities.map((activity, index) => (
+                <ActivityItem key={index} activity={activity} />
+            ))}
+        </div>
+    );
+};
 
 export default DashboardPage;

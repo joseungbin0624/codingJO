@@ -1,15 +1,18 @@
 @import 'variables';
+
 .footer {
   background-color: $dark-color;
   color: $light-color;
   text-align: center;
-  padding: $spacing-unit;
+  padding: 2rem; // 푸터 패딩 증가
+  margin-top: 4rem; // 페이지와의 여백 증가
 
   .social-links {
-    margin: $spacing-unit 0;
+    display: flex;
+    justify-content: center;
+    gap: 1rem; // 소셜 링크 간격 조정
 
     a {
-      margin: 0 $spacing-unit;
       color: $light-color;
       transition: color 0.3s ease;
 
@@ -20,7 +23,7 @@
   }
 
   p {
-    margin: $spacing-unit 0;
+    margin-top: 1rem;
     font-size: $font-size-small;
   }
 }

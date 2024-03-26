@@ -16,17 +16,21 @@ function RealtimeDiscussion({ chatId }) {
       }
     };
     fetchChat();
-  }, [chatId]);
+  }, [chatId, message]); // Added message to dependencies to refresh chat on new message
 
   const handleSendMessage = async () => {
-    if (!message.trim()) return; // 빈 메시지 전송 방지
+    if (!message.trim()) return;
     try {
       await sendMessage(chatId, { message });
       setMessage('');
-      // 새 메시지를 추가한 채팅 데이터를 다시 가져옵니다.
-      fetchChat();
     } catch (error) {
       console.error('Failed to send message', error);
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSendMessage();
     }
   };
 
@@ -40,7 +44,8 @@ function RealtimeDiscussion({ chatId }) {
       <input
         type="text"
         value={message}
-        onChange={e => setMessage(e.target.value)}
+        onChange={(e) => setMessage(e.target.value)}
+        onKeyPress={handleKeyPress}
         placeholder="Type a message..."
       />
       <button onClick={handleSendMessage}>Send</button>

@@ -1,16 +1,18 @@
 @import 'variables';
+
 .category-page {
-  padding: $spacing-large;
+  padding: 2rem; // 전체 페이지 패딩 증가
   
   h1 {
     text-align: center;
-    margin-bottom: $spacing-large;
+    margin-bottom: 2rem; // 제목 아래 여백 증가
+    font-size: $font-size-large; // 제목 크기 증가
   }
   
   .category-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
-    gap: $spacing-large;
+    justify-content: space-between;
+    gap: 2rem; // 항목 간 간격 증가
   }
 }

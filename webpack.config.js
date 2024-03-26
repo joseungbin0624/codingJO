@@ -18,7 +18,7 @@ module.exports = (env) => ({
     },
     historyApiFallback: true,
     compress: true,
-    port: 3000,
+    port: 3001,
     open: true,
   },
 

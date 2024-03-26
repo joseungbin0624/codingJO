@@ -1,5 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Navbar from './components/Navbar';
+
+// 페이지 임포트
 import AchievementsPage from './views/AchievementsPage';
 import AnalyticsPage from './views/AnalyticsPage';
 import CategoryPage from './views/CategoryPage';
@@ -27,6 +32,8 @@ import UserSettingPage from './views/UserSettingPage';
 function App() {
   return (
     <Router>
+      <Header />
+      <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/achievements" element={<AchievementsPage />} />
@@ -53,6 +60,7 @@ function App() {
         <Route path="/user-settings" element={<UserSettingPage />} />
         {/* 다른 필요한 라우트들을 여기에 추가하세요 */}
       </Routes>
+      <Footer />
     </Router>
   );
 }

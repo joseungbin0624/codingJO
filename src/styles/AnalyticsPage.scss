@@ -1,15 +1,21 @@
 @import 'variables';
 
 .analytics-page {
-  padding: $spacing-large;
+  padding: 2rem;
   
   h1 {
     text-align: center;
-    margin-bottom: $spacing-large;
+    margin-bottom: 2rem;
+    color: $info-color; // 분석 페이지 특성에 맞는 색상
+    font-size: $font-size-large;
   }
   
   .interactive-graph {
-    max-width: 600px;
+    max-width: 800px; // 더 넓은 최대 너비
     margin: 0 auto;
+    padding: 1rem; // 그래프 주변 패딩 추가
+    background-color: $light-color; // 배경색 추가
+    border-radius: $border-radius-large; // 모서리 둥글게
+    box-shadow: $box-shadow; // 그림자 추가
   }
 }

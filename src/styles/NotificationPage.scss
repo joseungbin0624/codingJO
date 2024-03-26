@@ -1,13 +1,17 @@
 @import 'variables';
+
 .notification-page {
   padding: $spacing-large;
+  
   h1 {
     text-align: center;
     margin-bottom: $spacing-large;
   }
+  
   .notification-list {
     list-style: none;
     padding: 0;
+    
     .notification-item {
       margin-bottom: $spacing-unit;
       padding: $spacing-unit;

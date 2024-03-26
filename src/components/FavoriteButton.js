@@ -6,14 +6,12 @@ function FavoriteButton({ userId, courseId }) {
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    // 좋아요 상태를 확인하여 UI에 반영
     const fetchFavoriteStatus = async () => {
       try {
         const status = await checkFavorite(userId, courseId);
         setIsFavorite(status);
       } catch (error) {
         console.error('Error fetching favorite status:', error);
-        // 오류 처리 로직 추가 (예: 사용자에게 피드백 제공)
       }
     };
     fetchFavoriteStatus();
@@ -29,12 +27,15 @@ function FavoriteButton({ userId, courseId }) {
       setIsFavorite(!isFavorite);
     } catch (error) {
       console.error('Error toggling favorite:', error);
-      // 오류 처리 로직 추가 (예: 사용자에게 피드백 제공)
     }
   };
 
   return (
-    <button className={`favorite-button ${isFavorite ? 'is-favorite' : ''}`} onClick={toggleFavorite}>
+    <button
+      className={`favorite-button ${isFavorite ? 'is-favorite' : ''}`}
+      onClick={toggleFavorite}
+      aria-pressed={isFavorite}
+    >
       {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
     </button>
   );

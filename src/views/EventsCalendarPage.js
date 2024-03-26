@@ -1,45 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { Calendar, momentLocalizer } from 'react-big-calendar';
-import moment from 'moment';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
-import { getAllEvents } from '../services/eventService'; // 수정된 부분
-import '../styles/EventsCalendarPage.scss';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllEvents } from '../store/eventSlice';
+import EventsCalendar from '../components/EventsCalendar'; // 수정 필요
+import '../styles/EventsCalendarPage.scss'; // 정확한 경로로 수정 필요
 
-const localizer = momentLocalizer(moment);
 
-function EventsCalendarPage() {
-  const [events, setEvents] = useState([]);
+const EventsCalendarPage = () => {
+    const dispatch = useDispatch();
+    const { events } = useSelector(state => state.event);
 
-  useEffect(() => {
-    async function fetchEvents() {
-      try {
-        const data = await getAllEvents(); // 수정된 부분
-        const formattedEvents = data.map(event => ({
-          ...event,
-          start: new Date(event.start),
-          end: new Date(event.end),
-        }));
-        setEvents(formattedEvents);
-      } catch (error) {
-        console.error('Error fetching events:', error);
-      }
-    };
-    fetchEvents();
-  }, []);
+    useEffect(() => {
+        dispatch(fetchAllEvents());
+    }, [dispatch]);
 
-  return (
-    <div className="events-calendar-page">
-      <Calendar
-        localizer={localizer}
-        events={events}
-        startAccessor="start"
-        endAccessor="end"
-        style={{ height: 500 }}
-      />
-      <Link to="/">Back to Home</Link>
-    </div>
-  );
-}
+    return (
+        <div className="events-calendar-page">
+            <h1>Events Calendar</h1>
+            <EventsCalendar events={events} />
+        </div>
+    );
+};
 
 export default EventsCalendarPage;
