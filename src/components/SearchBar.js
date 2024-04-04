@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import searchIcon from '../assets/icons/magnifying-glass-solid.svg'; // 아이콘 경로 추가
 import '../styles/SearchBar.scss';
 
 function SearchBar({ onSearch }) {
@@ -11,6 +12,7 @@ function SearchBar({ onSearch }) {
 
   return (
     <form className="search-bar" onSubmit={handleSubmit}>
+      <img src={searchIcon} alt="Search" className="search-icon" /> {/* 아이콘 추가 */}
       <input
         type="text"
         className="search-input"

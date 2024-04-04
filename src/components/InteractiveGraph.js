@@ -8,7 +8,7 @@ function InteractiveGraph({ data }) {
     d3.select('.interactive-graph svg').remove();
     const svg = d3.select('.interactive-graph').append('svg').attr('width', 600).attr('height', 400);
 
-    svg.selectAll('rect')
+    svg.selectAll('rect') 
       .data(data)
       .enter()
       .append('rect')

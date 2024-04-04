@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchCurrentUser } from '../services/authService';
-import './UserProfile.scss'; // 가정한 스타일시트 경로
+import userIcon from '../assets/icons/user-solid.svg'; // 아이콘 경로 추가
+import '../styles/UserProfile.scss';
 
 const UserProfile = () => {
   const [user, setUser] = useState(null);
@@ -22,9 +23,9 @@ const UserProfile = () => {
 
   return (
     <div className="user-profile">
+      <img src={userIcon} alt="User Profile" className="user-profile-icon" /> {/* 아이콘 추가 */}
       <h2>{user.name}</h2>
       <p>{user.email}</p>
-      {/* 추가적인 사용자 정보 표시 */}
     </div>
   );
 };

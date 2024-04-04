@@ -1,23 +1,43 @@
 const request = require('supertest');
-const app = require('../../app'); // app.js 경로 조정 필요
+const app = require('../../app');
+const Forum = require('../../api/v1/models/Forum');
+const User = require('../../api/v1/models/User');
 
-describe('Forum Routes', () => {
-    it('GET /api/v1/forums - should return all forums', async () => {
-        const response = await request(app).get('/api/v1/forums');
-        expect(response.statusCode).toBe(200);
-        expect(Array.isArray(response.body)).toBeTruthy();
-    });
+describe('Forum Routes Integration Tests', () => {
+  let createdBy;
 
-    it('POST /api/v1/forums - should create a forum', async () => {
-        const forumData = {
-            title: 'JavaScript Discussions',
-            content: 'Talk about everything JavaScript',
-            author: '유효한UserId' // 유효한 userId로 교체
-        };
-        const response = await request(app)
-            .post('/api/v1/forums')
-            .send(forumData);
-        expect(response.statusCode).toBe(201);
-        expect(response.body).toHaveProperty('_id');
+  beforeEach(async () => {
+    createdBy = await User.create({
+      username: 'forumCreator',
+      email: 'creator@example.com',
+      password: 'password'
     });
+  });
+
+  afterEach(async () => {
+    await Forum.deleteMany({});
+    await User.deleteMany({});
+  });
+
+  test('POST /api/forums 새로운 포럼 생성 및 반환', async () => {
+    const forumData = {
+      title: 'New Forum',
+      description: 'Forum description',
+      createdBy: createdBy._id,
+    };
+
+    const response = await request(app)
+      .post('/api/forums')
+      .send(forumData)
+      .expect(201);
+
+    expect(response.body.title).toEqual(forumData.title);
+    expect(response.body.description).toEqual(forumData.description);
+    expect(response.body.createdBy).toEqual(createdBy._id.toString());
+  });
+
+  test('GET /api/forums 모든 포럼 조회', async () => {
+    const response = await request(app).get('/api/forums').expect(200);
+    expect(response.body).toEqual(expect.arrayContaining([]));
+  });
 });

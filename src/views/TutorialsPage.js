@@ -1,7 +1,8 @@
+// TutorialsPage.js
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllTutorials } from '../store/tutorialSlice';
-import TutorialCard from '../components/TutorialCard'; // 가정: 각 튜토리얼을 표시하는 컴포넌트
+import TutorialCard from '../components/TutorialCard';
 import '../styles/TutorialsPage.scss';
 
 const TutorialsPage = () => {

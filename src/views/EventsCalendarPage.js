@@ -1,9 +1,9 @@
+// EventsCalendarPage.js
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllEvents } from '../store/eventSlice';
-import EventsCalendar from '../components/EventsCalendar'; // 수정 필요
-import '../styles/EventsCalendarPage.scss'; // 정확한 경로로 수정 필요
-
+import EventsCalendar from '../components/EventsCalendar';
+import '../styles/EventsCalendarPage.scss';
 
 const EventsCalendarPage = () => {
     const dispatch = useDispatch();

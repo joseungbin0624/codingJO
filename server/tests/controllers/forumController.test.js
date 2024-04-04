@@ -1,66 +1,68 @@
-const request = require('supertest');
-const app = require('../../app');
-jest.mock('../../api/v1/services/forumService');
+const forumController = require('../../api/v1/controllers/forumController');
 const forumService = require('../../api/v1/services/forumService');
 
-describe('Forum Controller Tests', () => {
-  beforeEach(() => {
-    forumService.createForum.mockResolvedValue({
-      id: 'forumId',
-      title: 'Forum Title',
-      content: 'Forum Description'
+jest.mock('../../api/v1/services/forumService');
+
+describe('Forum Controller - Unit Tests', () => {
+    let req, res;
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+        req = { params: {}, body: {} };
+        res = {
+            status: jest.fn().mockReturnThis(),
+            json: jest.fn().mockReturnThis(),
+            send: jest.fn().mockReturnThis()
+        };
     });
-    forumService.getAllForums.mockResolvedValue([{
-      id: 'forumId',
-      title: 'Forum Title',
-      content: 'Forum Description'
-    }]);
-    forumService.getForumById.mockResolvedValue({
-      id: 'forumId',
-      title: 'Forum Title',
-      content: 'Forum Description'
+
+    test('createForum creates a forum', async () => {
+        const mockForum = { id: '1', title: 'Forum Title', content: 'Forum Content' };
+        req.body = mockForum;
+        forumService.createForum.mockResolvedValue(mockForum);
+
+        await forumController.createForum(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(201);
+        expect(res.json).toHaveBeenCalledWith(mockForum);
     });
-    forumService.addPostToForum.mockResolvedValue({
-      postId: 'postId',
-      forumId: 'forumId',
-      content: 'Post Content'
+
+    test('getAllForums returns all forums', async () => {
+        const mockForums = [{ id: '1', title: 'Forum Title', content: 'Forum Content' }];
+        forumService.getAllForums.mockResolvedValue(mockForums);
+
+        await forumController.getAllForums(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith(mockForums);
     });
-  });
 
-  test('Create forum', async () => {
-    const forumData = {
-      title: 'Forum Title',
-      content: 'Forum Description'
-    };
-    const response = await request(app)
-      .post('/api/forum')
-      .send(forumData);
-    expect(response.statusCode).toBe(201);
-    expect(forumService.createForum).toHaveBeenCalledWith(forumData);
-  });
+    test('getForumById returns a forum by id', async () => {
+        const forumId = '1';
+        const mockForum = { id: forumId, title: 'Forum Title', content: 'Forum Content' };
+        req.params.id = forumId;
+        forumService.getForumById.mockResolvedValue(mockForum);
 
-  test('Get all forums', async () => {
-    const response = await request(app)
-      .get('/api/forum');
-    expect(response.statusCode).toBe(200);
-    expect(forumService.getAllForums).toHaveBeenCalled();
-  });
+        await forumController.getForumById(req, res);
 
-  test('Get forum by ID', async () => {
-    const forumId = 'forumId';
-    const response = await request(app)
-      .get(`/api/forum/${forumId}`);
-    expect(response.statusCode).toBe(200);
-    expect(forumService.getForumById).toHaveBeenCalledWith(forumId);
-  });
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith(mockForum);
+    });
 
-  test('Add post to forum', async () => {
-    const forumId = 'forumId';
-    const postData = { content: 'Post Content' };
-    const response = await request(app)
-      .post(`/api/forum/${forumId}/posts`)
-      .send(postData);
-    expect(response.statusCode).toBe(201);
-    expect(forumService.addPostToForum).toHaveBeenCalledWith(forumId, postData);
-  });
+    test('addPostToForum adds a post to a forum', async () => {
+        const forumId = '1';
+        const mockPost = { content: 'Post Content' };
+        req.params.id = forumId; // req.params.id로 올바르게 수정
+        req.body = mockPost;
+        forumService.addPostToForum.mockResolvedValue({
+            ...mockPost,
+            forumId: forumId,
+        });
+
+        await forumController.addPostToForum(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(201);
+        // 함수 호출 검증 시 req.params.id 사용을 반영
+        expect(forumService.addPostToForum).toHaveBeenCalledWith(forumId, mockPost);
+    });
 });

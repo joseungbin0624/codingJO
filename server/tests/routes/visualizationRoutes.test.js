@@ -1,35 +1,31 @@
 const request = require('supertest');
-const app = require('../../app'); // Express 앱 경로를 알맞게 수정해주세요.
+const app = require('../../app');
+const Visualization = require('../../api/v1/models/Visualization');
 
 describe('Visualization Routes Test', () => {
-  describe('POST /visualizations', () => {
-    it('should create a new visualization', async () => {
-      const visualizationData = { title: 'Test Title', description: 'Test Description', data: { chart: 'bar' }, createdBy: 'someUserId' };
-      const response = await request(app)
-        .post('/api/v1/visualizations')
-        .send(visualizationData);
-
-      expect(response.statusCode).toBe(201);
-      expect(response.body.title).toBe(visualizationData.title);
+    afterEach(async () => {
+        await Visualization.deleteMany({});
     });
-  });
 
-  describe('GET /visualizations', () => {
-    it('should return all visualizations', async () => {
-      const response = await request(app).get('/api/v1/visualizations');
+    test('Should create a new visualization', async () => {
+        const visualizationData = {
+            title: 'New Visualization',
+            description: 'Description of the new visualization',
+            data: { chartType: 'bar' },
+            createdBy: 'someUserId',
+        };
 
-      expect(response.statusCode).toBe(200);
-      expect(Array.isArray(response.body)).toBeTruthy();
+        const response = await request(app)
+            .post('/api/visualizations')
+            .send(visualizationData)
+            .expect(201);
+
+        const visualization = await Visualization.findById(response.body._id);
+        expect(visualization).not.toBeNull();
     });
-  });
 
-  describe('GET /visualizations/:id', () => {
-    it('should return a visualization by id', async () => {
-      const visualizationId = 'someVisualizationId';
-      const response = await request(app).get(`/api/v1/visualizations/${visualizationId}`);
-
-      expect(response.statusCode).toBe(200);
-      // 여기서는 실제 ID에 대한 응답을 모의해야 합니다.
+    test('Should fetch all visualizations', async () => {
+        const response = await request(app).get('/api/visualizations').expect(200);
+        expect(response.body.length).toBeGreaterThan(0);
     });
-  });
 });

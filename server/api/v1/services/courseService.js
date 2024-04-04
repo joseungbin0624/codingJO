@@ -31,7 +31,7 @@ async function deleteCourse(id) {
   if (!course) {
     throw new Error('Course not found');
   }
-  return course;
+  return true; // 수정: 삭제 성공 시 true 반환
 }
 
 module.exports = { createCourse, getAllCourses, getCourseById, updateCourse, deleteCourse };

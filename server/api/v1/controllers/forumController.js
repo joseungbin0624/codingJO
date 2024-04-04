@@ -12,7 +12,7 @@ async function createForum(req, res) {
 async function getAllForums(req, res) {
   try {
     const forums = await forumService.getAllForums();
-    res.json(forums);
+    res.status(200).json(forums); // 명시적으로 상태 코드 200을 설정
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -21,7 +21,7 @@ async function getAllForums(req, res) {
 async function getForumById(req, res) {
   try {
     const forum = await forumService.getForumById(req.params.id);
-    res.json(forum);
+    res.status(200).json(forum); // 명시적으로 상태 코드 200을 설정
   } catch (error) {
     res.status(404).json({ message: 'Forum not found' });
   }

@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
+const { MongoMemoryServer } = require('mongodb-memory-server');
 const Favorite = require('../../api/v1/models/Favorite');
 const User = require('../../api/v1/models/User');
 const Course = require('../../api/v1/models/Course');
-const { MongoMemoryServer } = require('mongodb-memory-server');
 
-describe('Favorite 모델', () => {
+describe('Favorite Model Test', () => {
   let mongoServer;
 
   beforeAll(async () => {
@@ -17,15 +17,16 @@ describe('Favorite 모델', () => {
     await mongoServer.stop();
   });
 
-  it('즐겨찾기에 코스 추가', async () => {
-    const user = await User.create({ username: 'testUser', email: 'test@example.com', password: 'test' });
-    const course = await Course.create({ title: 'Node.js 기초', description: 'Node.js 설명', category: '프로그래밍', instructor: user._id, price: 100 });
+  it('create & save favorite successfully', async () => {
+    const user = await User.create({ username: 'userTest', email: 'user@test.com', password: 'password123' });
+    const course = await Course.create({ title: 'Course Title', description: 'Description', category: 'Category', instructor: user._id, price: 100 });
 
-    const favorite = new Favorite({ user: user._id, courses: [course._id] });
-    await favorite.save();
+    const favoriteData = { user: user._id, courses: [course._id] };
+    const favorite = new Favorite(favoriteData);
+    const savedFavorite = await favorite.save();
 
-    const foundFavorite = await Favorite.findOne({ user: user._id }).populate('courses');
-    expect(foundFavorite.courses).toHaveLength(1);
-    expect(foundFavorite.courses[0]._id).toEqual(course._id);
+    expect(savedFavorite._id).toBeDefined();
+    expect(savedFavorite.courses.length).toBe(1);
+    expect(savedFavorite.user.toString()).toBe(user._id.toString());
   });
 });

@@ -7,18 +7,18 @@ exports.validateEvent = [
     .withMessage('Event name is required')
     .isLength({ min: 3, max: 50 })
     .withMessage('Event name must be between 3 and 50 characters'),
-  body('startTime')
+  body('startDate') // 수정: startTime -> startDate
     .notEmpty()
-    .withMessage('Start time is required')
+    .withMessage('Start date is required')
     .isISO8601()
-    .withMessage('Start time must be a valid ISO 8601 date'),
-  body('endTime')
+    .withMessage('Start date must be a valid ISO 8601 date'),
+  body('endDate') // 수정: endTime -> endDate
     .notEmpty()
-    .withMessage('End time is required')
+    .withMessage('End date is required')
     .isISO8601()
-    .withMessage('End time must be a valid ISO 8601 date')
-    .custom((value, { req }) => value > req.body.startTime)
-    .withMessage('End time must be after start time'),
+    .withMessage('End date must be a valid ISO 8601 date')
+    .custom((value, { req }) => value > req.body.startDate)
+    .withMessage('End date must be after start date'),
   body('location')
     .optional()
     .isLength({ max: 200 })

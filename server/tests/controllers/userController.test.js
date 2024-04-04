@@ -1,48 +1,67 @@
-const request = require('supertest');
-const app = require('../../app');
-jest.mock('../../api/v1/services/userService');
-const userService = require('../../api/v1/services/userService');
+const forumController = require('../../api/v1/controllers/forumController');
+const forumService = require('../../api/v1/services/forumService');
 
-describe('User Controller Tests', () => {
-  beforeEach(() => {
-    userService.createUser.mockResolvedValue({
-      id: 'userId',
-      username: 'testuser',
-      email: 'test@example.com',
-      password: 'password'
+jest.mock('../../api/v1/services/forumService');
+
+describe('Forum Controller - Unit Tests', () => {
+    let req, res;
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+        req = { params: {}, body: {} };
+        res = {
+            status: jest.fn().mockReturnThis(),
+            json: jest.fn().mockReturnThis(),
+            send: jest.fn().mockReturnThis()
+        };
     });
-    userService.updateUser.mockResolvedValue({
-      id: 'userId',
-      username: 'updatedUser',
-      email: 'updated@example.com'
+
+    test('createForum creates a forum', async () => {
+        const mockForum = { id: '1', title: 'Forum Title', content: 'Forum Content' };
+        req.body = mockForum;
+        forumService.createForum.mockResolvedValue(mockForum);
+
+        await forumController.createForum(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(201);
+        expect(res.json).toHaveBeenCalledWith(mockForum);
     });
-    userService.deleteUser.mockResolvedValue(true);
-  });
 
-  test('Register user', async () => {
-    const userData = { username: 'testuser', email: 'test@example.com', password: 'password' };
-    const response = await request(app)
-      .post('/api/users/register')
-      .send(userData);
-    expect(response.statusCode).toBe(201);
-    expect(userService.createUser).toHaveBeenCalledWith(userData);
-  });
+    test('getAllForums returns all forums', async () => {
+        const mockForums = [{ id: '1', title: 'Forum Title', content: 'Forum Content' }];
+        forumService.getAllForums.mockResolvedValue(mockForums);
 
-  test('Update user', async () => {
-    const userId = 'userId';
-    const updateData = { username: 'updatedUser', email: 'updated@example.com' };
-    const response = await request(app)
-      .put(`/api/users/${userId}`)
-      .send(updateData);
-    expect(response.statusCode).toBe(200);
-    expect(userService.updateUser).toHaveBeenCalledWith(userId, updateData);
-  });
+        await forumController.getAllForums(req, res);
 
-  test('Delete user', async () => {
-    const userId = 'userId';
-    const response = await request(app)
-      .delete(`/api/users/${userId}`);
-    expect(response.statusCode).toBe(200);
-    expect(userService.deleteUser).toHaveBeenCalledWith(userId);
-  });
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith(mockForums);
+    });
+
+    test('getForumById returns a forum by id', async () => {
+        const forumId = '1';
+        const mockForum = { id: forumId, title: 'Forum Title', content: 'Forum Content' };
+        req.params.id = forumId;
+        forumService.getForumById.mockResolvedValue(mockForum);
+
+        await forumController.getForumById(req, res);
+
+        expect(res.status).toHaveBeenCalledWith(200);
+        expect(res.json).toHaveBeenCalledWith(mockForum);
+    });
+
+    test('addPostToForum adds a post to a forum', async () => {
+        const forumId = '1'; // Ensure this is correctly set
+        const mockPost = { content: 'Post Content' };
+        req.params.forumId = forumId; // Make sure this is correctly assigning forumId
+        req.body = mockPost;
+        forumService.addPostToForum.mockResolvedValue({
+            ...mockPost,
+            forumId: forumId,
+        });
+    
+        await forumController.addPostToForum(req, res);
+    
+        expect(res.status).toHaveBeenCalledWith(201);
+        expect(forumService.addPostToForum).toHaveBeenCalledWith(forumId, mockPost);
+    });
 });

@@ -1,11 +1,41 @@
 const request = require('supertest');
-const app = require('../../app'); // 실제 app.js 파일 위치에 맞게 조정
+const app = require('../../app');
+const Notification = require('../../api/v1/models/Notification');
+const User = require('../../api/v1/models/User');
 
-describe('Notification Routes', () => {
-    it('GET /api/v1/notifications/user/:userId - should return notifications for a user', async () => {
-        const userId = 'JaneDoe의UserID'; // JaneDoe의 유효한 userId로 대체
-        const response = await request(app).get(`/api/v1/notifications/user/${userId}`);
-        expect(response.statusCode).toBe(200);
-        expect(Array.isArray(response.body)).toBeTruthy();
+describe('Notification Routes Integration Tests', () => {
+  let user;
+
+  beforeEach(async () => {
+    user = await User.create({
+      username: 'notificationUser',
+      email: 'notification@example.com',
+      password: 'password'
     });
+  });
+
+  afterEach(async () => {
+    await Notification.deleteMany({});
+    await User.deleteMany({});
+  });
+
+  test('POST /api/notifications 새로운 알림 생성 및 반환', async () => {
+    const notificationData = {
+      userId: user._id,
+      message: 'This is a test notification',
+    };
+
+    const response = await request(app)
+      .post('/api/notifications')
+      .send(notificationData)
+      .expect(201);
+
+    expect(response.body.userId).toEqual(notificationData.userId.toString());
+    expect(response.body.message).toEqual(notificationData.message);
+  });
+
+  test('GET /api/notifications 모든 알림 조회', async () => {
+    const response = await request(app).get('/api/notifications').expect(200);
+    expect(response.body).toEqual(expect.arrayContaining([]));
+  });
 });

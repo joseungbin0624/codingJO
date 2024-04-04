@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
+const { MongoMemoryServer } = require('mongodb-memory-server');
 const Feedback = require('../../api/v1/models/Feedback');
 const User = require('../../api/v1/models/User');
 const Course = require('../../api/v1/models/Course');
-const { MongoMemoryServer } = require('mongodb-memory-server');
 
-describe('Feedback 모델', () => {
+describe('Feedback Model Test', () => {
   let mongoServer;
 
   beforeAll(async () => {
@@ -17,15 +17,16 @@ describe('Feedback 모델', () => {
     await mongoServer.stop();
   });
 
-  it('유효한 피드백 저장', async () => {
-    const user = await User.create({ username: 'testUser2', email: 'test2@example.com', password: 'test' });
-    const course = await Course.create({ title: 'React 기초', description: 'React 설명', category: '프로그래밍', instructor: user._id, price: 200 });
+  it('create & save feedback successfully', async () => {
+    const user = await User.create({ username: 'userTest', email: 'user@test.com', password: 'password123' });
+    const course = await Course.create({ title: 'Course Title', description: 'Description', category: 'Category', instructor: user._id, price: 100 });
 
-    const feedback = new Feedback({ userId: user._id, courseId: course._id, content: '매우 유익함', rating: 5 });
-    await feedback.save();
+    const feedbackData = { userId: user._id, courseId: course._id, content: 'Great course', rating: 5 };
+    const feedback = new Feedback(feedbackData);
+    const savedFeedback = await feedback.save();
 
-    const foundFeedback = await Feedback.findOne({ userId: user._id });
-    expect(foundFeedback.content).toBe('매우 유익함');
-    expect(foundFeedback.rating).toBe(5);
+    expect(savedFeedback._id).toBeDefined();
+    expect(savedFeedback.content).toBe('Great course');
+    expect(savedFeedback.rating).toBe(5);
   });
 });

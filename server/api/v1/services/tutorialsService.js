@@ -1,10 +1,16 @@
 // tutorialsService.js
 const Tutorial = require('../models/Tutorial');
 
+// tutorialsService.js 파일 내 createTutorial 함수 수정
 async function createTutorial(tutorialData) {
-    const tutorial = new Tutorial(tutorialData);
-    await tutorial.save();
-    return tutorial;
+    try {
+        const tutorial = new Tutorial(tutorialData);
+        await tutorial.save();
+        return tutorial;
+    } catch (error) {
+        console.error("Error creating tutorial: ", error.message); // 로그 추가
+        throw new Error('Error creating tutorial');
+    }
 }
 
 async function getAllTutorials() {

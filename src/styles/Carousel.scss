@@ -5,32 +5,16 @@
   width: 100%;
   overflow: hidden;
 
-  .carousel-item {
+  .carousel-slide {
     display: flex;
     justify-content: center;
     align-items: center;
     transition: transform 0.5s ease-in-out;
 
     img {
-      width: 100%;
-      height: auto;
-      object-fit: cover;
-    }
-
-    h3, p {
-      position: absolute;
-      color: white;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    }
-
-    h3 {
-      bottom: 60px;
-      font-size: $font-size-large;
-    }
-
-    p {
-      bottom: 20px;
-      font-size: $font-size-small;
+      width: 100%; // 가로 폭을 컨테이너에 맞춤
+      height: 500px; // 슬라이드의 높이를 고정
+      object-fit: cover; // 이미지를 적절히 맞춤
     }
   }
 

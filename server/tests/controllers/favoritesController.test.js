@@ -1,52 +1,49 @@
-const request = require('supertest');
-const express = require('express');
-const favoritesController = require('../../api/v1/controllers/favoritesController');
+const { addFavorite, removeFavorite, getUserFavorites } = require('../../api/v1/controllers/favoritesController');
 const favoritesService = require('../../api/v1/services/favoritesService');
+
 jest.mock('../../api/v1/services/favoritesService');
 
-const app = express();
-app.use(express.json());
+describe('Favorites Controller - 단위 테스트', () => {
+  let req, res;
 
-app.post('/favorites', favoritesController.addFavorite);
-app.delete('/favorites/:userId/:courseId', favoritesController.removeFavorite);
-app.get('/favorites/:userId', favoritesController.getUserFavorites);
-
-describe('Favorites Controller Tests', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    req = { params: {}, body: {} };
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
   });
 
-  test('addFavorite: Should add a course to favorites and return status 201', async () => {
-    const mockFavorite = { userId: '1', courseId: '2' };
+  test('addFavorite는 즐겨찾기에 코스를 추가한다', async () => {
+    const mockFavorite = { userId: '1', courseId: '1' };
+    req.body = mockFavorite;
     favoritesService.addFavorite.mockResolvedValue(mockFavorite);
 
-    const response = await request(app)
-      .post('/favorites')
-      .send(mockFavorite);
+    await addFavorite(req, res);
 
-    expect(response.statusCode).toBe(201);
-    expect(favoritesService.addFavorite).toHaveBeenCalledWith(mockFavorite.userId, mockFavorite.courseId);
+    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.json).toHaveBeenCalledWith(mockFavorite);
   });
 
-  test('removeFavorite: Should remove a course from favorites and return status 200', async () => {
-    const userId = '1';
-    const courseId = '2';
+  test('removeFavorite는 즐겨찾기에서 코스를 제거한다', async () => {
+    req.params = { userId: '1', courseId: '1' };
     favoritesService.removeFavorite.mockResolvedValue(true);
 
-    const response = await request(app).delete(`/favorites/${userId}/${courseId}`);
+    await removeFavorite(req, res);
 
-    expect(response.statusCode).toBe(200);
-    expect(favoritesService.removeFavorite).toHaveBeenCalledWith(userId, courseId);
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(favoritesService.removeFavorite).toHaveBeenCalledWith('1', '1');
   });
 
-  test('getUserFavorites: Should return favorites for a user and status 200', async () => {
-    const userId = '1';
-    const mockFavorites = [{ userId, courseId: '2' }];
+  test('getUserFavorites는 사용자의 모든 즐겨찾기를 반환한다', async () => {
+    const mockFavorites = [{ userId: '1', courseId: '1' }];
+    req.params.userId = '1';
     favoritesService.getUserFavorites.mockResolvedValue(mockFavorites);
 
-    const response = await request(app).get(`/favorites/${userId}`);
+    await getUserFavorites(req, res);
 
-    expect(response.statusCode).toBe(200);
-    expect(favoritesService.getUserFavorites).toHaveBeenCalledWith(userId);
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(mockFavorites);
   });
 });

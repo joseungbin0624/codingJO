@@ -1,38 +1,57 @@
 const request = require('supertest');
-const app = require('../../app'); // 애플리케이션의 실제 express 인스턴스 경로에 맞게 조정해야 합니다.
-const { setupDatabase, userOneId, courseOneId } = require('../fixtures/db');
+const app = require('../../app');
+const User = require('../../api/v1/models/User');
+const Course = require('../../api/v1/models/Course');
+const Favorite = require('../../api/v1/models/Favorite');
 
-beforeEach(setupDatabase);
+describe('Favorites Routes Integration Tests', () => {
+  let user;
+  let course;
 
-describe('Favorites Routes', () => {
-  test('POST /api/favorites', async () => {
-    const response = await request(app)
-      .post('/api/favorites')
-      .send({
-        userId: userOneId,
-        courseId: courseOneId
-      })
-      .expect(201);
+  beforeEach(async () => {
+    user = await User.create({
+      username: 'testUser',
+      email: 'testuser@example.com',
+      password: 'password',
+    });
 
-    // 추가적인 검증 로직을 구현할 수 있습니다.
-    expect(response.body).not.toBeNull();
-    expect(response.body.courses).toContainEqual(courseOneId);
+    course = await Course.create({
+      title: 'Test Course',
+      description: 'This is a test course',
+      category: 'Development',
+      price: 100,
+      instructor: user._id,
+    });
   });
 
-  test('DELETE /api/favorites/:userId/:courseId', async () => {
-    await request(app)
-      .delete(`/api/favorites/${userOneId}/${courseOneId}`)
-      .expect(200);
-
-    // 삭제 후 확인 로직 구현
+  afterEach(async () => {
+    await User.deleteMany({});
+    await Course.deleteMany({});
+    await Favorite.deleteMany({});
   });
 
-  test('GET /api/favorites/:userId', async () => {
+  it('POST /api/favorites/ 즐겨찾기에 코스를 추가한다', async () => {
     const response = await request(app)
-      .get(`/api/favorites/${userOneId}`)
-      .expect(200);
+      .post('/api/favorites/')
+      .send({ userId: user._id, courseId: course._id });
 
-    // 조회 결과 검증 로직 구현
-    expect(response.body.user).toEqual(userOneId);
+    expect(response.statusCode).toBe(201);
+    expect(response.body.user).toEqual(user._id.toString());
+    expect(response.body.courses).toContainEqual(expect.any(String));
+  });
+
+  it('GET /api/favorites/:userId 사용자의 모든 즐겨찾기를 조회한다', async () => {
+    const response = await request(app).get(`/api/favorites/${user._id}`);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toHaveProperty('courses');
+    expect(response.body.courses.length).toBeGreaterThan(0);
+  });
+
+  it('DELETE /api/favorites/:userId/:courseId 즐겨찾기에서 코스를 제거한다', async () => {
+    const response = await request(app)
+      .delete(`/api/favorites/${user._id}/${course._id}`);
+
+    expect(response.statusCode).toBe(200);
   });
 });

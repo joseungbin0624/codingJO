@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { login } from '../services/authService';
+import lockIcon from '../assets/icons/lock-solid.svg'; // 아이콘 경로 추가
 import '../styles/SecureLogin.scss';
 
 function SecureLogin() {
@@ -24,6 +25,7 @@ function SecureLogin() {
 
   return (
     <form className="secure-login" onSubmit={handleSubmit}>
+      <img src={lockIcon} alt="Login" className="login-icon" /> {/* 아이콘 추가 */}
       <input
         type="email"
         name="email"

@@ -9,7 +9,7 @@ const container = document.getElementById('root');
 const root = createRoot(container);
 
 root.render(
-  <Provider store={store}> // Provider로 App을 감싸 store를 전달합니다.
+  <Provider store={store}> 
     <App />
   </Provider>
 );

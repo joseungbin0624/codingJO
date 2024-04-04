@@ -20,7 +20,7 @@ describe('Authentication Controller Tests', () => {
   });
 
   test('register should respond with 201 status code', async () => {
-    const mockUser = { id: '1', username: 'testUser', email: 'test@example.com' };
+    const mockUser = { _id: '1', username: 'testUser', email: 'test@example.com' }; // 수정: id -> _id
     const mockToken = 'fakeToken';
     authService.registerUser.mockResolvedValue({ user: mockUser, token: mockToken });
 
@@ -29,13 +29,13 @@ describe('Authentication Controller Tests', () => {
       .send({ username: 'testUser', email: 'test@example.com', password: 'password' });
 
     expect(response.statusCode).toBe(201);
-    expect(response.body).toEqual({ user: mockUser, token: mockToken });
+    // _id를 사용하도록 수정
+    expect(response.body).toEqual({ user: { _id: mockUser._id, username: mockUser.username, email: mockUser.email }, token: mockToken });
     expect(authService.registerUser).toHaveBeenCalledWith({ username: 'testUser', email: 'test@example.com', password: 'password' });
   });
 
-  // login 테스트
   test('login should respond with 200 status code', async () => {
-    const mockUser = { id: '1', username: 'testUser', email: 'test@example.com' };
+    const mockUser = { _id: '1', username: 'testUser', email: 'test@example.com' }; // 수정: id -> _id
     const mockToken = 'fakeToken';
     authService.loginUser.mockResolvedValue({ user: mockUser, token: mockToken });
 
@@ -44,13 +44,13 @@ describe('Authentication Controller Tests', () => {
       .send({ email: 'test@example.com', password: 'password' });
 
     expect(response.statusCode).toBe(200);
-    expect(response.body).toEqual({ user: mockUser, token: mockToken });
+    // _id를 사용하도록 수정
+    expect(response.body).toEqual({ user: { _id: mockUser._id, username: mockUser.username, email: mockUser.email }, token: mockToken });
     expect(authService.loginUser).toHaveBeenCalledWith('test@example.com', 'password');
   });
 
-  // getUserFromToken 테스트
   test('getUserFromToken should respond with 200 status code', async () => {
-    const mockUser = { id: '1', username: 'testUser', email: 'test@example.com' };
+    const mockUser = { _id: '1', username: 'testUser', email: 'test@example.com' }; // 수정: id -> _id
     authService.getUserFromToken.mockResolvedValue(mockUser);
 
     const response = await request(app)
@@ -58,7 +58,8 @@ describe('Authentication Controller Tests', () => {
       .set('Authorization', 'Bearer fakeToken');
 
     expect(response.statusCode).toBe(200);
-    expect(response.body).toEqual(mockUser);
+    // _id를 사용하도록 수정
+    expect(response.body).toEqual({ _id: mockUser._id, username: mockUser.username, email: mockUser.email });
     expect(authService.getUserFromToken).toHaveBeenCalledWith('fakeToken');
   });
 });

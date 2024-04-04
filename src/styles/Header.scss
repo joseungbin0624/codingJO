@@ -1,39 +1,74 @@
 @import 'variables';
 
-.site-header {
-  background-color: $primary-color;
-  padding: 1rem 2rem; // 헤더 패딩 조정
+.header {
+  background-color: $light-color; // 헤더 배경색을 밝은 색상으로 설정
+  color: $dark-color; // 헤더의 텍스트 색상을 어두운 색상으로 설정
+  padding: 1rem; // 상하좌우 패딩
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between; // 헤더 내 요소들을 좌우 양쪽에 정렬
 
-  .logo-link {
-    color: $light-color;
-    font-size: $font-size-large;
-    text-decoration: none;
-    font-weight: bold; // 로고의 가독성 강화
+  .header-brand {
+    font-size: $font-size-large; // 브랜드 로고의 폰트 크기
+    font-weight: bold; // 굵은 글씨체
+    display: flex;
+    align-items: center;
 
-    &:hover {
-      color: darken($light-color, 10%);
+    .brand-icon {
+      margin-right: $spacing-unit; // 아이콘과 브랜드 이름 사이의 간격
+      width: 30px; // 아이콘의 너비
+      height: 30px; // 아이콘의 높이
+    }
+
+    span {
+      display: inline-block;
     }
   }
 
-  .navigation {
-    .nav-links {
-      display: flex;
-      gap: 1rem; // 네비게이션 링크 간격 조정
+  .nav-items {
+    list-style: none; // 목록 스타일 제거
+    display: flex;
+    align-items: center;
+    gap: 20px; // 네비게이션 아이템 간의 간격
 
-      li {
-        a {
-          color: $light-color;
-          text-decoration: none;
-          transition: color 0.3s ease;
+    li {
+      a {
+        color: $dark-color; // 네비게이션 링크 색상 설정
+        text-decoration: none; // 밑줄 제거
+        padding: 0.5rem 1rem; // 상하좌우 패딩
 
-          &:hover {
-            color: $warning-color;
-          }
+        &:hover {
+          color: $primary-color; // 호버 시 색상 변경
         }
       }
+    }
+  }
+
+  .action-icons {
+    display: flex;
+    align-items: center;
+    gap: 20px; // 액션 아이콘 간의 간격
+
+    .icon {
+      width: 24px; // 아이콘의 너비
+      height: 24px; // 아이콘의 높이
+      cursor: pointer; // 커서를 포인터로 변경
+
+      &:hover {
+        opacity: 0.8; // 호버 시 투명도 변경
+      }
+    }
+  }
+}
+
+// 반응형 디자인을 위한 미디어 쿼리
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column; // 모바일 화면에서는 세로 배치
+    gap: 20px; // 요소 간 간격
+
+    .nav-items {
+      justify-content: center; // 중앙 정렬
     }
   }
 }

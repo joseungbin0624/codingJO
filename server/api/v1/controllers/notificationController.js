@@ -30,4 +30,13 @@ async function markNotificationAsRead(req, res) {
   }
 }
 
-module.exports = { sendNotification, getUserNotifications, markNotificationAsRead };
+async function getAllNotifications(req, res) {
+  try {
+    const notifications = await notificationService.getAllNotifications();
+    res.status(200).json(notifications);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+module.exports = { sendNotification, getUserNotifications, markNotificationAsRead, getAllNotifications };

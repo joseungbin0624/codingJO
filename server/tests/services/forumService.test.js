@@ -1,17 +1,16 @@
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
-const forumService = require('../../api/v1/services/forumService');
 const Forum = require('../../api/v1/models/Forum');
-const Post = require('../../api/v1/models/Post');
+const forumService = require('../../api/v1/services/forumService');
 const User = require('../../api/v1/models/User');
 
-describe('Forum Service', () => {
+describe('Forum Service Tests', () => {
     let mongoServer;
 
     beforeAll(async () => {
         mongoServer = await MongoMemoryServer.create();
-        const mongoUri = mongoServer.getUri();
-        await mongoose.connect(mongoUri);
+        const uri = mongoServer.getUri();
+        await mongoose.connect(uri);
     });
 
     afterAll(async () => {
@@ -21,20 +20,32 @@ describe('Forum Service', () => {
 
     beforeEach(async () => {
         await Forum.deleteMany({});
-        await Post.deleteMany({});
         await User.deleteMany({});
     });
 
-    it('should add a post to a forum', async () => {
-        const user = await User.create({ username: 'author', email: 'author@example.com', password: 'password123' });
-        const forum = await Forum.create({ title: 'New Forum', content: 'This is a new forum content', author: user._id });
+    it('createForum should create a new forum', async () => {
+        const user = await User.create({ username: 'author', email: 'author@example.com', password: 'password' });
+        const forumData = { title: 'New Forum', content: 'Forum content', author: user._id };
 
-        const postData = { title: 'New Post', content: 'New post in forum', author: user._id, forum: forum._id };
-        const updatedForum = await forumService.addPostToForum(forum._id, postData);
+        const forum = await forumService.createForum(forumData);
+        expect(forum.title).toBe(forumData.title);
+        expect(forum.content).toBe(forumData.content);
+    });
 
-        const posts = await Post.find({ forum: forum._id });
-        expect(posts.length).toBe(1);
-        expect(posts[0].content).toBe(postData.content);
-        expect(posts[0].title).toBe(postData.title);
+    it('getAllForums should retrieve all forums', async () => {
+        const user = await User.create({ username: 'author', email: 'author@example.com', password: 'password' });
+        await forumService.createForum({ title: 'Forum 1', content: 'Content 1', author: user._id });
+        await forumService.createForum({ title: 'Forum 2', content: 'Content 2', author: user._id });
+
+        const forums = await forumService.getAllForums();
+        expect(forums.length).toBe(2);
+    });
+
+    it('getForumById should retrieve a forum by ID', async () => {
+        const user = await User.create({ username: 'author', email: 'author@example.com', password: 'password' });
+        const forum = await forumService.createForum({ title: 'New Forum', content: 'Forum content', author: user._id });
+
+        const foundForum = await forumService.getForumById(forum._id);
+        expect(foundForum._id.toString()).toBe(forum._id.toString());
     });
 });

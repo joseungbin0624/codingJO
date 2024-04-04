@@ -1,57 +1,51 @@
-const request = require('supertest');
-const app = require('../../app');
-jest.mock('../../api/v1/services/notificationService');
+// notificationController.test.js
+const { sendNotification, getUserNotifications, markNotificationAsRead } = require('../../api/v1/controllers/notificationController');
 const notificationService = require('../../api/v1/services/notificationService');
 
-describe('Notification Controller Tests', () => {
+jest.mock('../../api/v1/services/notificationService');
+
+describe('Notification Controller - 단위 테스트', () => {
+  let req, res;
+
   beforeEach(() => {
-    notificationService.createNotification.mockResolvedValue({
-      id: 'notificationId',
-      userId: 'userId',
-      type: 'Info',
-      message: 'Notification Message',
-      isRead: false
-    });
-    notificationService.getUserNotifications.mockResolvedValue([{
-      id: 'notificationId',
-      userId: 'userId',
-      type: 'Info',
-      message: 'Notification Message',
-      isRead: false
-    }]);
-    notificationService.markNotificationAsRead.mockResolvedValue({
-      id: 'notificationId',
-      userId: 'userId',
-      type: 'Info',
-      message: 'Notification Message',
-      isRead: true
-    });
+    jest.clearAllMocks();
+    req = { params: {}, body: {} };
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
   });
 
-  test('Send notification', async () => {
-    const notificationData = { userId: 'userId', type: 'Info', message: 'Notification Message' };
-    const response = await request(app)
-      .post('/api/notifications')
-      .send(notificationData);
-    expect(response.statusCode).toBe(201);
-    expect(notificationService.createNotification).toHaveBeenCalledWith(notificationData);
+  test('sendNotification은 새로운 알림을 생성한다', async () => {
+    const mockNotification = { userId: '1', type: 'Info', message: 'Notification message' };
+    req.body = mockNotification;
+    notificationService.createNotification.mockResolvedValue(mockNotification);
+
+    await sendNotification(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.json).toHaveBeenCalledWith(mockNotification);
   });
 
-  test('Get user notifications', async () => {
-    const userId = 'userId';
-    const response = await request(app)
-      .get(`/api/notifications/user/${userId}`)
-      .set('Authorization', 'Bearer validToken'); // Assuming 'validToken' is a placeholder for an actual token.
-    expect(response.statusCode).toBe(200);
-    expect(notificationService.getUserNotifications).toHaveBeenCalledWith(userId);
+  test('getUserNotifications는 사용자의 모든 알림을 반환한다', async () => {
+    const mockNotifications = [{ userId: '1', type: 'Info', message: 'Notification message' }];
+    req.params.userId = '1';
+    notificationService.getUserNotifications.mockResolvedValue(mockNotifications);
+
+    await getUserNotifications(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(mockNotifications);
   });
 
-  test('Mark notification as read', async () => {
-    const notificationId = 'notificationId';
-    const response = await request(app)
-      .put(`/api/notifications/${notificationId}/read`)
-      .set('Authorization', 'Bearer validToken'); // Assuming 'validToken' is a placeholder for an actual token.
-    expect(response.statusCode).toBe(200);
+  test('markNotificationAsRead은 알림을 읽음 상태로 표시한다', async () => {
+    const notificationId = '1';
+    req.params.notificationId = notificationId;
+    notificationService.markNotificationAsRead.mockResolvedValue({});
+
+    await markNotificationAsRead(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
     expect(notificationService.markNotificationAsRead).toHaveBeenCalledWith(notificationId);
   });
 });

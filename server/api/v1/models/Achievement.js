@@ -1,5 +1,3 @@
-// 파일 경로: E:\project\codingJO\server\api\v1\models\Achievement.js
-
 const mongoose = require('mongoose');
 
 const achievementSchema = new mongoose.Schema({

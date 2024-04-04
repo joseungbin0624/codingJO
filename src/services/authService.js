@@ -1,37 +1,47 @@
 import api from '../utils/api';
-import { saveToken, removeToken, getToken } from '../utils/authUtils';
 
 export const login = async (credentials) => {
   try {
     const response = await api.post('/auth/login', credentials);
-    saveToken(response.data.token);
+    localStorage.setItem('user', JSON.stringify(response.data));
     return response.data;
   } catch (error) {
-    throw new Error(`Login failed: ${error.response?.data?.message || error.message}`);
+    console.error("Login error:", error);
+    throw new Error(error.response?.data?.message || "Login failed. Please try again.");
   }
 };
 
 export const register = async (userData) => {
   try {
     const response = await api.post('/auth/register', userData);
-    saveToken(response.data.token);
+    localStorage.setItem('user', JSON.stringify(response.data));
     return response.data;
   } catch (error) {
-    throw new Error(`Registration failed: ${error.response?.data?.message || error.message}`);
+    console.error("Registration error:", error);
+    throw new Error(error.response?.data?.message || "Registration failed. Please try again.");
   }
 };
 
 export const logout = () => {
-  removeToken();
+  localStorage.removeItem('user');
 };
 
 export const fetchCurrentUser = async () => {
   try {
-    const response = await api.get('/auth/user', {
-      headers: { Authorization: `Bearer ${getToken()}` },
-    });
+    const response = await api.get('/auth/user');
     return response.data;
   } catch (error) {
-    throw new Error(`Failed to fetch current user: ${error.response?.data?.message || error.message}`);
+    console.error("Fetch current user error:", error);
+    throw new Error("Failed to fetch current user. Please try again.");
+  }
+};
+
+export const checkUsername = async (username) => {
+  try {
+    const response = await api.get(`/auth/checkUsername/${username}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error checking username uniqueness", error);
+    throw new Error(error.response?.data?.message || "Username check failed. Please try again.");
   }
 };

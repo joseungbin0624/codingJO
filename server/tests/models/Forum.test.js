@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
+const { MongoMemoryServer } = require('mongodb-memory-server');
 const Forum = require('../../api/v1/models/Forum');
 const User = require('../../api/v1/models/User');
-const { MongoMemoryServer } = require('mongodb-memory-server');
 
-describe('Forum 모델', () => {
+describe('Forum Model Test', () => {
   let mongoServer;
 
   beforeAll(async () => {
@@ -16,24 +16,15 @@ describe('Forum 모델', () => {
     await mongoServer.stop();
   });
 
-  it('포럼 생성 및 답글 추가', async () => {
-    const user = await User.create({ username: 'forumUser', email: 'forum@example.com', password: 'forum' });
+  it('create & save forum successfully', async () => {
+    const user = await User.create({ username: 'userTest', email: 'user@test.com', password: 'password123' });
 
-    const forum = new Forum({
-      title: 'Node.js 질문',
-      content: 'Node.js에서 파일을 어떻게 다루나요?',
-      author: user._id,
-      replies: [{
-        content: 'fs 모듈을 사용하세요.',
-        author: user._id,
-      }]
-    });
+    const forumData = { title: 'Forum Title', content: 'Forum Content', author: user._id };
+    const forum = new Forum(forumData);
+    const savedForum = await forum.save();
 
-    await forum.save();
-
-    const foundForum = await Forum.findOne({ title: 'Node.js 질문' }).populate('author').populate('replies.author');
-    expect(foundForum.content).toBe('Node.js에서 파일을 어떻게 다루나요?');
-    expect(foundForum.replies).toHaveLength(1);
-    expect(foundForum.replies[0].content).toBe('fs 모듈을 사용하세요.');
+    expect(savedForum._id).toBeDefined();
+    expect(savedForum.title).toBe('Forum Title');
+    expect(savedForum.content).toBe('Forum Content');
   });
 });

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { submitFeedback } from '../services/feedbackService';
+import commentIcon from '../assets/icons/comment-solid.svg'; // 아이콘 경로 추가
 import '../styles/FeedbackForm.scss';
 
 function FeedbackForm() {
@@ -20,6 +21,7 @@ function FeedbackForm() {
 
   return (
     <div className="feedback-form">
+      <img src={commentIcon} alt="Feedback" className="feedback-icon" /> {/* 아이콘 추가 */}
       <form onSubmit={handleSubmit}>
         <textarea
           name="feedback"

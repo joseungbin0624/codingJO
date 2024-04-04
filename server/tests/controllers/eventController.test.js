@@ -1,55 +1,49 @@
-const request = require('supertest');
-const app = require('../../app');
-jest.mock('../../api/v1/services/eventService');
+const { createEvent, getAllEvents, getEventById } = require('../../api/v1/controllers/eventController');
 const eventService = require('../../api/v1/services/eventService');
 
-describe('Event Controller Tests', () => {
+jest.mock('../../api/v1/services/eventService');
+
+describe('Event Controller - 단위 테스트', () => {
+  let req, res;
+
   beforeEach(() => {
-    eventService.createEvent.mockResolvedValue({
-      id: 'eventId',
-      name: 'Event Name',
-      organizer: 'Organizer Name',
-      location: 'Event Location',
-      startDate: new Date(),
-      endDate: new Date(),
-      description: 'Event Description',
-      attendees: []
-    });
-    eventService.getAllEvents.mockResolvedValue([{
-      id: 'eventId',
-      name: 'Event Name',
-      organizer: 'Organizer Name',
-      location: 'Event Location',
-      startDate: new Date(),
-      endDate: new Date(),
-      description: 'Event Description',
-      attendees: []
-    }]);
-    eventService.getEventById.mockResolvedValue({
-      id: 'eventId',
-      name: 'Event Name',
-      organizer: 'Organizer Name',
-      location: 'Event Location',
-      startDate: new Date(),
-      endDate: new Date(),
-      description: 'Event Description',
-      attendees: []
-    });
+    jest.clearAllMocks();
+    req = { params: {}, body: {} };
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
   });
 
-  test('Create an event', async () => {
-    const eventData = {
-      name: 'Event Name',
-      organizer: 'Organizer Name',
-      location: 'Event Location',
-      startDate: new Date(),
-      endDate: new Date(),
-      description: 'Event Description'
-    };
-    const response = await request(app)
-      .post('/api/events')
-      .send(eventData);
-    expect(response.statusCode).toBe(201);
-    expect(eventService.createEvent).toHaveBeenCalledWith(eventData);
+  test('createEvent는 새로운 이벤트를 생성한다', async () => {
+    const mockEvent = { name: 'New Event', location: 'Event Location' };
+    req.body = mockEvent;
+    eventService.createEvent.mockResolvedValue(mockEvent);
+
+    await createEvent(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.json).toHaveBeenCalledWith(mockEvent);
+  });
+
+  test('getAllEvents는 모든 이벤트를 반환한다', async () => {
+    const mockEvents = [{ name: 'Event1', location: 'Location1' }];
+    eventService.getAllEvents.mockResolvedValue(mockEvents);
+
+    await getAllEvents(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(mockEvents);
+  });
+
+  test('getEventById는 ID로 이벤트를 검색한다', async () => {
+    const mockEvent = { id: '1', name: 'Event1', location: 'Location1' };
+    req.params.id = '1';
+    eventService.getEventById.mockResolvedValue(mockEvent);
+
+    await getEventById(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(mockEvent);
   });
 });

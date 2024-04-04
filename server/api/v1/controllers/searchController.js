@@ -13,7 +13,7 @@ exports.createSearchEntry = async (req, res) => {
 // 특정 쿼리에 대한 검색 결과 조회
 exports.getSearchResultsByQuery = async (req, res) => {
     try {
-        const searchResults = await searchService.getSearchResultsByQuery(req.params.query);
+        const searchResults = await searchService.getSearchResultsByQuery(req.query.q);
         res.status(200).json(searchResults);
     } catch (error) {
         res.status(500).json({ message: error.message });

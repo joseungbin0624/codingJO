@@ -1,55 +1,54 @@
-const request = require('supertest');
-const app = require('../../app');
-jest.mock('../../api/v1/services/visualizationService');
+const {
+  createVisualization,
+  getAllVisualizations,
+  getVisualizationById,
+} = require('../../api/v1/controllers/visualizationController');
 const visualizationService = require('../../api/v1/services/visualizationService');
 
-describe('Visualization Controller Tests', () => {
+jest.mock('../../api/v1/services/visualizationService');
+
+describe('Visualization Controller - 단위 테스트', () => {
+  let req, res;
+
   beforeEach(() => {
-    visualizationService.createVisualization.mockResolvedValue({
-      id: 'visualizationId',
-      title: 'Visualization Title',
-      description: 'Visualization Description',
-      data: {}
-    });
-    visualizationService.getAllVisualizations.mockResolvedValue([{
-      id: 'visualizationId',
-      title: 'Visualization Title',
-      description: 'Visualization Description',
-      data: {}
-    }]);
-    visualizationService.getVisualizationById.mockResolvedValue({
-      id: 'visualizationId',
-      title: 'Visualization Title',
-      description: 'Visualization Description',
-      data: {}
-    });
-  });
-
-  test('Create visualization', async () => {
-    const visualizationData = {
-      title: 'Visualization Title',
-      description: 'Visualization Description',
-      data: {}
+    jest.clearAllMocks();
+    req = { params: {}, body: {} };
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
     };
-    const response = await request(app)
-      .post('/api/visualizations')
-      .send(visualizationData);
-    expect(response.statusCode).toBe(201);
-    expect(visualizationService.createVisualization).toHaveBeenCalledWith(visualizationData);
   });
 
-  test('Get all visualizations', async () => {
-    const response = await request(app)
-      .get('/api/visualizations');
-    expect(response.statusCode).toBe(200);
-    expect(visualizationService.getAllVisualizations).toHaveBeenCalled();
+  test('createVisualization은 시각화를 생성한다', async () => {
+    const mockVisualization = { title: '시각화 제목', description: '설명', data: {} };
+    req.body = mockVisualization;
+    visualizationService.createVisualization.mockResolvedValue(mockVisualization);
+
+    await createVisualization(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.json).toHaveBeenCalledWith(mockVisualization);
   });
 
-  test('Get visualization by ID', async () => {
-    const visualizationId = 'visualizationId';
-    const response = await request(app)
-      .get(`/api/visualizations/${visualizationId}`);
-    expect(response.statusCode).toBe(200);
-    expect(visualizationService.getVisualizationById).toHaveBeenCalledWith(visualizationId);
+  test('getAllVisualizations은 모든 시각화를 반환한다', async () => {
+    const mockVisualizations = [{ title: '시각화 제목', description: '설명', data: {} }];
+    visualizationService.getAllVisualizations.mockResolvedValue(mockVisualizations);
+
+    await getAllVisualizations(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(mockVisualizations);
+  });
+
+  test('getVisualizationById는 ID에 해당하는 시각화를 반환한다', async () => {
+    const visualizationId = '1';
+    const mockVisualization = { id: visualizationId, title: '시각화 제목', description: '설명', data: {} };
+    req.params.id = visualizationId;
+    visualizationService.getVisualizationById.mockResolvedValue(mockVisualization);
+
+    await getVisualizationById(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(mockVisualization);
   });
 });

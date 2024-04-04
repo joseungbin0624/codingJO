@@ -1,43 +1,82 @@
 const request = require('supertest');
-const app = require('../../app'); // 실제 경로에 맞게 조정하세요.
+const app = require('../../app');
+const Event = require('../../api/v1/models/Event');
 
-describe('Event Routes', () => {
-    it('POST / should create a new event', async () => {
-        const eventData = {
-            name: "New Event",
-            location: "Some Location",
-            startDate: "2023-01-01",
-            endDate: "2023-01-02"
-            // 기타 필요한 필드 추가
-        };
-        const res = await request(app)
-            .post('/api/events')
-            .send(eventData);
-        expect(res.statusCode).toEqual(201);
-    });
+describe('Event Routes Integration Tests', () => {
+  let eventId;
 
-    it('GET / should retrieve all events', async () => {
-        const res = await request(app)
-            .get('/api/events');
-        expect(res.statusCode).toEqual(200);
+  beforeEach(async () => {
+    const event = await Event.create({
+      name: 'Initial Event',
+      organizer: 'Test Organizer',
+      location: 'Test Location',
+      startDate: new Date(),
+      endDate: new Date(),
+      description: 'This is a test event'
     });
+    eventId = event._id;
+  });
 
-    it('GET /:id should retrieve an event by ID', async () => {
-        const res = await request(app)
-            .get('/api/events/:id'); // 적절한 eventId 제공
-        expect(res.statusCode).toEqual(200);
-    });
+  afterEach(async () => {
+    await Event.deleteMany({});
+  });
 
-    it('PUT /:id should update an event', async () => {
-        const res = await request(app)
-            .put('/api/events/:id') // 적절한 eventId 제공
-            .send({location: "Updated Location"}); // 업데이트할 필드와 값 제공
-        expect(res.statusCode).toEqual(200);
-    });
+  it('POST /api/events 새로운 이벤트를 생성한다', async () => {
+    const newEvent = {
+      name: 'New Year Party',
+      organizer: 'Community Hall',
+      location: 'Community Hall, New City',
+      startDate: new Date(),
+      endDate: new Date(),
+      description: 'Annual New Year Celebration'
+    };
 
-    it('DELETE /:id should delete an event', async () => {
-        const res = await request(app)
-            .delete('/api/events/:id'); // 적절한 eventId 제공
-        expect(res.statusCode).toEqual(200);
-    });
+    const response = await request(app)
+      .post('/api/events')
+      .send(newEvent);
+
+    expect(response.statusCode).toBe(201);
+    expect(response.body.name).toEqual(newEvent.name);
+    expect(response.body.description).toEqual(newEvent.description);
+  });
+
+  it('GET /api/events 모든 이벤트를 조회한다', async () => {
+    const response = await request(app).get('/api/events');
+
+    expect(response.statusCode).toBe(200);
+    expect(Array.isArray(response.body)).toBeTruthy();
+    expect(response.body.length).toBeGreaterThanOrEqual(1);
+  });
+
+  it('GET /api/events/:id ID로 특정 이벤트를 조회한다', async () => {
+    const response = await request(app).get(`/api/events/${eventId}`);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body._id).toEqual(eventId.toString());
+  });
+
+  it('PUT /api/events/:id 이벤트 정보를 업데이트한다', async () => {
+    const updatedEvent = {
+      name: 'Updated Event Name',
+      description: 'Updated event description.'
+    };
+
+    const response = await request(app)
+      .put(`/api/events/${eventId}`)
+      .send(updatedEvent);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body.name).toEqual(updatedEvent.name);
+    expect(response.body.description).toEqual(updatedEvent.description);
+  });
+
+  it('DELETE /api/events/:id 이벤트를 삭제한다', async () => {
+    const response = await request(app).delete(`/api/events/${eventId}`);
+
+    expect(response.statusCode).toBe(204);
+
+    // 삭제된 이벤트가 정말로 없는지 확인
+    const fetchDeleted = await request(app).get(`/api/events/${eventId}`);
+    expect(fetchDeleted.statusCode).toBe(404);
+  });
 });

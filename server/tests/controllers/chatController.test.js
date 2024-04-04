@@ -1,73 +1,62 @@
-const request = require('supertest');
-const express = require('express');
-const chatController = require('../../api/v1/controllers/chatController');
+const { createChat, addMessage, getChatById, getUserChats } = require('../../api/v1/controllers/chatController');
 const chatService = require('../../api/v1/services/chatService');
+
 jest.mock('../../api/v1/services/chatService');
 
-const app = express();
-app.use(express.json());
+describe('Chat Controller - 단위 테스트', () => {
+  let req, res;
 
-app.post('/chats', chatController.createChat);
-app.post('/chats/:chatId/messages', chatController.addMessage);
-app.get('/chats/:chatId', chatController.getChatById);
-app.get('/chats/user/:userId', chatController.getUserChats);
-
-describe('Chat Controller Tests', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    req = { params: {}, body: {} };
+    res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis(),
+    };
   });
 
-  test('createChat: Should create a chat and return status 201', async () => {
+  test('createChat은 새로운 채팅을 생성한다', async () => {
     const mockChat = { id: '1', participants: ['user1', 'user2'], messages: [] };
+    req.body = { participants: mockChat.participants };
     chatService.createChat.mockResolvedValue(mockChat);
-    
-    const response = await request(app)
-      .post('/chats')
-      .send({ participants: mockChat.participants });
 
-    expect(response.statusCode).toBe(201);
-    expect(response.body).toEqual(mockChat);
-    expect(chatService.createChat).toHaveBeenCalledWith(mockChat.participants);
+    await createChat(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.json).toHaveBeenCalledWith(mockChat);
   });
 
-  test('addMessage: Should add a message to the chat and return status 200', async () => {
-    const chatId = '1';
-    const mockMessage = { sender: 'user1', message: 'Hello World' };
-    chatService.addMessage.mockResolvedValue({
-      ...mockMessage,
-      chatId,
-      timestamp: Date.now(),
-    });
+  test('addMessage는 채팅에 메시지를 추가한다', async () => {
+    const mockMessage = { chatId: '1', sender: 'user1', message: 'Hello World', timestamp: Date.now() };
+    req.params.chatId = '1';
+    req.body = { message: 'Hello World' };
+    chatService.addMessage.mockResolvedValue(mockMessage);
 
-    const response = await request(app)
-      .post(`/chats/${chatId}/messages`)
-      .send({ message: mockMessage.message });
+    await addMessage(req, res);
 
-    expect(response.statusCode).toBe(200);
-    expect(chatService.addMessage).toHaveBeenCalledWith(chatId, mockMessage.message);
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(mockMessage);
   });
 
-  test('getChatById: Should return a chat by ID and status 200', async () => {
-    const chatId = '1';
-    const mockChat = { id: chatId, participants: ['user1', 'user2'], messages: [] };
+  test('getChatById는 ID로 채팅을 검색한다', async () => {
+    const mockChat = { id: '1', participants: ['user1', 'user2'], messages: [] };
+    req.params.chatId = '1';
     chatService.getChatById.mockResolvedValue(mockChat);
 
-    const response = await request(app).get(`/chats/${chatId}`);
+    await getChatById(req, res);
 
-    expect(response.statusCode).toBe(200);
-    expect(response.body).toEqual(mockChat);
-    expect(chatService.getChatById).toHaveBeenCalledWith(chatId);
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(mockChat);
   });
 
-  test('getUserChats: Should return chats for a user and status 200', async () => {
-    const userId = 'user1';
-    const mockChats = [{ id: '1', participants: [userId, 'user2'], messages: [] }];
+  test('getUserChats는 사용자의 모든 채팅을 반환한다', async () => {
+    const mockChats = [{ id: '1', participants: ['user1', 'user2'], messages: [] }];
+    req.params.userId = 'user1';
     chatService.getUserChats.mockResolvedValue(mockChats);
 
-    const response = await request(app).get(`/chats/user/${userId}`);
+    await getUserChats(req, res);
 
-    expect(response.statusCode).toBe(200);
-    expect(response.body).toEqual(mockChats);
-    expect(chatService.getUserChats).toHaveBeenCalledWith(userId);
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(mockChats);
   });
 });

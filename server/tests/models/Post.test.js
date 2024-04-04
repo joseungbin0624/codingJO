@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
+const { MongoMemoryServer } = require('mongodb-memory-server');
 const Post = require('../../api/v1/models/Post');
 const User = require('../../api/v1/models/User');
 const Forum = require('../../api/v1/models/Forum');
-const { MongoMemoryServer } = require('mongodb-memory-server');
 
-describe('Post 모델', () => {
+describe('Post Model Test', () => {
   let mongoServer;
 
   beforeAll(async () => {
@@ -17,19 +17,18 @@ describe('Post 모델', () => {
     await mongoServer.stop();
   });
 
-  it('포스트 생성 및 저장', async () => {
-    const user = await User.create({ username: 'postUser', email: 'post@example.com', password: 'password' });
-    const forum = await Forum.create({ title: 'Node.js', content: 'Node.js에 대한 모든 것', author: user._id });
+  it('create & save post successfully', async () => {
+    const user = await User.create({ username: 'userTest', email: 'user@test.com', password: 'password123' });
+    const forum = await Forum.create({ title: 'Forum Title', content: 'Forum Content', author: user._id });
 
-    const post = new Post({
-      title: 'Node.js 파일 시스템',
-      content: 'Node.js에서 파일 시스템을 다루는 방법에 대해 알아봅시다.',
-      author: user._id,
-      forum: forum._id
-    });
-
+    const postData = { title: 'Post Title', content: 'Post Content', author: user._id, forum: forum._id };
+    const post = new Post(postData);
     const savedPost = await post.save();
-    expect(savedPost.title).toBe('Node.js 파일 시스템');
-    expect(savedPost.content).toContain('다루는 방법에 대해 알아봅시다');
+
+    expect(savedPost._id).toBeDefined();
+    expect(savedPost.title).toBe('Post Title');
+    expect(savedPost.content).toBe('Post Content');
+    expect(savedPost.author.toString()).toBe(user._id.toString());
+    expect(savedPost.forum.toString()).toBe(forum._id.toString());
   });
 });
